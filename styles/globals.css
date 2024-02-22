@@ -51,7 +51,7 @@ html {
 
 
 .bg_border {
-    border-image: linear-gradient(to left, #E72B2B, #FF5BB3, #9B03F8, #FF804A);
+    border-image: radial-gradient(to left, #E72B2B, #FF5BB3, #9B03F8, #FF804A);
 }
 
 body::-webkit-scrollbar {

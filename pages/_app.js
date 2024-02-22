@@ -11,7 +11,10 @@ export default function App({ Component, pageProps }) {
         <div className='fixed z-[-120] w-full h-full top-0 bg-black/70 '></div>
         <Navbar />
         <Component {...pageProps} />
+        <div className='bg-black/40'>
+
         <Footer />
+        </div>
 
 
       </div>

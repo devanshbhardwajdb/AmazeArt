@@ -27,7 +27,7 @@ const Explore = () => {
 
     return (
         <>
-            <div id="explore" className='lg:px-[8vw] pb-[20vh] flex items-center justify-center gap-0 border-t'>
+            <div id="explore" className='lg:px-[8vw] pb-[20vh] flex items-center justify-center gap-0 '>
                 <div className="w-auto relative flex items-center justify-center">
                     <FaChevronLeft className="absolute h-48 left-[-50px] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('prev')} />
                     <FaChevronRight className="absolute h-48 right-[-50px] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('next')} />

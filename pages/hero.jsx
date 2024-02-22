@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { motion } from 'framer-motion';
+import { FaArrowDown } from "react-icons/fa";
+
 
 const Hero = () => {
     const [currentImage, setCurrentImage] = useState(0);
@@ -45,7 +47,11 @@ const Hero = () => {
                     <h1 className='font-metal text-[200px] text-white px-5'>Art</h1>
                 </div>
                 <h2 className='font-swash text-white text-[55px]'>A Unified Solution for all Artists !</h2>
-                <Link href={'#explore'}><button className='bg_button1 px-14 mt-5 py-3 font-belleza text-xl rounded-full hover:scale-110 duration-300 button1 hover:shadow-md hover:shadow-black hover:duration-200'>Explore</button></Link>
+                <Link href={'#about'}><button className='bg_button1 px-14 mt-5 py-3 font-belleza text-xl rounded-full hover:scale-110 duration-300 button1 hover:shadow-md hover:shadow-black hover:duration-200'>Explore</button></Link>
+
+
+                {/* <div className='w-24 h-24  flex items-center justify-center rounded-full border-4 bg_border'><Link href={'#about'}><FaArrowDown className=' text-6xl text-white ' /></Link></div> */}
+
                 {/* </div> */}
             </div>
         </>
