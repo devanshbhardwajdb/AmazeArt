@@ -99,7 +99,7 @@ const Login = () => {
             <form
                 onSubmit={(e) => { handleSubmit(e) }}
                 method='POST'
-                className="flex flex-col gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-belleza bg-white/5 backdrop-blur-md border border-gray-300 glassmorphism  ">
+                className="flex flex-col gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-belleza bg-white/5 backdrop-blur-md   glassmorphism  ">
                 <h3 className="text-white text-2xl font-bold mb-1">Login to your account</h3>
                 <h3 className="text-white text-lg font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/signup'}><p className='text_main  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95 '>Signup</p></Link></h3>
                 <div className="flex mt-6 gap-8  flex-col w-full ">
@@ -107,7 +107,7 @@ const Login = () => {
                         value={email}
                         onChange={(e) => { setEmail(e.target.value) }}
                         type="email"
-                        className='border border-gray-300 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] bg-transparent text-white'
+                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200'
                         placeholder='Email address'
                         name='email'
                         required
@@ -120,7 +120,7 @@ const Login = () => {
                             value={password}
                             onChange={(e) => { setPassword(e.target.value) }}
                             type={`${isHidden ? "password" : "visible"}`}
-                            className='border  border-gray-300 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] bg-transparent text-white'
+                            className='bg-white/15 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200'
 
                             placeholder='Password'
                             name='password'

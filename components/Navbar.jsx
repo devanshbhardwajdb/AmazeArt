@@ -102,7 +102,7 @@ const Navbar = () => {
         </div>
         <div className='flex gap-12'>
           <Link href={'/login'}><button className='bg-transparent rounded-2xl text-lg font-belleza px-9 text-white border-2 hover:scale-110 duration-300 hover:bg-white hover:text-black'>Login</button></Link>
-          <Link href={'/'}><button className='bg-transparent rounded-2xl text-lg font-belleza px-8 text-white border-white border-2 hover:scale-110 duration-300 hover:bg-white hover:text-black'>Signup</button></Link>
+          <Link href={'/signup'}><button className='bg-transparent rounded-2xl text-lg font-belleza px-8 text-white border-white border-2 hover:scale-110 duration-300 hover:bg-white hover:text-black'>Signup</button></Link>
         </div>
       </div>
 
@@ -117,7 +117,7 @@ const Navbar = () => {
         <div className="flex flex-col gap-2">
           <Link href={'/login'}><button className='bg-transparent rounded-2xl text-lg font-belleza px-9 text-white border-2 hover:scale-110 duration-300 hover:bg-white hover:text-black'>Login</button></Link>
 
-          <Link href={'/'}><button className='bg-transparent rounded-2xl text-lg font-belleza px-8 text-white border-white border-2 hover:scale-110 duration-300 hover:bg-white hover:text-black'>Signup</button></Link>
+          <Link href={'/signup'}><button className='bg-transparent rounded-2xl text-lg font-belleza px-8 text-white border-white border-2 hover:scale-110 duration-300 hover:bg-white hover:text-black'>Signup</button></Link>
         </div>
       </div>
 
