@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { slideIn3 } from '@/utils/motion';
 
 const Explore = () => {
     const [currentImage, setCurrentImage] = useState(0);
@@ -9,9 +10,9 @@ const Explore = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setDirection('next');
+            // setDirection('next');
             setCurrentImage((prevImage) => (prevImage + 1) % images.length);
-        }, 4000);
+        }, 5000);
 
         return () => clearInterval(interval);
     }, [images.length]);
@@ -29,27 +30,30 @@ const Explore = () => {
         <>
             <div id="explore" className='lg:px-[8vw] pb-[20vh] flex items-center justify-center gap-0 '>
                 <div className="w-auto relative flex items-center justify-center">
-                    <FaChevronLeft className="absolute h-48 left-[-50px] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('prev')} />
-                    <FaChevronRight className="absolute h-48 right-[-50px] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('next')} />
-                    <div className="flex">
+                    {/* <FaChevronLeft className="absolute h-48 left-[-8vw] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('prev')} />
+                    <FaChevronRight className="absolute h-48 right-[-8vw] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('next')} /> */}
+                    <div className="flex relative">
                         {images.map((image, index) => (
                             <motion.img
                                 key={index}
-                                initial={direction === 'next' ? { opacity: 0, x: '100vw' } : { opacity: 0, x: '-100vw' }}
-                                animate={index === currentImage ? { opacity: 1, x: 0 } : { opacity: 0, x: 0}}
-                                exit={{ opacity: 0, x: direction === 'next' ? '-100vw' : '100vw' }}
-                                transition={{ duration: 1 }}
+                                variants={slideIn3(`${index>currentImage?'right':'left'}`, 'tween', 0, 1.0)}
+                                initial="hidden"
+                                animate={index === currentImage ? 'show' : 'hidden'}
+                                
                                 src={image}
                                 alt={`background-${index}`}
-                                className={`w-[60vw] h-[70vh] rounded-3xl shadow-lg shadow-black bg-contain ${index === currentImage ? '' : 'hidden'}`}
+                                className={`z-[50]  w-[60vw] h-[70vh] max-xl:w-[75vw]  max-xl:h-[30vh]  max-lg:w-[60vw]  max-lg:h-[17vh] rounded-3xl shadow-2xl shadow-black bg-contain ${index === currentImage ? 'visible' : 'hidden'}`}
                             />
                         ))}
+
+                        
+
                     </div>
-                    <div className='absolute bottom-[-50px] left-1/2 transform -translate-x-1/2 flex gap-2'>
+                    <div className='absolute bottom-[-6vh] left-1/2 transform -translate-x-1/2 flex gap-2'>
                         {images.map((_, index) => (
                             <span
                                 key={index}
-                                className={`w-3 h-3 rounded-full bg-white  cursor-pointer duration-500 ${index === currentImage ? 'opacity-80 bg_main' : 'opacity-20'}`}
+                                className={`w-3 h-3 max-md:w-2 max-md:h-2 rounded-full bg-white  cursor-pointer duration-500 ${index === currentImage ? 'opacity-80 bg_main' : 'opacity-20'}`}
                                 onClick={() => setCurrentImage(index)}
                             />
                         ))}

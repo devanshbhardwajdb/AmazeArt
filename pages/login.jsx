@@ -99,9 +99,9 @@ const Login = () => {
             <form
                 onSubmit={(e) => { handleSubmit(e) }}
                 method='POST'
-                className="flex flex-col gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-belleza bg-black/0 border border-gray-300  ">
+                className="flex flex-col gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-belleza bg-white/5 backdrop-blur-md border border-gray-300 glassmorphism  ">
                 <h3 className="text-white text-2xl font-bold mb-1">Login to your account</h3>
-                <h3 className="text-white text-lg font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/signup'}><p className='text-[#9F07F5]  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95'>Signup</p></Link></h3>
+                <h3 className="text-white text-lg font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/signup'}><p className='text_main  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95 '>Signup</p></Link></h3>
                 <div className="flex mt-6 gap-8  flex-col w-full ">
                     <input
                         value={email}
@@ -148,7 +148,7 @@ const Login = () => {
             <label htmlFor="remember" className='text-sm pl-1'>Remember me</label>
           </div> */}
 
-                    <p className='text-[#9F07F5] cursor-pointer hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95'><Link href={'/forgot'}>Forgot Password?</Link></p>
+                    <p className='text_main cursor-pointer hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95'><Link href={'/forgot'}>Forgot Password?</Link></p>
                 </div>
                 <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
                     {

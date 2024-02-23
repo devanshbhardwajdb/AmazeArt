@@ -29,6 +29,7 @@ html {
 .bg_main1 {
     /* background: ; */
     background-image: linear-gradient(to bottom left, #E72B2B, #FF5BB3, #E443C6, #9F07F5, #FF804A);
+    backface-visibility: 50%;
 }
 
 
@@ -51,8 +52,13 @@ html {
 
 
 .bg_border {
-    border-image: radial-gradient(to left, #E72B2B, #FF5BB3, #9B03F8, #FF804A);
+    border-image: linear-gradient(to left, #E72B2B, #FF5BB3, #9B03F8, #FF804A);
 }
+.bg7-image {
+    background-image: url('/bg7.jpg');
+     /* Adjust size as needed */
+}
+
 
 body::-webkit-scrollbar {
     display: block;
@@ -70,3 +76,36 @@ body::-webkit-scrollbar-thumb {
     color: #9B03F8;
     
   } */
+
+
+  .cursor {
+    height: 20px;
+    width: 20px;
+    background-image: linear-gradient(to bottom, #FF5BB3, #9B03F8);
+    border-radius: 50%;
+    filter: blur(2px);
+    position: fixed;
+    z-index: 100;
+    transition: all ease 0.1s;
+  
+  
+  }
+  
+  .cursor-b {
+    height: 400px;
+    width: 400px;
+    background-image: linear-gradient(to bottom, #FF5BB3, #9B03F8);
+    border-radius: 50%;
+    position: fixed;
+    opacity: 40%;
+    filter: blur(40px);
+    z-index: -2;
+    transition: all linear 0.4s;
+  }
+
+
+
+
+  .glassmorphism {
+    @apply rounded-xl border border-gray-200 bg-transparent shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur p-5;
+  }

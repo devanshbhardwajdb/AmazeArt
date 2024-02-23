@@ -23,7 +23,7 @@ export const navVariants = {
   export const slideIn = (direction, type, delay, duration) => ({
     hidden: {
       x: direction === 'left' ? '-70%' : direction === 'right' ? '70%' : 0,
-      y: direction === 'up' ? '70%' : direction === 'down' ? '70%' : 0,
+      y: direction === 'up' ? '70%' : direction === 'down' ? '-70%' : 0,
       opacity:0,
     },
     show: {
@@ -36,6 +36,26 @@ export const navVariants = {
         duration,
         ease: 'easeOut',
       },
+    
+    },
+  });
+  export const slideIn3 = (direction, type, delay, duration) => ({
+    hidden: {
+      x: direction === 'left' ? '-30%' : direction === 'right' ? '30%' : 0,
+      y: direction === 'up' ? '30%' : direction === 'down' ? '-30%' : 0,
+      opacity:0,
+    },
+    show: {
+      x: 0,
+      y: 0,
+      opacity:1,
+      transition: {
+        type,
+        delay,
+        duration,
+        ease: 'easeOut',
+      },
+    
     },
   });
   export const slideIn2 = (direction, type, delay, duration) => ({
