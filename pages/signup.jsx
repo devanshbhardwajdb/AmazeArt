@@ -84,7 +84,7 @@ const Signup = () => {
 
     // }
     return (
-        <div className='min-h-[100vh]  flex justify-center items-center font-belleza  max-md:px-6 pt-36 max-md:pt-64 pb-20'>
+        <div className='min-h-[91vh] px-[10vw]  flex  justify-center items-center font-livvic  max-md:px-6 max-md:pt-28 '>
             <Head><title>Signup to Amazeart</title></Head>
             <ToastContainer
                 position="top-right"
@@ -100,10 +100,18 @@ const Signup = () => {
             />
             {/* Same as */}
             <ToastContainer />
+            <div className='flex flex-col max-lg:hidden items-center justify-center w-1/2  border-r mr-20 h-[50vh]'>
+                <div className="flex ">
+                    <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-lg:text-[10vh] max-md:text-[10vh] text_main pl-5 backdrop' >Amaze</h1>
+                    <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-md:text-[10vh] max-lg:text-[10vh] text-white px-5'>Art</h1>
+                </div>
+                <h2 className='font-swash text-white text-[3vh] max-xl:text-[4vh] max-lg:text-[3vh] max-md:text-[2.54vh]'>Signup to join the creative amazeart community !</h2>
+            </div>
+            
             <form
                 onSubmit={(e) => { handleSubmit(e) }}
                 method='POST'
-                className="flex flex-col gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-belleza bg-white/5 backdrop-blur-md glassmorphism ">
+                className="flex flex-col  gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism">
                 <h3 className="text-white text-2xl font-bold mb-1">Signup to Tech Wear</h3>
                 <h3 className="text-white text-base font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/login'}><p className='text_main text  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95'>Login</p></Link></h3>
                 <div className="flex mt-6 gap-8  flex-col w-full ">

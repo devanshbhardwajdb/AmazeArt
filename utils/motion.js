@@ -15,7 +15,7 @@ export const navVariants = {
       transition: {
         type: 'slideIn',
         stiffness: 80,
-        delay: 1,
+        delay: 0.4,
       },
     },
   };
@@ -41,8 +41,8 @@ export const navVariants = {
   });
   export const slideIn3 = (direction, type, delay, duration) => ({
     hidden: {
-      x: direction === 'left' ? '-30%' : direction === 'right' ? '30%' : 0,
-      y: direction === 'up' ? '30%' : direction === 'down' ? '-30%' : 0,
+      x: direction === 'left' ? '-10%' : direction === 'right' ? '10%' : 0,
+      y: direction === 'up' ? '10%' : direction === 'down' ? '-10%' : 0,
       opacity:0,
     },
     show: {

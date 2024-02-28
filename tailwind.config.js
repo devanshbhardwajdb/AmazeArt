@@ -8,9 +8,10 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        belleza :  ['Belleza'],
+        livvic :  ['livvic'],
         metal: ["Metal Mania"],
         swash: ["Berkshire Swash"], 
+        livvic: ["Livvic"], 
       },
     },
   },
