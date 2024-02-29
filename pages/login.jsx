@@ -18,6 +18,17 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const [isHidden, setIsHidden] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [showImage, setShowImage] = useState(true); // State to control the visibility of the image
+
+    useEffect(() => {
+      // Hide the image after 3 seconds (3000 milliseconds)
+      const timeout = setTimeout(() => {
+        setShowImage(false);
+      }, 2000); // Adjust timing as needed
+  
+      // Clear timeout when component unmounts or showImage changes
+      return () => clearTimeout(timeout);
+    }, []); // Run only once on component mount
 
 
 
@@ -95,80 +106,96 @@ const Login = () => {
             />
             {/* Same as */}
             <ToastContainer />
-            <div className='flex flex-col max-lg:hidden items-center justify-center w-1/2  border-r mr-20 h-[50vh]'>
-                <div className="flex ">
-                    <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-lg:text-[10vh] max-md:text-[10vh] text_main pl-5 backdrop' >Amaze</h1>
-                    <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-md:text-[10vh] max-lg:text-[10vh] text-white px-5'>Art</h1>
-                </div>
-                <h2 className='font-swash text-white text-[3vh] max-xl:text-[4vh] max-lg:text-[3vh] max-md:text-[2.54vh]'>Login to share and sell your creation !</h2>
-            </div>
-
-
-
-            <form
-                onSubmit={(e) => { handleSubmit(e) }}
-                method='POST'
-                className="flex flex-col  gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism  ">
-                <h3 className="text-white text-2xl font-bold mb-1">Login to your account</h3>
-                <h3 className="text-white text-lg font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/signup'}><p className='text_main  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95 '>Signup</p></Link></h3>
-                <div className="flex mt-6 gap-8  flex-col w-full ">
-                    <input
-                        value={email}
-                        onChange={(e) => { setEmail(e.target.value) }}
-                        type="email"
-                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200'
-                        placeholder='Email address'
-                        name='email'
-                        required
+            {showImage ? (
+                <div className='flex items-center justify-center h-[100vh] w-full'>
+                    <img
+                        src="/logo.png"
+                        alt="AmazeArt"
+                        className="w-80 h-80 opacity-100 animate-pulse duration-300"
+                    // Set showImage to false when the image is loaded
                     />
-
-                    <div className=' relative  rounded-lg   flex w-full  items-center justify-between'>
-
-
-                        <input
-                            value={password}
-                            onChange={(e) => { setPassword(e.target.value) }}
-                            type={`${isHidden ? "password" : "visible"}`}
-                            className='bg-white/15 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200'
-
-                            placeholder='Password'
-                            name='password'
-                            required
-                        />
-                        {isHidden ?
-
-                            (<AiFillEyeInvisible
-                                onClick={() => { setIsHidden(false) }}
-                                className='cursor-pointer w-7 h-7 text-gray-200 absolute right-3  '
-                            />)
-                            :
-                            (<AiFillEye
-                                onClick={() => { setIsHidden(true) }}
-                                className='cursor-pointer w-7 h-7 text-[#9F07F5] absolute right-3 '
-                            />)
-
-
-                        }
-                    </div>
                 </div>
-                <div className="flex justify-end w-full items-center mt-5">
-                    {/* <div>
+            ) : (
+
+
+
+                <>
+
+                    <div className='flex flex-col max-lg:hidden items-center justify-center w-1/2  border-r mr-20 h-[50vh]'>
+                        <div className="flex ">
+                            <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-lg:text-[10vh] max-md:text-[10vh] text_main pl-5 backdrop' >Amaze</h1>
+                            <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-md:text-[10vh] max-lg:text-[10vh] text-white px-5'>Art</h1>
+                        </div>
+                        <h2 className='font-swash text-white text-[3vh] max-xl:text-[4vh] max-lg:text-[3vh] max-md:text-[2.54vh]'>Login to share and sell your creation !</h2>
+                    </div>
+
+
+
+                    <form
+                        onSubmit={(e) => { handleSubmit(e) }}
+                        method='POST'
+                        className="flex flex-col  gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism  ">
+                        <h3 className="text-white text-2xl font-bold mb-1">Login to your account</h3>
+                        <h3 className="text-white text-lg font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/signup'}><p className='text_main  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95 '>Signup</p></Link></h3>
+                        <div className="flex mt-6 gap-8  flex-col w-full ">
+                            <input
+                                value={email}
+                                onChange={(e) => { setEmail(e.target.value) }}
+                                type="email"
+                                className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200'
+                                placeholder='Email address'
+                                name='email'
+                                required
+                            />
+
+                            <div className=' relative  rounded-lg   flex w-full  items-center justify-between'>
+
+
+                                <input
+                                    value={password}
+                                    onChange={(e) => { setPassword(e.target.value) }}
+                                    type={`${isHidden ? "password" : "visible"}`}
+                                    className='bg-white/15 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200'
+
+                                    placeholder='Password'
+                                    name='password'
+                                    required
+                                />
+                                {isHidden ?
+
+                                    (<AiFillEyeInvisible
+                                        onClick={() => { setIsHidden(false) }}
+                                        className='cursor-pointer w-7 h-7 text-gray-200 absolute right-3  '
+                                    />)
+                                    :
+                                    (<AiFillEye
+                                        onClick={() => { setIsHidden(true) }}
+                                        className='cursor-pointer w-7 h-7 text-[#9F07F5] absolute right-3 '
+                                    />)
+
+
+                                }
+                            </div>
+                        </div>
+                        <div className="flex justify-end w-full items-center mt-5">
+                            {/* <div>
             <input type="checkbox" name='remember' className=' w-[15px] h-[15px] rounded cursor-pointer bg-[#d1fffe] border-[#9F07F5] text-[#9F07F5] focus:ring-0 focus:outline-none ' />
             <label htmlFor="remember" className='text-sm pl-1'>Remember me</label>
           </div> */}
 
-                    <p className='text_main cursor-pointer hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95'><Link href={'/forgot'}>Forgot Password?</Link></p>
-                </div>
-                <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
-                    {
-                        loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
+                            <p className='text_main cursor-pointer hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95'><Link href={'/forgot'}>Forgot Password?</Link></p>
+                        </div>
+                        <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
+                            {
+                                loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
 
-                            <p>Login</p>
+                                    <p>Login</p>
 
-                    }
+                            }
 
-                </button>
-            </form>
+                        </button>
+                    </form>
+                </>)}
 
         </div>
     )

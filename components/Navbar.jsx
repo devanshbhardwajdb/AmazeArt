@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { slideIn, textVariant2,navVariants } from "@/utils/motion";
+import { slideIn, textVariant2, navVariants } from "@/utils/motion";
 import { useRouter } from 'next/router';
 import { AiFillHome } from "react-icons/ai";
 import { FaBagShopping } from "react-icons/fa6";
@@ -104,10 +104,10 @@ const Navbar = () => {
 
     // THIS IS THE MAIN NAVABR DIV
     <motion.div
-    variants={navVariants}
-    initial="hidden"
-    whileInView="show"
-    className={`flex   h-[8vh]  gap-2  w-full fixed justify-center max-xl:gap-12 xl:justify-between bg-black/60  md:px-[10vw] px-[2vw] items-center   z-50 duration-700 backdrop-blur-md text-white  `}
+      variants={navVariants}
+      initial="hidden"
+      whileInView="show"
+      className={`flex   h-[8vh]  gap-2  w-full fixed justify-center max-xl:gap-12 xl:justify-between bg-black/60  md:px-[10vw] px-[2vw] items-center   z-50 duration-700 backdrop-blur-md text-white  `}
     >
 
       {/* THIS IS THE LOGO */}
@@ -126,13 +126,16 @@ const Navbar = () => {
         </Link>
         <Link href={'/products'} className={`hover:text-3xl duration-300 ${page === 'products' ? 'text-3xl border-b-2 text-[#9B03F8]' : ''}    md:px-10 px-4  h-full flex items-center  `}><FaBagShopping />
         </Link>
-        <Link href={'/#about'} className={`hover:text-3xl duration-300 ${page === 'about' ? 'text-3xl border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center  `}><FaReadme />
+        <Link href={'/#about'} className={`hover:text-3xl duration-300 bg_border1 ${page === 'about' ? 'text-3xl  border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center  `}><FaReadme />
         </Link>
       </div>
 
 
       <div className=' flex items-center h-full justify-end gap-12 w-3/4    '>
-        <Link href={'/login'}><button className='bg-transparent rounded-xl  font-livvic w-20  border-2 border-white hover:scale-110 duration-300 hover:bg-[#fff] hover:text-[#000]'>Login</button></Link>
+        <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
+
+Login
+        </button></Link>
         {/* <Link href={'/signup'}><button className='bg-transparent rounded-xl  font-livvic w-20   hover:scale-110 duration-300 hover:bg-[#F6E8B1] border-2 border-white hover:text-[#461313]'>Signup</button></Link> */}
       </div>
 
