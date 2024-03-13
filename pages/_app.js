@@ -5,16 +5,19 @@ import Footer from '@/components/Footer'
 import Cursor from '@/components/Cursor'
 import LoadingBar from 'react-top-loading-bar'
 import { useRouter } from 'next/router'
+var jwt = require('jsonwebtoken');
 
 export default function App({ Component, pageProps }) {
 
   const [progress, setProgress] = useState(0)
   const router = useRouter();
   const [key, setKey] = useState()
+  const [user, setUser] = useState({ value: null });
+  const decoded = jwt.decode(user.value);
+  const userData = decoded;
 
 
 
-  console.log(router.query)
   useEffect(() => {
 
     router.events.on('routeChangeStart', () => {
@@ -23,11 +26,17 @@ export default function App({ Component, pageProps }) {
     router.events.on('routeChangeComplete', () => {
       setProgress(100);
     })
+    const token = localStorage.getItem('token');
 
-
+    if (token) {
+      setUser({ value: token })
+    }
+  
     setKey(Math.random())
 
   }, [router.query])
+
+  
 
   const [showImage, setShowImage] = useState(true); // State to control the visibility of the image
 
@@ -40,6 +49,14 @@ export default function App({ Component, pageProps }) {
     // Clear timeout when component unmounts or showImage changes
     return () => clearTimeout(timeout);
   }, []); // Run only once on component mount
+
+  const logout = () => {
+    localStorage.removeItem('token');
+    // clearCart();
+    setUser({ value: null })
+    setKey(Math.random());
+    router.push('/')
+  }
 
   return (
 
@@ -69,8 +86,8 @@ export default function App({ Component, pageProps }) {
           </div>
         ) :
           <>
-            <Navbar />
-            <Component {...pageProps} />
+            <Navbar userData={userData} user={user} logout={logout}/>
+            <Component {...pageProps} userData={userData} user={user} />
             <div className='bg-black/40'>
 
               <Footer />

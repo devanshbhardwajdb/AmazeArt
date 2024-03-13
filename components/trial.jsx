@@ -53,7 +53,7 @@
 
 
      {/* THIS IS MOBILE SUPPORTED LINKS */}
-     <div ref={ref} className={`flex fixed max-sm:w-[50vw] top-[12vh] max-md:top-[9vh] w-[40vw] p-5  right-0 flex-col    items-start gap-6 font-light   nav-right  duration-500 translate-x-full transform transition-transform  lg:hidden shadow-md shadow-black  ${navbarBackground === 'transparent' ? 'bg-transparent' : 'bg-black/70 '}  `}>
+     <div ref={ref} className={`flex fixed max-sm:w-[50vw] top-[12vh] max-md:top-[9vh] w-[40vw] p-5  right-0 flex-col    items-start gap-6 font-dark   nav-right  duration-500 translate-x-full transform transition-transform  lg:hidden shadow-md shadow-black  ${navbarBackground === 'transparent' ? 'bg-transparent' : 'bg-black/70 '}  `}>
      <Link href={'/'} className=' hover:text-3xl duration-300 '><h1>Home</h1></Link>
      <Link href={'/feed'} className=' hover:text-3xl duration-300 py-2'><h1>Feed</h1></Link>
      <Link href={'/products'} className=' hover:text-3xl duration-300 '><h1>Products</h1></Link>
@@ -77,3 +77,5 @@
      </div>
 
    </div>
+
+

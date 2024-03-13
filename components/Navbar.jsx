@@ -14,7 +14,7 @@ import { FaReadme } from "react-icons/fa";
 
 
 
-const Navbar = () => {
+const Navbar = ({ user, userData,logout }) => {
   const ref = useRef();
   const ref2 = useRef();
   const ref3 = useRef();
@@ -25,6 +25,9 @@ const Navbar = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const [navbarBackground, setNavbarBackground] = useState('transparent');
   const [page, setPage] = useState("");
+  const [dropdown, setDropdown] = useState(false);
+
+  
 
 
 
@@ -55,6 +58,7 @@ const Navbar = () => {
       setPage("home")
     }
     if (router.pathname === "/feed") {
+      
       setPage("feed")
     }
     if (router.pathname === "/products") {
@@ -121,21 +125,53 @@ const Navbar = () => {
 
       <div className='flex items-center text-2xl max-lg:text-lg font-normal font-livvic h-full  w-1/2'>
 
-        <Link href={'/'} className={`hover:text-3xl duration-300 ${page === 'home' ? 'text-3xl border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center `}><AiFillHome /></Link>
-        <Link href={'/feed'} className={`hover:text-3xl duration-300 ${page === 'feed' ? 'text-3xl border-b-2 text-[#9B03F8]' : ''}    md:px-10 px-4  h-full flex items-center  `}><BsFilePostFill />
+        <Link href={'/'} className={`hover:text-3xl duration-300 ${page === 'home' ? 'text-3xl border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center `} title='Home'><AiFillHome /></Link>
+        <Link href={'/feed'} className={`hover:text-3xl duration-300 ${page === 'feed' ? 'text-3xl border-b-2 text-[#9B03F8]' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Feed'><BsFilePostFill />
         </Link>
-        <Link href={'/products'} className={`hover:text-3xl duration-300 ${page === 'products' ? 'text-3xl border-b-2 text-[#9B03F8]' : ''}    md:px-10 px-4  h-full flex items-center  `}><FaBagShopping />
+        <Link href={'/products'} className={`hover:text-3xl duration-300 ${page === 'products' ? 'text-3xl border-b-2 text-[#9B03F8]' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Shop'><FaBagShopping />
         </Link>
-        <Link href={'/#about'} className={`hover:text-3xl duration-300 bg_border1 ${page === 'about' ? 'text-3xl  border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center  `}><FaReadme />
+        <Link href={'/#about'} className={`hover:text-3xl duration-300 bg_border1 ${page === 'about' ? 'text-3xl  border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center  `} title='About'><FaReadme />
         </Link>
       </div>
 
 
       <div className=' flex items-center h-full justify-end gap-12 w-3/4    '>
-        <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
+        {!user.value ?
 
-Login
-        </button></Link>
+          <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
+
+            Login
+          </button></Link>
+          : (
+           
+            <div className='lg:relative '>
+
+            <div onClick={() => { setDropdown(prevState => !prevState); }} className=' cursor-pointer   p-3 flex items-center justify-center'>
+            <img alt={`${userData.username}'s profilepic`} className="rounded-full w-10 h-10" src={userData.profilepic} ></img>
+            </div>
+
+            {dropdown &&
+
+              <div
+
+                className="dropdown bg-black/70 absolute right-0 max-lg:left-0  px-10  pt-6 pb-4 rounded-lg lg:rounded-tr-none gap-5 flex flex-col shadow-lg shadow-black   "
+              >
+                 
+                <Link href={`/Profile/${userData.username}`} className='hover:text-[#9B03F8] hover:underline-offset-4  hover:underline transition-all duration-300 hover:scale-95'><h4>My Profile</h4></Link>
+                
+                <button onClick={logout} className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 ' >Logout</button>
+
+              </div>
+
+            }
+
+          </div>
+          )
+
+
+
+
+        }
         {/* <Link href={'/signup'}><button className='bg-transparent rounded-xl  font-livvic w-20   hover:scale-110 duration-300 hover:bg-[#F6E8B1] border-2 border-white hover:text-[#461313]'>Signup</button></Link> */}
       </div>
 
