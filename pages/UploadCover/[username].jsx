@@ -16,8 +16,8 @@ const Complete = ({ tokenUserData }) => {
     const [imagePreview, setImagePreview] = useState(null); // State to store image preview URL
     const router = useRouter();
     const { username } = router.query;
-    const [tokenUserData1, settokenUserData1] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [userData1, setUserData1] = useState(null);
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -26,8 +26,9 @@ const Complete = ({ tokenUserData }) => {
         const previewURL = URL.createObjectURL(file);
         setImagePreview(previewURL);
     };
+
     useEffect(() => {
-        const fetchtokenUserData = async () => {
+        const fetchUserData = async () => {
             try {
                 if (username) {
                     // Fetch user data based on the username
@@ -37,25 +38,26 @@ const Complete = ({ tokenUserData }) => {
                     if (response.success) {
                         const { user } = response;
                         // Check if address and other required fields are already filled
-                        if (user.profilepic) {
+                        if (user.coverpic) {
+                            console.log("hi bro")
                             // Redirect to another page if all required fields are filled
-                            router.push(`/UploadCover/${username}`);
+                            router.push(`/Profile/${username}`);
                         } else {
                             // Set user data if some fields are missing
-                            settokenUserData1(user);
+                            setUserData1(user);
                             setLoading(false);
                         }
                     }
                 } else {
                     // Username is not available
-                    settokenUserData1(null);
+                    setUserData1(null);
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
             }
         };
 
-        fetchtokenUserData();
+        fetchUserData();
     }, [username, router]);
 
     const handleSubmit = async (e) => {
@@ -74,14 +76,14 @@ const Complete = ({ tokenUserData }) => {
             const { imageUrl } = data;
 
             if (imageUrl) {
-                const updatedtokenUserData = { username, imageUrl };
+                const updatedUserData = { username, imageUrl };
 
-                const res = await fetch('/api/updateprofileimage', {
+                const res = await fetch('/api/updatecoverimage', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(updatedtokenUserData),
+                    body: JSON.stringify(updatedUserData),
                 });
 
                 const response = await res.json();
@@ -100,7 +102,7 @@ const Complete = ({ tokenUserData }) => {
                     });
 
                     // Redirect to another page
-                    router.push(`/UploadCover/${username}`);
+                    router.push(`/Profile/${username}`);
                 } else {
                     toast.error(response.error || 'Failed to update token', {
                         position: 'top-center',
@@ -154,20 +156,17 @@ const Complete = ({ tokenUserData }) => {
             />
 
             <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism '>
-                <h3 className="text-white text-2xl font-bold mb-1 text-center">Upload your Profile Picture <span className='text_main'>{tokenUserData.name}</span></h3>
-                <form onSubmit={handleSubmit} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 w-1/2' >
+                <h3 className="text-white text-2xl font-bold mb-1 text-center">Upload your Cover Picture <span className='text_main'>{tokenUserData.name}</span></h3>
+                <form onSubmit={handleSubmit} className='bg-black/40 p-10 rounded-lg'>
                     {/* Style the input field */}
-                    <div className='flex items-center justify-center '>
-                        <input type="file" accept="image/*" onChange={handleImageChange} className='hidden' id="fileInput" required />
-                        {/* Style the label to resemble a button */}
-                        <label htmlFor="fileInput" className="cursor-pointer bg_button1 hover:bg-blue-700 text-white  py-2 px-4 rounded">
-                            Choose File
-                        </label>
-
-                        {/* Display the selected file name (optional) */}
-                        <span className='px-2'>{selectedImage ? selectedImage.name : "No file chosen"}</span>
-                        {/* Display the image preview */}
-                    </div>
+                    <input type="file" accept="image/*" onChange={handleImageChange} className='hidden' id="fileInput" required />
+                    {/* Style the label to resemble a button */}
+                    <label htmlFor="fileInput" className="cursor-pointer bg_button1 hover:bg-blue-700 text-white  py-2 px-4 rounded">
+                        Choose File
+                    </label>
+                    {/* Display the selected file name (optional) */}
+                    <span className='px-2'>{selectedImage ? selectedImage.name : "No file chosen"}</span>
+                    {/* Display the image preview */}
                     {imagePreview && <img src={imagePreview} alt="Preview" className=" w-36 h-auto mx-auto mb-4" />}
                     <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  w-full flex  justify-center items-center mt-5' type='submit' >
                         {

@@ -14,7 +14,7 @@ import { FaReadme } from "react-icons/fa";
 
 
 
-const Navbar = ({ user, userData,logout }) => {
+const Navbar = ({ user, tokenUserData,logout }) => {
   const ref = useRef();
   const ref2 = useRef();
   const ref3 = useRef();
@@ -147,7 +147,7 @@ const Navbar = ({ user, userData,logout }) => {
             <div className='lg:relative '>
 
             <div onClick={() => { setDropdown(prevState => !prevState); }} className=' cursor-pointer   p-3 flex items-center justify-center'>
-            <img alt={`${userData.username}'s profilepic`} className="rounded-full w-10 h-10" src={userData.profilepic} ></img>
+            <img alt={`${tokenUserData.username}'s profilepic`} className="rounded-full w-10 h-10" src={tokenUserData.profilepic} ></img>
             </div>
 
             {dropdown &&
@@ -157,7 +157,7 @@ const Navbar = ({ user, userData,logout }) => {
                 className="dropdown bg-black/70 absolute right-0 max-lg:left-0  px-10  pt-6 pb-4 rounded-lg lg:rounded-tr-none gap-5 flex flex-col shadow-lg shadow-black   "
               >
                  
-                <Link href={`/Profile/${userData.username}`} className='hover:text-[#9B03F8] hover:underline-offset-4  hover:underline transition-all duration-300 hover:scale-95'><h4>My Profile</h4></Link>
+                <Link href={`/Profile/${tokenUserData.username}`} className='hover:text-[#9B03F8] hover:underline-offset-4  hover:underline transition-all duration-300 hover:scale-95'><h4>My Profile</h4></Link>
                 
                 <button onClick={logout} className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 ' >Logout</button>
 

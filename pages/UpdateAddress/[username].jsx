@@ -15,7 +15,7 @@ const Complete = () => {
     const router = useRouter();
 
     const { username } = router.query;
-    console.log(username)
+    // console.log(username)
 
     const [userData, setUserData] = useState(null);
     const [address, setAddress] = useState("")
@@ -41,13 +41,13 @@ const Complete = () => {
                     // Fetch user data based on the username
                     const res = await fetch(`/api/user/${username}`);
                     const response = await res.json();
-    
+
                     if (response.success) {
                         const { user } = response;
                         // Check if address and other required fields are already filled
                         if (user.address && user.city && user.state && user.pincode) {
                             // Redirect to another page if all required fields are filled
-                            router.push(`/Profile/${username}`);
+                            router.push(`/UploadProfile/${username}`);
                         } else {
                             // Set user data if some fields are missing
                             setUserData(user);
@@ -62,17 +62,15 @@ const Complete = () => {
                 console.error('Error fetching user data:', error);
             }
         };
-    
+
         fetchUserData();
     }, [username, router]);
 
-    const handleSubmit = async (e) => {
-        
-        e.preventDefault();
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
         setLoading(true);
 
-        // Prepare the form data
         const formData = {
             username,
             address,
@@ -80,10 +78,8 @@ const Complete = () => {
             state,
             pincode,
         };
-        console.log(formData)
 
         try {
-            // Send a POST request to the API endpoint to update user address
             const res = await fetch('/api/updateaddress', {
                 method: 'POST',
                 headers: {
@@ -95,7 +91,7 @@ const Complete = () => {
             const data = await res.json();
 
             if (data.success) {
-                // Show success message
+                localStorage.setItem('token', data.token);
                 toast.success('User address updated successfully', {
                     position: 'top-center',
                     autoClose: 3000,
@@ -105,11 +101,8 @@ const Complete = () => {
                     draggable: true,
                     progress: undefined,
                 });
-
-                // Redirect to another page
-                router.push(`/Profile/${username}`);
+                router.push(`/UploadProfile/${username}`);
             } else {
-                // Show error message
                 toast.error(data.error, {
                     position: 'top-center',
                     autoClose: 3000,
@@ -122,8 +115,6 @@ const Complete = () => {
             }
         } catch (error) {
             console.error('Error updating user address:', error);
-
-            // Show error message
             toast.error('An error occurred while updating user address', {
                 position: 'top-center',
                 autoClose: 3000,
@@ -221,7 +212,7 @@ const Complete = () => {
                                         name='email'
                                         required
                                     />
-                                </div> 
+                                </div>
                                 <div className='text-white w-full'>
                                     <h3>Phone</h3>
                                     <input
@@ -237,72 +228,72 @@ const Complete = () => {
                             </div>
                             <div className='flex gap-8'>
 
-                            <div className='text-white w-full'>
-                                <h3>Address</h3>
-                                <textarea
-                                    value={address}
-                                    onChange={(e) => {
+                                <div className='text-white w-full'>
+                                    <h3>Address</h3>
+                                    <textarea
+                                        value={address}
+                                        onChange={(e) => {
 
-                                        setAddress(e.target.value);
+                                            setAddress(e.target.value);
 
-                                    }}
-                                    type="text"
-                                    className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
-                                    placeholder='Enter your address'
-                                    name='address'
-                                    required
-                                />
-                            </div>
-                            <div className='text-white w-full'>
-                                <h3>City</h3>
-                                <input
-                                    value={city}
-                                    onChange={(e) => {
+                                        }}
+                                        type="text"
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
+                                        placeholder='Enter your address'
+                                        name='address'
+                                        required
+                                    />
+                                </div>
+                                <div className='text-white w-full'>
+                                    <h3>City</h3>
+                                    <input
+                                        value={city}
+                                        onChange={(e) => {
 
-                                        setCity(e.target.value);
+                                            setCity(e.target.value);
 
-                                    }}
-                                    type="text"
-                                    className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none '
-                                    placeholder='Enter you City'
-                                    name='city'
-                                    required
-                                />
-                            </div>
+                                        }}
+                                        type="text"
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none '
+                                        placeholder='Enter you City'
+                                        name='city'
+                                        required
+                                    />
+                                </div>
                             </div>
                             <div className='flex gap-8'>
-                            <div className='text-white w-full'>
-                                <h3>State</h3>
-                                <input
-                                    value={state}
-                                    onChange={(e) => {
+                                <div className='text-white w-full'>
+                                    <h3>State</h3>
+                                    <input
+                                        value={state}
+                                        onChange={(e) => {
 
-                                        setState(e.target.value);
+                                            setState(e.target.value);
 
-                                    }}
-                                    type="text"
-                                    className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
-                                    placeholder='Enter you State'
-                                    name='state'
-                                    required
-                                />
-                            </div>
-                            <div className='text-white w-full'>
-                                <h3>Pincode</h3>
-                                <input
-                                    value={pincode}
-                                    onChange={(e) => {
-                                        if (e.target.value.length <= 6) {
-                                            setPincode(e.target.value);
-                                        }
-                                    }}
-                                    type="number"
-                                    className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
-                                    placeholder='Enter your Pincode'
-                                    name='pincode'
-                                    required
-                                />
-                            </div>
+                                        }}
+                                        type="text"
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
+                                        placeholder='Enter you State'
+                                        name='state'
+                                        required
+                                    />
+                                </div>
+                                <div className='text-white w-full'>
+                                    <h3>Pincode</h3>
+                                    <input
+                                        value={pincode}
+                                        onChange={(e) => {
+                                            if (e.target.value.length <= 6) {
+                                                setPincode(e.target.value);
+                                            }
+                                        }}
+                                        type="number"
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
+                                        placeholder='Enter your Pincode'
+                                        name='pincode'
+                                        required
+                                    />
+                                </div>
                             </div>
 
 
@@ -321,7 +312,7 @@ const Complete = () => {
 
                         </button>
 
-                     
+
                     </form>)}
 
         </div>

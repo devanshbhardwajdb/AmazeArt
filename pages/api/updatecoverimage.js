@@ -1,3 +1,4 @@
+// Backend API (/pages/api/updatetoken.js)
 import jwt from 'jsonwebtoken';
 import connectDB from '@middleware/database';
 import User from '@models/User';
@@ -5,16 +6,13 @@ import User from '@models/User';
 const handler = async (req, res) => {
     try {
         if (req.method === 'POST') {
-            const { username, address, city, state, pincode } = req.body;
+            const { username, imageUrl } = req.body;
 
             // Retrieve user data from the database
             const userData = await User.findOne({ username });
 
-            // Update user data with the new address
-            userData.address = address;
-            userData.city = city;
-            userData.state = state;
-            userData.pincode = pincode;
+            // Update user data with the new image URL
+            userData.coverpic = imageUrl;
             await userData.save();
 
             // Generate a new JWT token with updated user data

@@ -11,10 +11,8 @@ export default function App({ Component, pageProps }) {
 
   const [progress, setProgress] = useState(0)
   const router = useRouter();
-  const [key, setKey] = useState()
   const [user, setUser] = useState({ value: null });
-  const decoded = jwt.decode(user.value);
-  const userData = decoded;
+  
 
 
 
@@ -32,12 +30,10 @@ export default function App({ Component, pageProps }) {
       setUser({ value: token })
     }
   
-    setKey(Math.random())
-
   }, [router.query])
 
-  
-
+  const decoded = jwt.decode(user.value);
+  const tokenUserData = decoded;
   const [showImage, setShowImage] = useState(true); // State to control the visibility of the image
 
   useEffect(() => {
@@ -54,7 +50,7 @@ export default function App({ Component, pageProps }) {
     localStorage.removeItem('token');
     // clearCart();
     setUser({ value: null })
-    setKey(Math.random());
+    
     router.push('/')
   }
 
@@ -86,8 +82,8 @@ export default function App({ Component, pageProps }) {
           </div>
         ) :
           <>
-            <Navbar userData={userData} user={user} logout={logout}/>
-            <Component {...pageProps} userData={userData} user={user} />
+            <Navbar tokenUserData={tokenUserData} user={user} logout={logout}/>
+            <Component {...pageProps} tokenUserData={tokenUserData} user={user} />
             <div className='bg-black/40'>
 
               <Footer />

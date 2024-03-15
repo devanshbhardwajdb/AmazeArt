@@ -1,4 +1,4 @@
-// pages/api/[username].js
+// pages/api/uploadImage.js
 
 import multer from 'multer';
 import path from 'path';
