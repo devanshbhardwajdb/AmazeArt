@@ -20,16 +20,16 @@ export default function Home() {
 
   return (
     <div className=''>
-      
-        <>
-          <Cursor />
-          <Hero />
-          <div className='bg-black/40 backdrop-blur-sm'>
-            <About />
-            <Explore />
-          </div>
-        </>
-      
+
+      <>
+        {/* <Cursor /> */}
+        <Hero />
+        <div className='bg-black/40 backdrop-blur-sm'>
+          <About />
+          <Explore />
+        </div>
+      </>
+
     </div>
   )
 }

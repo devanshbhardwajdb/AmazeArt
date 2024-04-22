@@ -111,7 +111,7 @@ const Navbar = ({ user, tokenUserData,logout }) => {
       variants={navVariants}
       initial="hidden"
       whileInView="show"
-      className={`flex   h-[8vh]  gap-2  w-full fixed justify-center max-xl:gap-12 xl:justify-between bg-black/60  md:px-[10vw] px-[2vw] items-center   z-50 duration-700 backdrop-blur-md text-white  `}
+      className={`flex   h-[8vh]  gap-2  w-full fixed justify-center max-xl:gap-12 xl:justify-between bg-black/60  md:px-[10vw] px-[2vw] items-center   z-50 duration-700 backdrop-blur-md text-white`}
     >
 
       {/* THIS IS THE LOGO */}
@@ -123,7 +123,7 @@ const Navbar = ({ user, tokenUserData,logout }) => {
       </div>
       {/* THIS IS THE PC LINKS */}
 
-      <div className='flex items-center text-2xl max-lg:text-lg font-normal font-livvic h-full  w-1/2'>
+      <div className='flex items-center text-2xl max-lg:text-lg font-normal font-noto h-full  w-1/2'>
 
         <Link href={'/'} className={`hover:text-3xl duration-300 ${page === 'home' ? 'text-3xl border-b-2  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center `} title='Home'><AiFillHome /></Link>
         <Link href={'/feed'} className={`hover:text-3xl duration-300 ${page === 'feed' ? 'text-3xl border-b-2 text-[#9B03F8]' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Feed'><BsFilePostFill />
@@ -172,7 +172,7 @@ const Navbar = ({ user, tokenUserData,logout }) => {
 
 
         }
-        {/* <Link href={'/signup'}><button className='bg-transparent rounded-xl  font-livvic w-20   hover:scale-110 duration-300 hover:bg-[#F6E8B1] border-2 border-white hover:text-[#461313]'>Signup</button></Link> */}
+        {/* <Link href={'/signup'}><button className='bg-transparent rounded-xl  font-noto w-20   hover:scale-110 duration-300 hover:bg-[#F6E8B1] border-2 border-white hover:text-[#461313]'>Signup</button></Link> */}
       </div>
 
 

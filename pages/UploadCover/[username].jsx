@@ -141,7 +141,7 @@ const Complete = ({ tokenUserData }) => {
     };
 
     return (
-        <div className="min-h-[120vh] px-[10vw] flex justify-center items-center font-livvic max-md:px-6 max-md:pt-28">
+        <div className="min-h-[120vh] px-[10vw] flex justify-center items-center font-noto max-md:px-6 max-md:pt-28">
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -155,7 +155,7 @@ const Complete = ({ tokenUserData }) => {
                 theme="dark"
             />
 
-            <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism '>
+            <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-white/5 backdrop-blur-md   glassmorphism '>
                 <h3 className="text-white text-2xl font-bold mb-1 text-center">Upload your Cover Picture <span className='text_main'>{tokenUserData.name}</span></h3>
                 <form onSubmit={handleSubmit} className='bg-black/40 p-10 rounded-lg'>
                     {/* Style the input field */}

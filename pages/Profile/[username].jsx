@@ -65,7 +65,7 @@ const UserProfile = ({ tokenUserData }) => {
       <Head>
         <title>Profile - {username}</title>
       </Head>
-      <div className='lg:px-[8vw]   flex  items-center justify-center text-white   flex-col gap-0 min-h-[100vh] font-livvic '>
+      <div className='lg:px-[8vw]   flex  items-center justify-center text-white   flex-col gap-0 min-h-[100vh] font-noto '>
         {
           loading ? (
             <div>

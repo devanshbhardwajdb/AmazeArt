@@ -4,6 +4,9 @@ import Head from 'next/head';
 import { motion } from 'framer-motion';
 import { slideIn, textVariant2, navVariants, slideIn2, slideIn3 } from "@/utils/motion";
 import { FaArrowDown } from "react-icons/fa";
+import A1 from "@/robo_anime.json"
+import A2 from "@/art_anime.json"
+import Lottie from "lottie-react";
 
 
 const Hero = () => {
@@ -17,10 +20,14 @@ const Hero = () => {
                 <title>Amazeart</title>
             </Head>
             <motion.div className='  lg:px-[8vw] py-[18vh] flex  items-center   flex-col gap-0'>
-                <div className={`fixed z-[-117] bg7-image w-full h-full top-0 transition-opacity  duration-1000 
+                {/* <div className={`fixed z-[-117] bg7-image w-full h-full top-0 transition-opacity  duration-1000 
                         }`}
-                ></div>
-                <div className='fixed z-[-116] w-full h-full top-0 opacity-15 bg_main'></div>
+                ></div> */}
+
+                <video src='/space2.mp4' className='fixed z-[-117]  opacity-50 top-0 transition-opacity  duration-1000 ' autoPlay={true} loop muted></video>
+                 {/* <Lottie animationData={A1} loop={true} className='w-[30vw] fixed left-50 -z-10 opacity-50 top-50' /> */}
+                 
+                {/* <div className='fixed z-[-116] w-full h-full top-0 opacity-15 bg_main'></div> */}
                
                     <>
 
@@ -53,7 +60,7 @@ const Hero = () => {
                             initial="hidden"
                             whileInView="show"
                             viewport={{ once: false, amount: 0.9 }}
-                            className='bg_button1 px-14 mt-5 py-3 font-livvic text-xl max-md:text-base max-md:px-8 max-md:py-2 rounded-full hover:scale-110 duration-300 button1 hover:shadow-md hover:shadow-black hover:duration-200'>Explore</motion.button></Link>
+                            className='bg_button1 px-14 mt-5 py-3 font-noto text-xl max-md:text-base max-md:px-8 max-md:py-2 rounded-full hover:scale-110 duration-300 button1 hover:shadow-md hover:shadow-black hover:duration-200'>Explore</motion.button></Link>
 
                     </>
 

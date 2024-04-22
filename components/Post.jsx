@@ -21,7 +21,7 @@ const Post = ({ post }) => {
 
     return (
 
-        <div className="feedcontainer w-full bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col gap-6 p-5 font-livvic">
+        <div className="feedcontainer w-full bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col gap-6 p-5 font-noto">
             <div className='flex justify-between items-center w-full'>
                 <div className='flex items-center gap-2 '>
                     <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={post.profilepic} ></img>
@@ -31,7 +31,7 @@ const Post = ({ post }) => {
                         <h5 className='text-gray-300'>@{post.username}</h5>
                     </div>
                 </div>
-                <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-livvic w-30 h-8  border-2 border-white hover:scale-110 duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
+                <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white hover:scale-110 duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
 
             </div>
             <div className="caption text-white"><h4>{post.caption}</h4></div>

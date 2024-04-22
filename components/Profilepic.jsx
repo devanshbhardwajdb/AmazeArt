@@ -109,7 +109,7 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
     };
 
     return (
-        <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-gray-900 h-[70vh]     relative '>
+        <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-gray-900 h-[70vh]     relative '>
             <div className='flex justify-between'>
 
                 <h3 className="text-white text-2xl font-bold mb-1 text-center">Update your Profile Picture <span className='text_main'>{tokenUserData?.name}</span></h3>

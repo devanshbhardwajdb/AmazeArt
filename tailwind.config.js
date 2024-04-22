@@ -12,6 +12,7 @@ module.exports = {
         metal: ["Metal Mania"],
         swash: ["Berkshire Swash"], 
         livvic: ["Livvic"], 
+        noto: ["Noto Sans"],
       },
     },
   },

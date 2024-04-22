@@ -91,7 +91,7 @@ const Login = () => {
 
     }
     return (
-        <div className='min-h-[91vh] px-[10vw]  flex  justify-center items-center font-livvic  max-md:px-6 max-md:pt-28  '>
+        <div className='min-h-[91vh] px-[10vw]  flex  justify-center items-center font-noto  max-md:px-6 max-md:pt-28  '>
             <Head><title>Login to Amazeart</title></Head>
             <ToastContainer
                 position="top-right"
@@ -122,7 +122,7 @@ const Login = () => {
             <form
                 onSubmit={(e) => { handleSubmit(e) }}
                 method='POST'
-                className="flex flex-col  gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism  ">
+                className="flex flex-col  gap-2 items-center   md:w-1/2 w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-white/5 backdrop-blur-md   glassmorphism  ">
                 <h3 className="text-white text-2xl font-bold mb-1">Login to your account</h3>
                 <h3 className="text-white text-lg font-medium mb-1 cursor-pointer flex gap-1">or  <Link href={'/signup'}><p className='text_main  hover:text-[#9F07F5] hover:underline-offset-4 hover:underline transition-all duration-300 hover:scale-95 '>Signup</p></Link></h3>
                 <div className="flex mt-6 gap-8  flex-col w-full ">

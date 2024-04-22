@@ -131,7 +131,7 @@ const Complete = () => {
 
 
     return (
-        <div className='min-h-[120vh] px-[10vw]  flex  justify-center items-center font-livvic  max-md:px-6 max-md:pt-28 '>
+        <div className='min-h-[120vh] px-[10vw]  flex  justify-center items-center font-noto  max-md:px-6 max-md:pt-28 '>
             <Head><title>Signup to Amazeart</title></Head>
             <ToastContainer
                 position="top-right"
@@ -160,7 +160,7 @@ const Complete = () => {
                     <form
                         onSubmit={(e) => { handleSubmit(e) }}
                         method='POST'
-                        className="flex flex-col  gap-2 items-center    w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-livvic bg-white/5 backdrop-blur-md   glassmorphism">
+                        className="flex flex-col  gap-2 items-center    w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-white/5 backdrop-blur-md   glassmorphism">
                         <h3 className="text-white text-2xl font-bold mb-1 text-center">Complete Your Profile <span className='text_main'>{userData.name}</span></h3>
 
                         <div className="flex mt-6 gap-8  flex-col w-full ">

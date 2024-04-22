@@ -29,7 +29,7 @@ const Products = () => { const [isLiked, setIsLiked] = useState(false)
 
         <div className='feeds flex flex-col gap-10  backdrop-blur-xl shadow-black shadow-md overflow-y-scroll lg:w-[60vw] h-[100vh] py-[20vh] px-[5vw]'>
 
-          <div className="feedcontainer w-full bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col gap-6 p-5 font-livvic">
+          <div className="feedcontainer w-full bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col gap-6 p-5 font-noto">
             <div className='flex justify-between items-center w-full'>
               <div className='flex items-center gap-2 '>
                 <div className="profilepic w-16 h-16 rounded-full bg-green-400"></div>
@@ -75,7 +75,7 @@ const Products = () => { const [isLiked, setIsLiked] = useState(false)
               </div>
               <div className='flex   items-center justify-center text-white cursor-pointer   '>
 
-              <Link href={'/'}><button className='bg-transparent text-sm rounded-xl  font-livvic w-20 h-8  border-2 border-white hover:scale-110 duration-300 hover:bg-[#fff] hover:text-[#000]'>Buy Now</button></Link>
+              <Link href={'/'}><button className='bg-transparent text-sm rounded-xl  font-noto w-20 h-8  border-2 border-white hover:scale-110 duration-300 hover:bg-[#fff] hover:text-[#000]'>Buy Now</button></Link>
 
               </div>
 

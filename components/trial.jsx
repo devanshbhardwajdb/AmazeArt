@@ -26,13 +26,13 @@
 </div>
 <div className="flex h-full w-full gap-1 text-white">
 <div className='bg-white/80 h-full w-[5vw] rounded-b-lg '></div>
-<Link href={'/login'}><div className='bg-black/80 h-full w-[5vw] rounded-b-lg  flex items-center justify-center hover:scale-125 duration-300 hover:bg-black'><button className='bg-transparent rounded-b-xl text-lg  font-livvic w-full h-full    '>Login</button></div></Link>
+<Link href={'/login'}><div className='bg-black/80 h-full w-[5vw] rounded-b-lg  flex items-center justify-center hover:scale-125 duration-300 hover:bg-black'><button className='bg-transparent rounded-b-xl text-lg  font-noto w-full h-full    '>Login</button></div></Link>
 
 
 <div className='bg-white/80 h-full w-[5vw] rounded-b-lg '></div>
 
 
-<Link href={'/signup'}><div className='bg-black/80 h-full w-[5vw] rounded-b-lg   flex items-center justify-center hover:scale-125 duration-300 hover:bg-black'><button className='bg-transparent rounded-b-xl text-lg  font-livvic w-full h-full   hover:bg_main  '>Signup</button></div></Link>
+<Link href={'/signup'}><div className='bg-black/80 h-full w-[5vw] rounded-b-lg   flex items-center justify-center hover:scale-125 duration-300 hover:bg-black'><button className='bg-transparent rounded-b-xl text-lg  font-noto w-full h-full   hover:bg_main  '>Signup</button></div></Link>
 
 
 <div className='bg-white/80 h-full w-[5vw] rounded-b-lg '></div>
@@ -60,9 +60,9 @@
      <Link href={'/#about'} className=' hover:text-3xl duration-300'><h1>About us</h1></Link>
 
      <div className="flex flex-col gap-2">
-       <Link href={'/login'}><button className='bg-transparent rounded-xl text-lg font-livvic w-20  border-2 border-[#fff] hover:scale-110 duration-300 hover:bg-[#F6E8B1] hover:text-[#461313]'>Login</button></Link>
+       <Link href={'/login'}><button className='bg-transparent rounded-xl text-lg font-noto w-20  border-2 border-[#fff] hover:scale-110 duration-300 hover:bg-[#F6E8B1] hover:text-[#461313]'>Login</button></Link>
 
-       <Link href={'/signup'}><button className='bg-transparent rounded-xl text-lg font-livvic w-20   hover:scale-110 duration-300 hover:bg-[#fff] border-2 border-[#fff] hover:text-black'>Signup</button></Link>
+       <Link href={'/signup'}><button className='bg-transparent rounded-xl text-lg font-noto w-20   hover:scale-110 duration-300 hover:bg-[#fff] border-2 border-[#fff] hover:text-black'>Signup</button></Link>
      </div>
    </div>
 
