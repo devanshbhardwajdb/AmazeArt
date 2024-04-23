@@ -6,7 +6,7 @@ import { slideIn3 } from '@/utils/motion';
 const Explore = () => {
     const [currentImage, setCurrentImage] = useState(0);
     const [direction, setDirection] = useState('next'); // State to track the direction of image change
-    const images = ['/bg1.jpg', '/bg2.jpg', '/bg3.jpg', '/bg4.jpg', '/bg6.jpg', '/bg7.jpg', '/bg8.jpg', '/bg11.jpg', '/bg12.jpg', '/bg13.jpg'];
+    const images = ['/bg1.jpg', '/bg2.jpg', '/bg3.jpg', '/bg4.jpg', '/bg6.jpg', '/bg7.jpg', '/bg8.jpg'];
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -28,7 +28,7 @@ const Explore = () => {
 
     return (
         <>
-            <div id="explore" className='lg:px-[8vw] pb-[20vh] flex items-center justify-center gap-0 '>
+            <div id="explore" className=' w-1/2  flex items-center justify-center gap-0 '>
                 <div className="w-auto relative flex items-center justify-center">
                     {/* <FaChevronLeft className="absolute h-48 left-[-8vw] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('prev')} />
                     <FaChevronRight className="absolute h-48 right-[-8vw] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('next')} /> */}
@@ -42,14 +42,14 @@ const Explore = () => {
                                 
                                 src={image}
                                 alt={`background-${index}`}
-                                className={`z-[50]  w-[60vw] h-[70vh] max-xl:w-[75vw]  max-xl:h-[30vh]  max-lg:w-[60vw]  max-lg:h-[17vh] rounded-3xl shadow-2xl shadow-black bg-contain ${index === currentImage ? 'visible' : 'hidden'}`}
+                                className={`z-[10]  w-[40vw] h-[50vh] max-xl:w-[75vw]  max-xl:h-[30vh]  max-lg:w-[50vw]  max-lg:h-[20vh] max-md:h-[14vh] rounded-3xl shadow-2xl shadow-black bg-contain ${index === currentImage ? 'visible' : 'hidden'}`}
                             />
                         ))}
 
                         
 
                     </div>
-                    <div className='absolute bottom-[-6vh] left-1/2 transform -translate-x-1/2 flex gap-2'>
+                    <div className='absolute bottom-[-6vh] max-lg:bottom-[-3vh] left-1/2 transform -translate-x-1/2 flex gap-2'>
                         {images.map((_, index) => (
                             <span
                                 key={index}

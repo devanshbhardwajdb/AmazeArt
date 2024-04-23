@@ -41,12 +41,22 @@ html {
     background-color: #FF5BB3;
     /* background-image: linear-gradient(45deg, #f3ec78, #af4261); */
     background-image: linear-gradient(to bottom left, #E72B2B, #FF5BB3, #9B03F8, #FF804A);
+    background-position: top;
     background-size: 100%;
     -webkit-background-clip: text;
     -moz-background-clip: text;
     -webkit-text-fill-color: transparent;
     -moz-text-fill-color: transparent;
+   
 }
+
+.text-shadow {
+    text-shadow: 0 4px 3px rgba(0, 0, 0, 0.8);
+  }
+.text-shadow2 {
+    text-shadow: 0 1.5px 3px rgba(0, 0, 0, 0.8);
+  }
+
 
 .bg_button1 {
     background-image: linear-gradient(to bottom left, #FF5BB3, #9B03F8);
@@ -71,6 +81,7 @@ body::-webkit-scrollbar {
     width: 6px;
     background: #000;
 }
+
 
 body::-webkit-scrollbar-thumb {
     background-image: linear-gradient(to bottom, #FF5BB3, #9B03F8);
@@ -129,6 +140,7 @@ body::-webkit-scrollbar-thumb {
     transition: all linear 0.4s;
   }
 
+ 
 
 
 

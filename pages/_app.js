@@ -69,7 +69,7 @@ export default function App({ Component, pageProps }) {
           onLoaderFinished={() => setProgress(0)}
         />
         <div className='fixed z-[-121] w-full h-full top-0 opacity-80 bg_main'></div>
-        <div className='fixed z-[-120] w-full h-full top-0 bg-black/70 '></div>
+        <div className='fixed z-[-120] w-full h-full top-0 bg-black/70 '></div> 
 
         {showImage ? (
           <div className='flex items-center justify-center h-[100vh] w-full'>

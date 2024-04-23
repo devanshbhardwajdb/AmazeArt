@@ -138,7 +138,7 @@ const Navbar = ({ user, tokenUserData,logout }) => {
       <div className=' flex items-center h-full justify-end gap-12 w-3/4    '>
         {!user.value ?
 
-          <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center' >
+          <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center text-shadow2' >
 
             Login
           </button></Link>

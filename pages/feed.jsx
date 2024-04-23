@@ -7,23 +7,32 @@ import CreatePost from '@components/CreatePost';
 const Feed = ({ tokenUserData }) => {
     const [isLiked, setIsLiked] = useState(false);
     const [posts, setPosts] = useState([]);
-    const [createPost, setCreatePost] = useState(true)
+    const [createPost, setCreatePost] = useState(false)
+
+
 
 
 
     useEffect(() => {
-        const fetchPosts = async () => {
-            try {
-                // Fetch posts 
-                const res = await fetch(`/api/getposts`);
-                const response = await res.json();
-                setPosts(response);
 
-            } catch (error) {
-                console.error('Error fetching user data:', error);
-            }
-        };
-        fetchPosts();
+        
+   
+            const fetchPosts = async () => {
+                try {
+                    // Fetch posts 
+                    const res = await fetch(`/api/getposts`);
+                    const response = await res.json();
+                    setPosts(response);
+
+                } catch (error) {
+                    console.error('Error fetching user data:', error);
+                }
+            };
+            fetchPosts();
+
+        
+
+
     }, []);
 
     const handleLike = () => {
