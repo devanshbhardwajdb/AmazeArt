@@ -20,18 +20,18 @@ const Hero = () => {
             <Head>
                 <title>Amazeart</title>
             </Head>
-            <motion.div className='  lg:px-[8vw] xl:py-[25vh] py-[10vh]  max-lg:flex-col  flex w-full  items-center   gap-8'>
+            <motion.div className='  lg:px-[8vw] min-h-[100vh] xl:py-[25vh] py-[10vh]  max-lg:flex-col   flex w-full  items-center   gap-8'>
                 {/* <div className={`fixed z-[-117] bg7-image w-full h-full top-0 transition-opacity  duration-1000 
                         }`}
                 ></div> */}
 
-                <video src='/space2.mp4' class='fixed z-[-117] opacity-50 top-0 left-0 transition-opacity duration-1000 w-full h-full object-cover ' autoplay={true} loop muted ></video>
+                <video src='/space2.mp4' class='fixed z-[-117] opacity-50 top-0 left-0 w-full h-full object-cover ' loop autoPlay muted  ></video>
 
                 {/* <Lottie animationData={A1} loop={true} className='w-[30vw] fixed left-50 -z-10 opacity-50 top-50' /> */}
 
                 {/* <div className='fixed z-[-116] w-full h-full top-0 opacity-15 bg_main'></div> */}
 
-                <div className='flex flex-col items-center   xl:w-1/2'>
+                <div className='flex flex-col items-center    xl:w-1/2'>
 
                     <motion.div className="flex relative ">
                         <motion.h1

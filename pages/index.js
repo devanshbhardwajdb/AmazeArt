@@ -24,10 +24,7 @@ export default function Home() {
       <>
         {/* <Cursor /> */}
         <Hero />
-        <div className='backdrop-blur-sm bg-black/40 '>
-          <About />
-          {/* <Explore /> */}
-        </div>
+        
       </>
 
     </div>

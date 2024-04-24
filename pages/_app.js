@@ -64,12 +64,12 @@ export default function App({ Component, pageProps }) {
             backgroundImage: 'linear-gradient(to left , #E72B2B, #FF5BB3, #9B03F8, #FF804A)', // Example gradient colors
           }}
           progress={progress}
-          waitingTime={500}
+          waitingTime={300}
           height={4}
           onLoaderFinished={() => setProgress(0)}
         />
-        <div className='fixed z-[-121] w-full h-full top-0 opacity-80 bg_main'></div>
-        <div className='fixed z-[-120] w-full h-full top-0 bg-black/70 '></div> 
+        <div className='fixed bg-fixed bg-cover z-[-121] w-full h-full top-0 opacity-8  0 bg_main2'></div>
+        {/* <div className='fixed z-[-120] w-full h-full top-0 bg-black/70 '></div>  */}
 
         {showImage ? (
           <div className='flex items-center justify-center h-[100vh] w-full'>

@@ -17,6 +17,14 @@ body {
 
 
 }
+/* Disable text selection for the entire page */
+body {
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
 
 html {  
     scroll-behavior: smooth;
@@ -34,6 +42,14 @@ html {
     background-image: linear-gradient(to bottom left, #E72B2B, #FF5BB3, #E443C6, #9F07F5, #FF804A);
     backface-visibility: 50%;
 }
+
+.bg_main2{
+    background: url("/background.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 
 
 
@@ -146,4 +162,7 @@ body::-webkit-scrollbar-thumb {
 
   .glassmorphism {
     @apply rounded-xl  bg-transparent shadow-[inset_0px_2220px_50px_0_rgb(0,0,0,0.3)] backdrop-blur p-5;
+  }
+  .glassmorphism1 {
+    @apply rounded-full  bg-transparent shadow-[inset_0px_2220px_50px_0_rgb(0,0,0,0.3)] backdrop-blur p-5;
   }
