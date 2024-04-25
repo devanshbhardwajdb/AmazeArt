@@ -105,8 +105,6 @@ const Login = () => {
                 pauseOnHover
                 theme="dark"
             />
-            {/* Same as */}
-            <ToastContainer />
 
 
             <div className='flex flex-col max-lg:hidden items-center justify-center w-1/2  border-r mr-20 h-[50vh]'>

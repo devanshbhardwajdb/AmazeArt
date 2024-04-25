@@ -8,6 +8,10 @@ const CommentSchema = new Schema({
     commentText: {
         type: String,
         required: true,
+    },
+    profilepic: {
+        type: String,
+        required: true,
     }
 }, { timestamps: true });
 

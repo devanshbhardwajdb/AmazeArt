@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { FaHeart, FaRegHeart, FaShare, FaFacebook, FaTwitter, FaLinkedin,FaPlus,FaComment,FaWhatsapp } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
@@ -53,7 +54,7 @@ const Post = ({ post, tokenUserData }) => {
     };
 
     return (
-        <div className="feedcontainer xl:w-[30vw] bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col  gap-6  font-noto w-full">
+        <div className="feedcontainer xl:w-[20vw] bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col  gap-6  font-noto w-full">
             <div className='flex justify-between items-center w-full'>
                 <div className='flex items-center gap-2 '>
                     <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={post.profilepic} ></img>
@@ -62,12 +63,15 @@ const Post = ({ post, tokenUserData }) => {
                         <h5 className='text-gray-300 text-sm '>@{post.username}</h5>
                     </div>
                 </div>
-                <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
+                {/* <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button> */}
             </div>
             <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
+
+            <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}>
             <div className="post bg-white/10   object-scale-down flex justify-center ">
                 <img src={post.contentUrl} alt="Post" className=' object-contain' />
             </div>
+            </Link>
             <div className="reactions flex items-center justify-around py-4 border-t border-b border-white/40  text-2xl">
                 <div className={`flex max-md:flex-col items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
                     {isLiked ? <FaHeart className='text-md text-red-500' /> : <FaRegHeart className='text-md' />}
@@ -83,22 +87,14 @@ const Post = ({ post, tokenUserData }) => {
                 </div>
                 {isShareOpen && (
                         <div className="share-options rounded-lg flex fixed bg-black/70 gap-3 -right-28 p-4">
-                            <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`}><FaWhatsapp className='text-green-500'/></WhatsappShareButton>
-                            <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`}><FaFacebook  className='text-blue-500'/></FacebookShareButton>
-                            <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`}><FaXTwitter  className='text-gray-200'/> </TwitterShareButton>
-                            <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`}><FaLinkedin className='text-blue-700'/></LinkedinShareButton>
+                            <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}><FaWhatsapp className='text-green-500'/></WhatsappShareButton>
+                            <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}><FaFacebook  className='text-blue-500'/></FacebookShareButton>
+                            <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}><FaXTwitter  className='text-gray-200'/> </TwitterShareButton>
+                            <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}><FaLinkedin className='text-blue-700'/></LinkedinShareButton>
                         </div>
                     )}
             </div>
-            <form className="commentbox flex gap-2 items-center font-noto ">
-                <input
-                    type={`text`}
-                    className='bg-white/15 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 text-sm'
-                    placeholder='Type your comment'
-                    name='comment'
-                />
-                <IoSend className='text-xl bg_button1 h-full w-10 p-1 rounded-full  text-white transition-all duration-150  hover:scale-95  hover:shadow-lg cursor-pointer' />
-            </form>
+            
         </div>
     )
 }

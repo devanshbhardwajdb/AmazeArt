@@ -67,7 +67,7 @@ const Feed = ({ tokenUserData }) => {
                 }
 
 
-                <div className='feeds  justify-between flex xl:flex-wrap max-xl:flex-col   gap-10   overflow-y-scroll w-full  h-[100vh] pt-[10vh] pb-[30vh] px-[5vw] bg_main2'>
+                <div className='feeds  justify-between flex xl:flex-wrap max-xl:flex-col   gap-10   overflow-y-scroll w-full  h-[100vh] pt-[10vh] pb-[30vh] px-[5vw] bg_main2  '>
 
 
                     {tokenUserData ? <div className=' w-full  flex gap-4 justify-center items-center'>
@@ -92,7 +92,7 @@ const Feed = ({ tokenUserData }) => {
 
                     }
 
-                    <div className='feeds  justify-center items-center flex flex-col   gap-10 w-full  min-h-[100vh]  '>
+                    <div className='feeds xl:flex-wrap  justify-center items-start flex max-xl:flex-col   gap-10 w-full    '>
                     {posts.map((post) => (
                         <Post key={post._id} post={post} tokenUserData={tokenUserData} />
                     ))}
