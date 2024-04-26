@@ -166,7 +166,7 @@ const PostId = ({ tokenUserData }) => {
                 setLikeCount(result.likes.length);
                 setCommentCount(result.comments.length);
                 setShareCount(result.shares);
-                setLoading(fapostId // Set loading to false after fetching post
+                setLoading(false); // Set loading to false after fetching post
             } catch (error) {
                 console.error('Error fetching post:', error);
             }
