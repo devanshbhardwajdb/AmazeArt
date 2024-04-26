@@ -9,6 +9,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { useRouter } from 'next/router';
 import Lottie from "lottie-react";
 import A1 from "@/anime3.json"
+import LoadingContainer2 from '@components/LoadingContainer2';
 
 import {
     EmailShareButton,
@@ -30,7 +31,7 @@ const PostId = ({ tokenUserData }) => {
     const [commentText, setCommentText] = useState('')
     const [shareCount, setShareCount] = useState(0);
     const [isShareOpen, setIsShareOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
 
 
 
@@ -164,7 +165,8 @@ const PostId = ({ tokenUserData }) => {
                 setIsLiked(result.likes.includes(tokenUserData?.username));
                 setLikeCount(result.likes.length);
                 setCommentCount(result.comments.length);
-                setShareCount(result.shares)
+                setShareCount(result.shares);
+                setLoading(false); // Set loading to false after fetching post
             } catch (error) {
                 console.error('Error fetching post:', error);
             }
@@ -172,7 +174,6 @@ const PostId = ({ tokenUserData }) => {
         fetchPost();
     }, [postId, tokenUserData]);
 
-    console.log(post.comments)
 
 
     return (
@@ -199,81 +200,87 @@ const PostId = ({ tokenUserData }) => {
 
 
             <div className='py-[15vh] bg-white/5 backdrop-blur-md lg:px-[15vw] max-lg:px-[3vw] overflow-x-hidden gap-6  font-noto w-full'>
+                {loading ? (
+                    // Render loading container while fetching post
+                    <LoadingContainer2 />
+                ) :
 
-                <div className="postcontainer  bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg  flex flex-col  gap-6  font-noto ">
-                    <div className='flex justify-between items-center w-full'>
-                        <div className='flex  items-center gap-2 '>
-                            <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={post.profilepic} ></img>
-                            <div className=''>
-                                <h4 className='text-white font-medium text-sm flex max-md:flex-col items-center gap-1'>{post.name} • <span className="text-gray-300 text-xs">Posted {formatTimeAgo(post.createdAt)}</span></h4>
-                                <h5 className='text-gray-300 text-sm'>@{post.username}</h5>
-                            </div>
-                        </div>
-                        <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
-                    </div>
-                    <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
-                    <div className="post bg-white/10   object-scale-down flex justify-center items-center w-full ">
-                        <img src={post.contentUrl} alt="Post" className='xl:w-[25vw] w-[100vw] object-contain' />
-                    </div>
-                    <div className="reactions flex items-center justify-around py-4 border-t border-b border-white/40  text-2xl">
-                        <div className={`flex  items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
-                            {isLiked ? <FaHeart className='text-md text-red-500' /> : <FaRegHeart className='text-md' />}
-                            <h5 className='text-sm'>{likeCount}</h5>
-                        </div>
-                        <div className='flex gap-1 items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 '>
-                            <FaComment className='text-md' />
-                            <h5 className='text-sm'>{commentCount}</h5>
-                        </div>
-                        <div className='flex gap-1  items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 relative '>
-                            <FaShare onClick={handleShare} />
-                            <h5 className='text-sm'>{shareCount}</h5>
+                    (<div className="postcontainer  bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg  flex flex-col  gap-6  font-noto ">
 
-                        </div>
-                        {isShareOpen && (
-                            <div className="share-options rounded-lg flex fixed bg-black/70 gap-5 bottom-6 right-0 p-4">
-                                <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                                <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                                <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                                <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
-                            </div>
-                        )}
-                    </div>
-                    <form className="commentbox flex gap-2 items-center font-noto " onSubmit={(e) => { addComment(e) }} method='PUT'>
-                        <input
-                            type={`text`}
-                            value={commentText}
-                            onChange={(e) => setCommentText(e.target.value)}
-                            className='bg-white/15 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 text-sm'
-                            placeholder='Type your comment'
-                            name='comment'
-                            required
-                        />
-                        <button type='submit' className='text-xl bg_button1 h-full w-10 p-2 rounded-full  text-white transition-all duration-150  hover:scale-95  hover:shadow-lg cursor-pointer flex justify-center items-center'>
-                            {
-                                loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
-
-                                    <IoSend />
-
-                            }
-                        </button>
-                    </form>
-
-                    <div className="comments  flex  flex-col gap-4 text-white text-sm">
-                        {post.comments?.map((comment) => (
-                            <div key={comment._id} className='commentbox flex  items-start gap-2 '>
-                                <img alt={`${comment.username}'s profilepic`} className="rounded-full w-10 h-10" src={comment.profilepic} />
-                                <div className='flex flex-col gap-0'>
-                                    <div className='bg-black/40 py-1 px-4 rounded-lg rounded-tl-none flex flex-col gap-2'>
-                                        <h4 className='text-white font-bold text-sm'>@{comment.username}</h4>
-                                        <h4 className='font-light'>{comment.commentText}</h4>
-                                    </div>
-                                    <span className="text-gray-300 text-xs">Posted {formatTimeAgo(comment.createdAt)}</span>
+                        <div className='flex justify-between items-center w-full'>
+                            <div className='flex  items-center gap-2 '>
+                                <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={post.profilepic} ></img>
+                                <div className=''>
+                                    <h4 className='text-white font-medium text-sm flex max-md:flex-col items-center gap-1'>{post.name} • <span className="text-gray-300 text-xs">Posted {formatTimeAgo(post.createdAt)}</span></h4>
+                                    <h5 className='text-gray-300 text-sm'>@{post.username}</h5>
                                 </div>
                             </div>
-                        ))}
-                    </div>
+                            <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
+                        </div>
+                        <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
+                        <div className="post bg-white/10   object-scale-down flex justify-center items-center w-full ">
+                            <img src={post.contentUrl} alt="Post" className='xl:w-[25vw] w-[100vw] object-contain' />
+                        </div>
+                        <div className="reactions flex items-center justify-around py-4 border-t border-b border-white/30  text-2xl">
+                            <div className={`flex  items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
+                                {isLiked ? <FaHeart className='text-md text-red-500' /> : <FaRegHeart className='text-md' />}
+                                <h5 className='text-sm'>{likeCount}</h5>
+                            </div>
+                            <div className='flex gap-1 items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 '>
+                                <FaComment className='text-md' />
+                                <h5 className='text-sm'>{commentCount}</h5>
+                            </div>
+                            <div className='flex gap-1  items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 relative '>
+                                <FaShare onClick={handleShare} />
+                                <h5 className='text-sm'>{shareCount}</h5>
 
-                </div>
+                            </div>
+                            {isShareOpen && (
+                                <div className="share-options rounded-lg flex fixed bg-black/70 gap-5 bottom-6 right-0 p-4">
+                                    <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                                    <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                                    <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                                    <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                                </div>
+                            )}
+                        </div>
+                        <form className="commentbox flex gap-2 items-center font-noto " onSubmit={(e) => { addComment(e) }} method='PUT'>
+                            <input
+                                type={`text`}
+                                value={commentText}
+                                onChange={(e) => setCommentText(e.target.value)}
+                                className='bg-white/15 rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 text-sm'
+                                placeholder='Type your comment'
+                                name='comment'
+                                required
+                            />
+                            <button type='submit' className='text-xl bg_button1 h-full w-10 p-2 rounded-full  text-white transition-all duration-150  hover:scale-95  hover:shadow-lg cursor-pointer flex justify-center items-center'>
+                                {
+                                    loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
+
+                                        <IoSend />
+
+                                }
+                            </button>
+                        </form>
+
+                        <div className="comments  flex  flex-col gap-4 text-white text-sm">
+                            {post.comments?.map((comment) => (
+                                <div key={comment._id} className='commentbox flex  items-start gap-2 '>
+                                    <img alt={`${comment.username}'s profilepic`} className="rounded-full w-10 h-10" src={comment.profilepic} />
+                                    <div className='flex flex-col gap-0'>
+                                        <div className='bg-black/40 py-1 px-4 rounded-lg rounded-tl-none flex flex-col gap-2'>
+                                            <h4 className='text-white font-bold text-sm'>@{comment.username}</h4>
+                                            <h4 className='font-light'>{comment.commentText}</h4>
+                                        </div>
+                                        <span className="text-gray-300 text-xs">Posted {formatTimeAgo(comment.createdAt)}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                    </div>)
+                }
             </div>
         </>
     )
