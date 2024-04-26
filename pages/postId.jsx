@@ -166,7 +166,7 @@ const PostId = ({ tokenUserData }) => {
                 setLikeCount(result.likes.length);
                 setCommentCount(result.comments.length);
                 setShareCount(result.shares);
-                setLoading(false); // Set loading to false after fetching post
+                setLoading(fapostId // Set loading to false after fetching post
             } catch (error) {
                 console.error('Error fetching post:', error);
             }
@@ -237,10 +237,10 @@ const PostId = ({ tokenUserData }) => {
                             </div>
                             {isShareOpen && (
                                 <div className="share-options rounded-lg flex fixed bg-black/70 gap-5 bottom-6 right-0 p-4">
-                                    <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                                    <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                                    <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                                    <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/feed?post=${post._id}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                                    <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                                    <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                                    <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                                    <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
                                 </div>
                             )}
                         </div>
