@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 // Set up multer storage
 const storage = multer.diskStorage({
-  destination: './public/uploads',
+  destination: path.join(process.cwd(), 'public/uploads'), // Use path.join to ensure correct path concatenation
   filename: (req, file, cb) => {
     const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
     cb(null, uniqueName);
