@@ -218,9 +218,13 @@ const PostId = ({ tokenUserData }) => {
                             <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
                         </div>
                         <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
-                        <div className="post bg-white/10   object-scale-down flex justify-center items-center w-full ">
-                            <img src={post.contentUrl} alt="Post" className='xl:w-[25vw] w-[100vw] object-contain' />
-                        </div>
+                        {post.contentUrl.endsWith('.mp4') || post.contentUrl.endsWith('.webm') ? (
+                            <video controls className='object-contain w-full'>
+                                <source src={post.contentUrl} type='video/mp4' />
+                            </video>
+                        ) : (
+                            <img src={post.contentUrl} alt="Post" className='w-full object-contain' />
+                        )}
                         <div className="reactions flex items-center justify-around py-4 border-t border-b border-white/30  text-2xl">
                             <div className={`flex  items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
                                 {isLiked ? <FaHeart className='text-md text-red-500' /> : <FaRegHeart className='text-md' />}

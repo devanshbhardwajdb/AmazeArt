@@ -1,24 +1,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { FaHeart, FaRegHeart, FaShare, FaFacebook, FaTwitter, FaLinkedin, FaPlus, FaComment, FaWhatsapp } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
-import { IoSend } from "react-icons/io5";
-import { MdPayment } from "react-icons/md";
-import { BsThreeDotsVertical } from "react-icons/bs";
-import {
-    EmailShareButton,
-    FacebookShareButton,
-    LinkedinShareButton,
-    TwitterShareButton,
-    WhatsappShareButton,
-
-} from "react-share";
+import { FaHeart, FaRegHeart, FaComment } from "react-icons/fa";
 
 const Post = ({ post, tokenUserData }) => {
     const [isLiked, setIsLiked] = useState(post.likes.includes(tokenUserData?.username));
     const [likeCount, setLikeCount] = useState(post.likes.length);
     const [commentCount, setCommentCount] = useState(post.comments.length);
-    const [isShareOpen, setIsShareOpen] = useState(false);
 
     const handleLike = async () => {
         try {
@@ -49,10 +36,6 @@ const Post = ({ post, tokenUserData }) => {
         }
     };
 
-    const handleShare = () => {
-        setIsShareOpen(!isShareOpen);
-    };
-
     return (
         <div className="feedcontainer xl:w-[20vw] bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg h-auto flex flex-col  gap-6  font-noto w-full hover:scale-105 duration-200">
             <div className='flex justify-between items-center w-full'>
@@ -64,15 +47,26 @@ const Post = ({ post, tokenUserData }) => {
                         <h5 className='text-gray-300 text-sm '>@{post.username}</h5>
                     </div>
                 </div>
-                {/* <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button> */}
             </div>
             <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
 
-            <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}>
-                <div className="post bg-white/10   object-scale-down flex justify-center ">
-                    <img src={post.contentUrl} alt="Post" className=' object-contain' />
-                </div>
-            </Link>
+            {/* Conditional rendering for image or video */}
+            {post.contentUrl.endsWith('.mp4') || post.contentUrl.endsWith('.webm') ? (
+                // Render video element if contentUrl ends with video extension
+                <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}>
+                    <video controls className='object-contain'>
+                        <source src={post.contentUrl} type='video/mp4' />
+                    </video>
+                </Link>
+            ) : (
+                // Render image element for all other cases
+                <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}>
+                    <div className="post bg-white/10   object-scale-down flex justify-center ">
+                        <img src={post.contentUrl} alt="Post" className=' object-contain' />
+                    </div>
+                </Link>
+            )}
+
             <div className="reactions flex items-center justify-around py-2 border-t border-b border-white/20  text-2xl">
                 <div className={`flex max-md:flex-col items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
                     {isLiked ? <FaHeart className='text-md text-red-500' /> : <FaRegHeart className='text-md' />}
@@ -82,9 +76,7 @@ const Post = ({ post, tokenUserData }) => {
                     <FaComment className='text-md' />
                     <h5 className='text-sm'>{commentCount}</h5>
                 </div>
-
             </div>
-
         </div>
     )
 }

@@ -17,6 +17,7 @@ const Login = () => {
     const [username, setUsername] = useState("");
     const [isUsernameValid, setIsUsernameValid] = useState(true);
 
+    // const [userData, setUserData] = useState(null);
     const [password, setPassword] = useState("");
     const [isHidden, setIsHidden] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -49,8 +50,6 @@ const Login = () => {
         let response = await res.json();
 
 
-        setUsername("")
-        setPassword("")
 
 
         if (response.success) {
@@ -70,10 +69,48 @@ const Login = () => {
             });
             setLoading(false);
 
-            setTimeout(() => {
-                router.push(`${process.env.NEXT_PUBLIC_HOST}/UpdateAddress/${userData.username}`)
+            // setTimeout(() => {
+            //     // router.push(`${process.env.NEXT_PUBLIC_HOST}/UpdateAddress/${userData.username}`)
 
-            }, 2000);
+                
+
+            // }, 2000);
+            if (username) {
+                // Fetch user data based on the username
+                const res = await fetch(`/api/user/${username}`);
+                const response = await res.json();
+
+                if (response.success) {
+                    const { user } = response;
+                    // Check if address and other required fields are already filled
+                    if (user.address && user.city && user.state && user.pincode) {
+                        // setUserData(user);
+                        if (user.profilepic){
+                            
+                            if (user.coverpic){
+                                router.push(`/Profile/${username}`);
+                            }
+                            else{
+                                router.push(`/UploadCover/${username}`);
+                            }
+                        }
+                        else{
+                            router.push(`/UploadProfile/${username}`);
+                        }
+                        
+                        
+                    } else {
+                        // Set user data if some fields are missing
+                        // setUserData(user);
+                        router.push(`/UpdateAddress/${username}`);
+                        // setLoading(false);
+                    }
+                }
+            }
+
+            
+        setUsername("")
+        setPassword("")
         }
         else {
             toast.error(response.error, {

@@ -7,16 +7,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Lottie from "lottie-react";
 import A1 from "@/anime3.json"
+import A2 from "@/anime9.json"
 import Head from 'next/head';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '@firebase.config';
 
-const Complete = () => {
+const Complete = ({ tokenUserData }) => {
     const router = useRouter();
 
     const { username } = router.query;
-    // console.log(username)
-
     const [userData, setUserData] = useState(null);
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
@@ -25,8 +24,6 @@ const Complete = () => {
     const [bio, setBio] = useState("")
     const [profilePic, setProfilePic] = useState("")
     const [coverPic, setCoverPic] = useState("")
-
-
     const [isHidden, setIsHidden] = useState(true);
     const [loading, setLoading] = useState(false);
     const [isUsernameValid, setIsUsernameValid] = useState(true);
@@ -37,7 +34,7 @@ const Complete = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                if (username) {
+                if (username && username === tokenUserData.username) {
                     // Fetch user data based on the username
                     const res = await fetch(`/api/user/${username}`);
                     const response = await res.json();
@@ -47,16 +44,19 @@ const Complete = () => {
                         // Check if address and other required fields are already filled
                         if (user.address && user.city && user.state && user.pincode) {
                             // Redirect to another page if all required fields are filled
-                            router.push(`/UploadProfile/${username}`);
+                            // router.push(`/UploadProfile/${username}`);
+                            setUserData(user);
                         } else {
                             // Set user data if some fields are missing
                             setUserData(user);
-                            setLoading(false);
+                            // setLoading(false);
                         }
                     }
-                } else {
+                } else if (!username && username === tokenUserData.username) {
                     // Username is not available
                     setUserData(null);
+                } else {
+                    router.push(`/NotFound`)
                 }
             } catch (error) {
                 console.error('Error fetching user data:', error);
@@ -129,6 +129,11 @@ const Complete = () => {
         setLoading(false);
     };
 
+    const handleSkip = () => {
+        router.push(`/UploadProfile/${username}`);
+
+    }
+
 
     return (
         <div className='min-h-[120vh] px-[10vw]  flex  justify-center items-center font-noto  max-md:px-6 max-md:pt-28 '>
@@ -151,7 +156,7 @@ const Complete = () => {
             {
                 !userData ? (
                     <div className='text-white'>
-                        Loading...
+                        <Lottie animationData={A2} loop={true} className='w-[15vw]' />
                     </div>
 
                 ) : (
@@ -174,8 +179,8 @@ const Complete = () => {
                                         value={username}
                                         readOnly
                                         type="text"
-                                        className={`bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border ${isUsernameValid ? 'border-[#9F07F5]' : 'border-red-500'
-                                            } focus:shadow-[#9F07F5] text-white placeholder-gray-200 w-full `}
+                                        className={`bg-white/15 rounded-lg p-2 focus:outline-none  ${isUsernameValid ? 'border-[#9F07F5]' : 'border-red-500'
+                                            } shadow-md border border-[#9F07F5] shadow-[#9F07F5] text-white placeholder-gray-200 w-full `}
                                         placeholder="Username"
                                         name="username"
                                         pattern="[a-zA-Z0-9_]{4,}" // Only allows alphanumeric characters and underscores, minimum length of 4 characters
@@ -192,7 +197,7 @@ const Complete = () => {
                                         value={userData.name}
                                         readOnly
                                         type="name"
-                                        className='rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] bg-white/15 text-white placeholder-gray-200 w-full'
+                                        className='rounded-lg p-2 focus:outline-none shadow-md border border-[#9F07F5] shadow-[#9F07F5] bg-white/15 text-white placeholder-gray-200 w-full'
                                         placeholder='Name'
                                         name='name'
                                         required
@@ -207,7 +212,7 @@ const Complete = () => {
                                         value={userData.email}
                                         readOnly
                                         type="email"
-                                        className='rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] bg-white/15 text-white placeholder-gray-200 w-full'
+                                        className='rounded-lg p-2 focus:outline-none shadow-md border border-[#9F07F5] shadow-[#9F07F5] bg-white/15 text-white placeholder-gray-200 w-full'
                                         placeholder='Email address'
                                         name='email'
                                         required
@@ -219,7 +224,7 @@ const Complete = () => {
                                         value={userData.phone}
                                         readOnly
                                         type="tel"
-                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
+                                        className='bg-white/15 rounded-lg p-2 shadow-md border border-[#9F07F5] shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
                                         placeholder='Mobile'
                                         name='phone'
                                         required
@@ -302,15 +307,19 @@ const Complete = () => {
 
                         </div>
 
-                        <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  w-full flex  justify-center items-center mt-5' >
-                            {
-                                loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
+                        <div className='flex flex-col w-full items-end'>
+                            <button className='nav-btn   text-white underline text-shadow rounded-lg  transition-all duration-150   flex w-1/2  justify-end items-end px-4 mt-5 hover:text-gray-400' onClick={handleSkip}><p>Skip</p></button>
 
-                                    <p>Continue</p>
+                            <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  w-full flex  justify-center items-center mt-5' >
+                                {
+                                    loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
 
-                            }
+                                        <p>Continue</p>
 
-                        </button>
+                                }
+
+                            </button>
+                        </div>
 
 
                     </form>)}

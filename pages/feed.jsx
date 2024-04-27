@@ -49,9 +49,9 @@ const Feed = ({ tokenUserData }) => {
                 theme="dark"
             />
 
-            <div className='flex items-center font-noto flex-col gap-0 min-h-[100vh]'>
+            <div className='flex items-center font-noto flex-col gap-0 min-h-[100vh] relative'>
                 {createPost && (
-                    <div className='fixed z-30 top-36 justify-center items-center top- w-full shadow-black shadow-2xl'>
+                    <div className='   justify-center items-center  w-full shadow-black shadow-2xl'>
                         <CreatePost tokenUserData={tokenUserData} toggleCreatePost={toggleCreatePost} />
                     </div>
                 )}

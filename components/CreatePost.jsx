@@ -36,7 +36,17 @@ const CreatePost = ({ tokenUserData, toggleCreatePost }) => {
         setLoading(true);
 
         const formData = new FormData();
-        formData.append('file', selectedFile);
+        if(selectedFile.type.startsWith('image')){
+
+            formData.append('image', selectedFile);
+        }
+        else{
+            formData.append('video', selectedFile);
+        }
+        
+
+
+        
 
         try {
             const res = await fetch(selectedFile.type.startsWith('image') ? '/api/uploadimage' : '/api/uploadvideo', {
@@ -127,13 +137,13 @@ const CreatePost = ({ tokenUserData, toggleCreatePost }) => {
     }, []);
 
     return (
-        <div className='fixed inset-0 flex justify-center items-center z-50'>
-            <div className='flex flex-col text-white justify-center gap-10 items-center w-[60vw] p-8 rounded-lg shadow-sm shadow-gray-900 duration-150 transition-all font-noto bg-gray-900 h-[80vh] relative'>
+        <div className='fixed bg-red-400 w-full flex justify-center items-center z-50 mt-[10vh] ' >
+            <div className='flex flex-col text-white justify-center gap-10 items-center lg:w-[60vw] w-[90vw]  p-8 rounded-lg shadow-sm shadow-gray-900 duration-150 transition-all font-noto bg-gray-900 xl:min-h-[80vh] min-h-[60vh] relative '>
                 <div className='flex justify-between'>
-                    <h3 className="text-white text-2xl font-bold mb-1 text-center">Create a new Post! <span className='text_main'>{tokenUserData?.name}</span></h3>
+                    <h3 className="text-white lg:text-2xl text-lg font-bold mb-1 text-center">Create a new Post! <span className='text_main'>{tokenUserData?.name}</span></h3>
                 </div>
                 <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={toggleCreatePost} />
-                <form onSubmit={handleCreatePost} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 w-1/2'>
+                <form onSubmit={handleCreatePost} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 lg:w-1/2'>
                     {/* Style the input field */}
                     <div className='flex flex-col gap-6 items-center justify-center '>
                         <textarea type="text" placeholder='Write the Caption' className='bg-black/80 p-4 rounded-md focus:outline-none focus:shadow-md focus:shadow-[#9F07F5] text-white border-[#9F07F5] focus:border placeholder-gray-200 resize-none flex justify-center items-center create_text w-full' onChange={(e) => { setCaption(e.target.value) }} required />
