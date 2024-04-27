@@ -1,28 +1,9 @@
 // pages/api/uploadImage.js
 
 import multer from 'multer';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
 
-// Set up multer storage
-const storage = multer.diskStorage({
-  destination: path.join(process.cwd(), 'public/uploads'), // Use path.join to ensure correct path concatenation
-  filename: (req, file, cb) => {
-    const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
-    cb(null, uniqueName);
-  }
-});
-
-// Check file type
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('image/')) {
-    cb(null, true);
-  } else {
-    cb(new Error('Only images are allowed'));
-  }
-};
-
-const upload = multer({ storage, fileFilter });
+// Initialize multer without diskStorage
+const upload = multer({ storage: multer.memoryStorage() });
 
 export const config = {
   api: {
@@ -36,9 +17,24 @@ const handler = async (req, res) => {
       return res.status(400).json({ error: err.message });
     }
 
-    // Image uploaded successfully, return the URL
-    const imageUrl = `/uploads/${req.file.filename}`;
-    return res.status(200).json({ success: true, imageUrl });
+    // Access the buffer containing the uploaded file
+    const imageBuffer = req.file.buffer;
+
+    try {
+      // Use Vercel's File System (FS) API to write the file
+      const { fileId } = await fetch('/_api/uploads', {
+        method: 'POST',
+        body: imageBuffer,
+      }).then((res) => res.json());
+
+      // Construct the URL of the uploaded image
+      const imageUrl = `/_next/image?url=${encodeURIComponent(`/_next/static/${fileId}`)}&w=640&q=75`;
+
+      // Return the URL of the uploaded image
+      return res.status(200).json({ success: true, imageUrl });
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to upload image' });
+    }
   });
 };
 
