@@ -32,6 +32,7 @@ const PostId = ({ tokenUserData }) => {
     const [shareCount, setShareCount] = useState(0);
     const [isShareOpen, setIsShareOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const isVideo = /\.(mp4|webm)/.test(post.contentUrl);
 
 
 
@@ -218,7 +219,7 @@ const PostId = ({ tokenUserData }) => {
                             <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
                         </div>
                         <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
-                        {post.contentUrl.endsWith('.mp4') || post.contentUrl.endsWith('.webm') ? (
+                        {isVideo ? (
                             <video controls className='object-contain w-full'>
                                 <source src={post.contentUrl} type='video/mp4' />
                             </video>

@@ -11,6 +11,9 @@ import Head from 'next/head';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '@firebase.config';
 import { IoMdCloseCircle } from "react-icons/io";
+import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
+import Cropper from 'react-easy-crop';
 
 
 const Profilepic = ({ tokenUserData, togglePopup }) => {
@@ -20,6 +23,62 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
     const { username } = router.query;
     const [userData1, setUserData1] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [imageCrop, setImageCrop] = useState({ x: 0, y: 0 });
+    const [crop, setCrop] = useState({ x: 0, y: 0 });
+    const [zoom, setZoom] = useState(1);
+    const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+    const [croppedImage, setCroppedImage] = useState(null);
+
+    const onCropComplete = (croppedArea, croppedAreaPixels) => {
+        setCroppedAreaPixels(croppedAreaPixels);
+    };
+
+
+
+    const handleCropChange = (crop, percentCrop) => {
+        setCrop(crop);
+    };
+
+    const handleZoomChange = (zoom) => {
+        setZoom(zoom);
+    };
+
+    const handleCrop = async () => {
+        try {
+            const croppedImageBlob = await getCroppedImageBlob(selectedImage, croppedAreaPixels);
+            setCroppedImage(URL.createObjectURL(croppedImageBlob));
+        } catch (error) {
+            console.error('Error cropping image:', error);
+        }
+    };
+
+    const getCroppedImageBlob = (image, croppedAreaPixels) => {
+        return new Promise((resolve, reject) => {
+            const canvas = document.createElement('canvas');
+            const scaleX = image.naturalWidth / image.width;
+            const scaleY = image.naturalHeight / image.height;
+            canvas.width = croppedAreaPixels.width;
+            canvas.height = croppedAreaPixels.height;
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(
+                image,
+                croppedAreaPixels.x * scaleX,
+                croppedAreaPixels.y * scaleY,
+                croppedAreaPixels.width * scaleX,
+                croppedAreaPixels.height * scaleY,
+                0,
+                0,
+                croppedAreaPixels.width,
+                croppedAreaPixels.height
+            );
+
+            canvas.toBlob((blob) => {
+                resolve(blob);
+            }, 'image/jpeg');
+        });
+    };
+
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -109,36 +168,37 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
     };
 
     return (
-        <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-gray-900 h-[70vh]     relative '>
+        <div className='flex flex-col text-white justify-center gap-10 items-center w-full p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-gray-900 h-[70vh] relative '>
             <div className='flex justify-between'>
-
                 <h3 className="text-white text-2xl font-bold mb-1 text-center">Update your Profile Picture <span className='text_main'>{tokenUserData?.name}</span></h3>
-
             </div>
             <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={togglePopup} />
-
             <form onSubmit={handleSubmit} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 w-1/2' >
-                {/* Style the input field */}
-                <div className='flex items-center justify-center '>
+                <div className='flex items-center justify-center'>
                     <input type="file" accept="image/*" onChange={handleImageChange} className='hidden' id="fileInput" required />
-                    {/* Style the label to resemble a button */}
                     <label htmlFor="fileInput" className="cursor-pointer bg_button1 hover:bg-blue-700 text-white  py-2 px-4 rounded">
                         Choose File
                     </label>
-
-                    {/* Display the selected file name (optional) */}
                     <span className='px-2'>{selectedImage ? selectedImage.name : "No file chosen"}</span>
-                    {/* Display the image preview */}
                 </div>
-                {imagePreview && <img src={imagePreview} alt="Preview" className=" w-36 h-auto mx-auto mb-4" />}
-                <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  w-full flex  justify-center items-center mt-5' type='submit' >
-                    {
-                        loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
-
-                            <p>Upload</p>
-
-                    }
-
+                {selectedImage && (
+                    <div className='flex flex-col  bg-red-400' >
+                        <Cropper
+                            image={URL.createObjectURL(selectedImage)}
+                            crop={crop}
+                            zoom={zoom}
+                            aspect={1 / 1}
+                            onCropChange={handleCropChange}
+                            onZoomChange={handleZoomChange}
+                            onCropComplete={onCropComplete}
+                            
+                        />
+                        <button onClick={handleCrop} >Crop Image</button>
+                    </div>
+                )}
+                {croppedImage && <img src={croppedImage} alt="Cropped" />}
+                <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg transition-all duration-150  hover:scale-95  w-full flex  justify-center items-center mt-5' type='submit'>
+                    Upload
                 </button>
             </form>
         </div>

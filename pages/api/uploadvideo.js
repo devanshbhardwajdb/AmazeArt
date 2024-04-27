@@ -1,27 +1,9 @@
 import multer from 'multer';
-import path from 'path';
-import { v4 as uuidv4 } from 'uuid';
+import { storage } from '../../firebase.config'; // Import Firebase storage instance
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-// Set up multer storage
-const storage = multer.diskStorage({
-  destination: './public/uploads',
-  filename: (req, file, cb) => {
-    const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
-    cb(null, uniqueName);
-  }
-});
-
-// Check file type
-const fileFilter = (req, file, cb) => {
-  if (file.mimetype.startsWith('video/')) {
-    cb(null, true);
-    console.log("idhar se guzar gaya")
-  } else {
-    cb(new Error('Only videos are allowed'));
-  }
-};
-
-const upload = multer({ storage, fileFilter });
+// Initialize multer without diskStorage
+const upload = multer({ storage: multer.memoryStorage() });
 
 export const config = {
   api: {
@@ -30,16 +12,39 @@ export const config = {
 };
 
 const handler = async (req, res) => {
-  upload.single('video')(req, res, async (err) => {
-    if (err) {
-        console.log("erroe mein hu")
-      return res.status(400).json({ error: err.message });
-    }
+  try {
+    upload.single('video')(req, res, async (err) => {
+      if (err) {
+        return res.status(400).json({ error: err.message });
+      }
 
-    // Video uploaded successfully, return the URL
-    const videoUrl = `/uploads/${req.file.filename}`;
-    return res.status(200).json({ success: true, videoUrl });
-  });
+      // Check if file is uploaded
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+
+      // Access the buffer containing the uploaded file
+      const videoBuffer = req.file.buffer;
+
+      // Generate a unique filename or use the original filename
+      const uniqueFilename = req.file.originalname;
+
+      // Create a reference to the Firebase Storage bucket and specify the filename
+      const storageRef = ref(storage, uniqueFilename);
+
+      // Upload the image file to Firebase Storage
+      await uploadBytes(storageRef, videoBuffer);
+
+      // Construct the URL of the uploaded image
+      const videoUrl = await getDownloadURL(storageRef);
+
+      // Return the URL of the uploaded image
+      return res.status(200).json({ success: true, videoUrl });
+    });
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    return res.status(500).json({ error: 'Failed to upload image' });
+  }
 };
 
 export default handler;

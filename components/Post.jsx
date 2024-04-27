@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FaHeart, FaRegHeart, FaComment } from "react-icons/fa";
+import { FaCirclePlay } from "react-icons/fa6";
+import { FaPlay } from "react-icons/fa";
+
+
 
 const Post = ({ post, tokenUserData }) => {
     const [isLiked, setIsLiked] = useState(post.likes.includes(tokenUserData?.username));
     const [likeCount, setLikeCount] = useState(post.likes.length);
     const [commentCount, setCommentCount] = useState(post.comments.length);
+    // Check if the contentUrl contains any video extension
+    const isVideo = /\.(mp4|webm)/.test(post.contentUrl);
+
+
 
     const handleLike = async () => {
         try {
@@ -51,17 +59,22 @@ const Post = ({ post, tokenUserData }) => {
             <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
 
             {/* Conditional rendering for image or video */}
-            {post.contentUrl.endsWith('.mp4') || post.contentUrl.endsWith('.webm') ? (
-                // Render video element if contentUrl ends with video extension
+            {isVideo ? (
+                // Render video element if contentUrl is a video
                 <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}>
-                    <video controls className='object-contain'>
-                        <source src={post.contentUrl} type='video/mp4' />
-                    </video>
+                    <div className='post bg-white/10 relative  object-scale-down flex justify-center '>
+                        <FaPlay className='absolute text-5xl text-gray-200 text-shadow top-[30%] ' />
+                        <video className='object-contain '>
+                            <source src={post.contentUrl} type='video/mp4' />
+
+
+                        </video>
+                    </div>
                 </Link>
             ) : (
-                // Render image element for all other cases
+                // Render image element if contentUrl is not a video
                 <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}`}>
-                    <div className="post bg-white/10   object-scale-down flex justify-center ">
+                    <div className="post bg-white/10    flex justify-center ">
                         <img src={post.contentUrl} alt="Post" className=' object-contain' />
                     </div>
                 </Link>
