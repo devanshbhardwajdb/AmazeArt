@@ -166,3 +166,5 @@ body::-webkit-scrollbar-thumb {
   .glassmorphism1 {
     @apply rounded-full  bg-transparent shadow-[inset_0px_2220px_50px_0_rgb(0,0,0,0.3)] backdrop-blur p-5;
   }
+
+  

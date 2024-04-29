@@ -1,9 +1,10 @@
+// pages/api/createpost.js
+
 import connectDB from '@middleware/database';
 import Post from '@models/Post';
+import User from '@models/User';
 
 const handler = async (req, res) => {
-
-  // console.log(req.body)
   try {
     if (req.method === 'POST') {
       const {
@@ -28,7 +29,13 @@ const handler = async (req, res) => {
       // Save the new post to the database
       const savedPost = await newPost.save();
 
-      res.status(201).json({ success: true, savedPost });; // Return the saved post as JSON response
+      // Update user's post count
+      await User.findOneAndUpdate(
+        { username },
+        { $inc: { posts: 1 } } // Increment the posts count by 1
+      );
+
+      res.status(201).json({ success: true, savedPost }); // Return the saved post as JSON response
     } else {
       res.status(400).json({ error: 'Invalid request method' });
     }

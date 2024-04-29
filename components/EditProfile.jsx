@@ -8,11 +8,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import Lottie from "lottie-react";
 import A1 from "@/anime3.json"
 import A2 from "@/anime9.json"
+import Select from 'react-select';
 import Head from 'next/head';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '@firebase.config';
+import { IoMdCloseCircle } from "react-icons/io";
 
-const Complete = ({ tokenUserData }) => {
+
+const EditProfile = ({ tokenUserData, togglePopup3 }) => {
     const router = useRouter();
 
     const { username } = router.query;
@@ -20,6 +23,8 @@ const Complete = ({ tokenUserData }) => {
     const [address, setAddress] = useState("")
     const [city, setCity] = useState("")
     const [state, setState] = useState("")
+    const [creatorTag, setCreatorTag] = useState("")
+    const [link, setLink] = useState("")
     const [pincode, setPincode] = useState("")
     const [bio, setBio] = useState("")
     const [profilePic, setProfilePic] = useState("")
@@ -28,7 +33,36 @@ const Complete = ({ tokenUserData }) => {
     const [loading, setLoading] = useState(false);
     const [isUsernameValid, setIsUsernameValid] = useState(true);
     const [userExists, setUserExists] = useState(false);
+    const [linkError, setLinkError] = useState('');
 
+
+    const options = [
+        { value: 'Musician', label: 'Musician' },
+        { value: 'Band', label: 'Band' },
+        { value: 'Singer', label: 'Singer' },
+        { value: 'Songwriter', label: 'Songwriter' },
+        // Add more options here...
+    ];
+
+    const handleChange = (selectedOption) => {
+        setCreatorTag(selectedOption);
+    };
+    const handleLinkChange = (e) => {
+        const { value } = e.target;
+        // Regular expression to check if the link starts with https:// or http://
+        const regex = /^(https?:\/\/)/;
+
+        if (!regex.test(value)) {
+            // If the link does not start with https:// or http://, set an error message
+            setLinkError('Please enter a secure link starting with "https://" or "http://"');
+        } else {
+            // If the link starts with https:// or http://, clear the error message
+            setLinkError('');
+        }
+
+        // Update the link state
+        setLink(value);
+    };
 
 
     useEffect(() => {
@@ -41,20 +75,21 @@ const Complete = ({ tokenUserData }) => {
 
                     if (response.success) {
                         const { user } = response;
-                        // Check if address and other required fields are already filled
-                        if (user.address && user.city && user.state && user.pincode) {
-                            // Redirect to another page if all required fields are filled
-                            router.push(`/UploadProfile/${username}`);
-                            setUserData(user);
-                        } else {
-                            // Set user data if some fields are missing
-                            setUserData(user);
-                            // setLoading(false);
-                        }
+                        
+
+                        
+                        setUserData(user);
+                        setAddress(user.address)
+                        setBio(user.bio)
+                        setLink(user.link)
+                        setCreatorTag(user.creatorTag)
+                        setState(user.state)
+                        setCity(user.city)
+                        setPincode(user.pincode)
+
+                        
+
                     }
-                } else if (!username && username === tokenUserData.username) {
-                    // Username is not available
-                    setUserData(null);
                 } else {
                     router.push(`/NotFound`)
                 }
@@ -64,7 +99,7 @@ const Complete = ({ tokenUserData }) => {
         };
 
         fetchUserData();
-    }, [username, router]);
+    }, [username, router,, togglePopup3]);
 
 
     const handleSubmit = async (e) => {
@@ -77,10 +112,13 @@ const Complete = ({ tokenUserData }) => {
             city,
             state,
             pincode,
+            bio,
+            link,
+            creatorTag
         };
 
         try {
-            const res = await fetch('/api/updateaddress', {
+            const res = await fetch('/api/updateprofile', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,7 +130,7 @@ const Complete = ({ tokenUserData }) => {
 
             if (data.success) {
                 localStorage.setItem('token', data.token);
-                toast.success('User address updated successfully', {
+                toast.success('Profile updated successfully', {
                     position: 'top-center',
                     autoClose: 3000,
                     hideProgressBar: false,
@@ -101,7 +139,12 @@ const Complete = ({ tokenUserData }) => {
                     draggable: true,
                     progress: undefined,
                 });
-                router.push(`/UploadProfile/${username}`);
+                // router.push(`/Profile/${username}`);
+
+                setTimeout(() => {
+
+                    togglePopup3();
+                }, 2000);
             } else {
                 toast.error(data.error, {
                     position: 'top-center',
@@ -114,7 +157,7 @@ const Complete = ({ tokenUserData }) => {
                 });
             }
         } catch (error) {
-            console.error('Error updating user address:', error);
+            console.error('Error updating profile:', error);
             toast.error('An error occurred while updating user address', {
                 position: 'top-center',
                 autoClose: 3000,
@@ -136,8 +179,8 @@ const Complete = ({ tokenUserData }) => {
 
 
     return (
-        <div className='min-h-[120vh] px-[10vw]  flex  justify-center items-center font-noto  max-md:px-6 max-md:pt-28 '>
-            <Head><title>Signup to Amazeart</title></Head>
+        <div className='min-h-[120vh] px-[10vw]  flex justify-center items-center font-noto '>
+            <Head><title>Edit Profile</title></Head>
             <ToastContainer
                 position="top-right"
                 autoClose={5000}
@@ -165,8 +208,9 @@ const Complete = ({ tokenUserData }) => {
                     <form
                         onSubmit={(e) => { handleSubmit(e) }}
                         method='POST'
-                        className="flex flex-col  gap-2 items-center    w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-white/5 backdrop-blur-md   glassmorphism">
-                        <h3 className="text-white text-2xl font-bold mb-1 text-center">Complete Your Profile <span className='text_main'>{userData.name}</span></h3>
+                        className="flex relative flex-col  gap-2 items-center    w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-gray-800 backdrop-blur-md   ">
+                        <h3 className="text-white text-2xl font-bold mb-1 text-center">Edit Your Profile <span className='text_main'>{userData.name}</span></h3>
+                        <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={togglePopup3} />
 
                         <div className="flex mt-6 gap-8  flex-col w-full ">
                             <div className='flex gap-8'>
@@ -192,20 +236,6 @@ const Complete = ({ tokenUserData }) => {
 
 
                                 <div className='text-white w-full'>
-                                    <h3>Name</h3>
-                                    <input
-                                        value={userData.name}
-                                        readOnly
-                                        type="name"
-                                        className='rounded-lg p-2 focus:outline-none shadow-md border border-[#9F07F5] shadow-[#9F07F5] bg-white/15 text-white placeholder-gray-200 w-full'
-                                        placeholder='Name'
-                                        name='name'
-                                        required
-                                    />
-                                </div>
-                            </div>
-                            <div className='flex gap-8'>
-                                <div className='text-white w-full'>
                                     <h3>Email</h3>
 
                                     <input
@@ -218,6 +248,9 @@ const Complete = ({ tokenUserData }) => {
                                         required
                                     />
                                 </div>
+                            </div>
+                            <div className='flex gap-8'>
+
                                 <div className='text-white w-full'>
                                     <h3>Phone</h3>
                                     <input
@@ -230,7 +263,52 @@ const Complete = ({ tokenUserData }) => {
                                         required
                                     />
                                 </div>
+                                <div className='text-white w-full'>
+                                    <h3>Social Link</h3>
+                                    <input
+                                        value={link}
+                                        onChange={handleLinkChange}
+                                        type="text"
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none '
+                                        placeholder='Enter the Link'
+                                        name='link'
+                                        required
+                                    />
+                                    {linkError && <p className="text-red-500 text-sm">{linkError}</p>}
+                                </div>
                             </div>
+
+                            <div className='flex gap-8'>
+
+                                <div className='text-white w-full'>
+                                    <h3>Bio</h3>
+                                    <textarea
+                                        value={bio}
+                                        onChange={(e) => {
+
+                                            setBio(e.target.value);
+
+                                        }}
+                                        type="text"
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none'
+                                        placeholder='Enter your Bio'
+                                        name='bio'
+                                        required
+                                    />
+                                </div>
+                                <div className='text-white w-full'>
+                                    <h3>Creator Tag</h3>
+                                    <Select
+                                        value={creatorTag}
+                                        onChange={handleChange}
+                                        options={options}
+                                        isSearchable
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] text-white placeholder-gray-200 w-full'
+                                        placeholder="Select or search creator tag..."
+                                    />
+                                </div>
+                            </div>
+
                             <div className='flex gap-8'>
 
                                 <div className='text-white w-full'>
@@ -243,10 +321,11 @@ const Complete = ({ tokenUserData }) => {
 
                                         }}
                                         type="text"
-                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none'
                                         placeholder='Enter your address'
                                         name='address'
                                         required
+
                                     />
                                 </div>
                                 <div className='text-white w-full'>
@@ -260,7 +339,7 @@ const Complete = ({ tokenUserData }) => {
                                         }}
                                         type="text"
                                         className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none '
-                                        placeholder='Enter you City'
+                                        placeholder='Enter your City'
                                         name='city'
                                         required
                                     />
@@ -278,9 +357,10 @@ const Complete = ({ tokenUserData }) => {
                                         }}
                                         type="text"
                                         className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
-                                        placeholder='Enter you State'
+                                        placeholder='Enter your State'
                                         name='state'
                                         required
+
                                     />
                                 </div>
                                 <div className='text-white w-full'>
@@ -308,13 +388,13 @@ const Complete = ({ tokenUserData }) => {
                         </div>
 
                         <div className='flex flex-col w-full items-end'>
-                            <button className='nav-btn   text-white underline text-shadow rounded-lg  transition-all duration-150   flex w-1/2  justify-end items-end px-4 mt-5 hover:text-gray-400' onClick={handleSkip}><p>Skip</p></button>
+                            {/* <button className='nav-btn   text-white underline text-shadow rounded-lg  transition-all duration-150   flex w-1/2  justify-end items-end px-4 mt-5 hover:text-gray-400' onClick={handleSkip}><p>Skip</p></button> */}
 
                             <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  w-full flex  justify-center items-center mt-5' >
                                 {
                                     loading ? <Lottie animationData={A1} loop={true} className='w-6' /> :
 
-                                        <p>Continue</p>
+                                        <p>Save Changes</p>
 
                                 }
 
@@ -328,4 +408,4 @@ const Complete = ({ tokenUserData }) => {
     )
 }
 
-export default Complete
+export default EditProfile

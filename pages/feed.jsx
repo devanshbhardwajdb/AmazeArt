@@ -17,6 +17,9 @@ const Feed = ({ tokenUserData }) => {
                 // Fetch posts 
                 const res = await fetch(`/api/getposts`);
                 const response = await res.json();
+
+              
+
                 setPosts(response);
                 setIsLoading(false); // Set loading to false after fetching posts
             } catch (error) {
@@ -61,7 +64,7 @@ const Feed = ({ tokenUserData }) => {
                         <div className='w-full flex gap-4 justify-center items-center'>
                             {tokenUserData.profilepic ? (
                                 <Link href={`/Profile/${tokenUserData?.username}`}>
-                                    <img alt={`${tokenUserData?.name}'s Profile pic`} className="rounded-full max-md:w-[14vw] w-[5vw]" src={tokenUserData?.profilepic} />
+                                    <img alt={`${tokenUserData?.name}'s Profile pic`} className="rounded-full w-20 h-20" src={tokenUserData?.profilepic} />
                                 </Link>
                             ) : (
                                 <MdAccountCircle className='rounded-full w-20 h-20 text-gray-500' />

@@ -5,11 +5,13 @@ import { FaXTwitter } from "react-icons/fa6";
 import { IoSend } from "react-icons/io5";
 import { MdPayment } from "react-icons/md";
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { useRouter } from 'next/router';
 import Lottie from "lottie-react";
 import A1 from "@/anime3.json"
 import LoadingContainer2 from '@components/LoadingContainer2';
+import { TiTick } from "react-icons/ti";
 
 import {
     EmailShareButton,
@@ -24,6 +26,7 @@ const PostId = ({ tokenUserData }) => {
 
     const router = useRouter();
     const postId = router.query.id;
+    const username = router.query.username;
     const [post, setPost] = useState({});
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
@@ -33,6 +36,8 @@ const PostId = ({ tokenUserData }) => {
     const [isShareOpen, setIsShareOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const isVideo = /\.(mp4|webm)/.test(post.contentUrl);
+    const [isFollowing, setIsFollowing] = useState(false);
+    const [user, setUser] = useState(null)
 
 
 
@@ -163,17 +168,77 @@ const PostId = ({ tokenUserData }) => {
                 const res = await fetch(`/api/getpostbyid?id=${postId}`);
                 const result = await res.json();
                 setPost(result);
+                // Set loading to false after fetching post
+
+
+                const result2 = await fetch(`/api/user/${username}`);
+                const userJson = await result2.json();
+
+                const { user } = userJson
+                setUser(user)
                 setIsLiked(result.likes.includes(tokenUserData?.username));
+                setIsFollowing(user.followers.includes(tokenUserData.username));
                 setLikeCount(result.likes.length);
                 setCommentCount(result.comments.length);
                 setShareCount(result.shares);
-                setLoading(false); // Set loading to false after fetching post
+                setLoading(false);
+                console.log(user)
+
             } catch (error) {
                 console.error('Error fetching post:', error);
             }
         };
+
+
+
         fetchPost();
     }, [postId, tokenUserData]);
+
+    const handleFollow = async () => {
+        try {
+            const response = await fetch('/api/follow', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('User followed successfully:', data.message);
+                setIsFollowing(true); // Update the state to reflect that the user is now following
+                setFollowers((prevCount) => (prevCount + 1));
+            } else {
+                console.error('Failed to follow user:', data.error);
+            }
+        } catch (error) {
+            console.error('Error following user:', error);
+        }
+    };
+
+    const handleUnfollow = async () => {
+        try {
+            const response = await fetch('/api/follow', { // Assuming you have an unfollow API endpoint
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('User unfollowed successfully:', data.message);
+                setIsFollowing(false); // Update the state to reflect that the user is no longer following
+                setFollowers((prevCount) => (prevCount - 1));
+            } else {
+                console.error('Failed to unfollow user:', data.error);
+            }
+        } catch (error) {
+            console.error('Error unfollowing user:', error);
+        }
+    };
 
 
 
@@ -208,15 +273,30 @@ const PostId = ({ tokenUserData }) => {
 
                     (<div className="postcontainer  bg-white/5 backdrop-blur-md   glassmorphism  bg-gray-600 rounded-lg  flex flex-col  gap-6  font-noto ">
 
-                        <div className='flex justify-between items-center w-full'>
+                        <div className='flex justify-between items-center w-full '>
                             <div className='flex  items-center gap-2 '>
-                                <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={post.profilepic} ></img>
+                                <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={user.profilepic} ></img>
                                 <div className=''>
-                                    <h4 className='text-white font-medium text-sm flex max-md:flex-col items-center gap-1'>{post.name} • <span className="text-gray-300 text-xs">Posted {formatTimeAgo(post.createdAt)}</span></h4>
-                                    <h5 className='text-gray-300 text-sm'>@{post.username}</h5>
+                                    <h4 className='text-white font-medium text-sm flex max-md:flex-col items-center gap-1'>{post.name}<span className="text-gray-300 text-xs "><span className='max-md:hidden'>•</span>  Posted {formatTimeAgo(post.createdAt)}</span></h4>
+                                    <h5 className='text-gray-300 text-sm max-md:hidden'>@{post.username}</h5>
                                 </div>
                             </div>
-                            <button className='bg-transparent flex items-center justify-center px-3 text-white text-sm rounded-xl  font-noto w-30 h-8  border-2 border-white  duration-300 hover:bg-[#fff] hover:text-[#000]'><FaPlus className='  cursor-pointer mr-3' /><h5>Follow</h5></button>
+
+                            <div>
+
+
+                                {
+                                    !(post.username === tokenUserData.username) && (isFollowing ? (
+                                        <button className='nav-btn bg-gray-500 text-white px-5 py-2 rounded-lg transition-all duration-150 hover:scale-95 hover:shadow-lg flex justify-center items-center max-md:scale-90 gap-1' onClick={handleUnfollow}>
+                                            <TiTick /> Following
+                                        </button>
+                                    ) : (
+                                        <button className='nav-btn border-2 border-gray-500 text-white px-5 py-2 rounded-lg transition-all duration-150 hover:scale-95 hover:shadow-lg flex justify-center items-center max-md:scale-90 gap-1' onClick={handleFollow}>
+                                            <FaPlus /> Follow
+                                        </button>
+                                    ))
+                                }
+                            </div>
                         </div>
                         <div className="caption text-white text-sm"><h4>{post.caption}</h4></div>
                         {isVideo ? (
@@ -242,10 +322,10 @@ const PostId = ({ tokenUserData }) => {
                             </div>
                             {isShareOpen && (
                                 <div className="share-options rounded-lg flex fixed bg-black/70 gap-5 bottom-6 right-0 p-4">
-                                    <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                                    <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                                    <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                                    <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?post=${post._id}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                                    <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                                    <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                                    <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                                    <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
                                 </div>
                             )}
                         </div>

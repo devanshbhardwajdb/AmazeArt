@@ -13,7 +13,7 @@ import { auth } from '@firebase.config';
 import { IoMdCloseCircle } from "react-icons/io";
 
 
-const Profilepic = ({ tokenUserData, togglePopup }) => {
+const Coverpic = ({ tokenUserData, togglePopup2 }) => {
     const [selectedImage, setSelectedImage] = useState(null);
     const [imagePreview, setImagePreview] = useState(null); // State to store image preview URL
     const router = useRouter();
@@ -46,7 +46,7 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
             if (imageUrl) {
                 const updatedUserData = { username, imageUrl };
 
-                const res = await fetch('/api/updateprofileimage', {
+                const res = await fetch('/api/updatecoverimage', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
                 if (response.success) {
                     // Store the new token in localStorage
                     localStorage.setItem('token', response.token);
-                    toast.success('User profilepic updated successfully', {
+                    toast.success('User coverpic updated successfully', {
                         position: 'top-center',
                         autoClose: 3000,
                         hideProgressBar: false,
@@ -115,10 +115,10 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
             
             <div className='flex justify-between'>
 
-                <h3 className="text-white text-2xl font-bold mb-1 text-center">Update your Profile Picture <span className='text_main'>{tokenUserData?.name}</span></h3>
+                <h3 className="text-white text-2xl font-bold mb-1 text-center">Update your Cover Picture <span className='text_main'>{tokenUserData?.name}</span></h3>
 
             </div>
-            <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={togglePopup} />
+            <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={togglePopup2} />
 
             <form onSubmit={handleSubmit} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 w-1/2' >
                 {/* Style the input field */}
@@ -148,4 +148,4 @@ const Profilepic = ({ tokenUserData, togglePopup }) => {
     )
 }
 
-export default Profilepic
+export default Coverpic

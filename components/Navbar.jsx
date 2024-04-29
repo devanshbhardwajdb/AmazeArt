@@ -154,7 +154,7 @@ const Navbar = ({ user, tokenUserData,logout }) => {
 
               <div
 
-                className="dropdown bg-black/70 absolute right-0 max-lg:left-0  px-10  pt-6 pb-4 rounded-lg lg:rounded-tr-none gap-5 flex flex-col shadow-lg shadow-black   "
+                className="dropdown bg-black/90 absolute right-0 max-lg:left-0  px-10  pt-6 pb-4 rounded-lg lg:rounded-tr-none gap-5 flex flex-col shadow-lg shadow-black   "
               >
                  
                 <Link href={`/Profile/${tokenUserData?.username}`} className='hover:text-[#9B03F8] hover:underline-offset-4  hover:underline transition-all duration-300 hover:scale-95'><h4>My Profile</h4></Link>

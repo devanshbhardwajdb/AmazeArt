@@ -48,10 +48,11 @@ export default function App({ Component, pageProps }) {
 
   const logout = () => {
     localStorage.removeItem('token');
-    // clearCart();
     setUser({ value: null })
-    
     router.push('/')
+    // clearCart();
+    router.reload()
+    
   }
 
   return (
@@ -76,7 +77,7 @@ export default function App({ Component, pageProps }) {
             <img
               src="/logo.png"
               alt="AmazeArt"
-              className="w-80 h-80 opacity-100 animate-pulse duration-300"
+              className="w-80 h-80 opacity-100 animate-pulse duration-300 "
                // Set showImage to false when the image is loaded
             />
           </div>
