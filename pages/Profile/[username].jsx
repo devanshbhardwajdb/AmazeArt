@@ -14,11 +14,13 @@ import Link from 'next/link';
 import Profilepic from '@components/Profilepic';
 import Coverpic from '@components/Coverpic';
 import ProfilePost from '@components/ProfilePost';
+import ProfileProduct from '@components/ProfileProduct';
 import { MdGridOn } from "react-icons/md";
 import EditProfile from '@components/EditProfile';
 import { TiTick } from "react-icons/ti";
 import Followers from '@components/Followers';
 import Following from '@components/Following';
+import { FaBagShopping } from "react-icons/fa6";
 
 
 
@@ -37,9 +39,12 @@ const UserProfile = ({ tokenUserData }) => {
   const [followingPopup, setFollowingPopup] = useState(false);
   const [editProfilePopup, setEditProfilePopup] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [isFollowing, setIsFollowing] = useState(false);
   const [followers, setFollowers] = useState(0)
   const [following, setFollowing] = useState(0)
+  const [isPosts, setIsPosts] = useState(true)
+  const [isProducts, setIsProducts] = useState(false)
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
@@ -85,10 +90,26 @@ const UserProfile = ({ tokenUserData }) => {
         // setIsLoading(false); // Set loading to false in case of an error
       }
     };
+    const fetchProducts = async () => {
+      try {
+        // Fetch posts 
+        const res = await fetch(`/api/getuserproducts?username=${username}`);
+        const response = await res.json();
+
+
+
+        setProducts(response);
+        // setIsLoading(false); // Set loading to false after fetching posts
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // setIsLoading(false); // Set loading to false in case of an error
+      }
+    };
 
     if (username) {
       fetchUserData();
       fetchPosts();
+      fetchProducts();
     }
   }, [username]);
 
@@ -155,6 +176,17 @@ const UserProfile = ({ tokenUserData }) => {
     }
   };
 
+
+  const toggleIsPosts = () => {
+
+    isPosts ? setIsPosts(true) : setIsPosts(true); setIsProducts(false);
+    
+  }
+  const toggleIsProducts = () => {
+
+    isProducts ? setIsProducts(true) : setIsPosts(false); setIsProducts(true);
+    
+  }
 
 
   return (
@@ -287,12 +319,26 @@ const UserProfile = ({ tokenUserData }) => {
                 <div className="flex flex-col gap-4  min-h-[30vh] ">
                   <div className='flex w-full justify-between '>
 
-                    <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2 ' ><MdGridOn />  Posts</button>
-                    <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2' >Professional Dashboard</button>
+                    <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2 ' onClick={toggleIsPosts} ><MdGridOn />  Posts</button>
+                    <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2' onClick={toggleIsProducts} ><FaBagShopping />Products</button>
                   </div>
-                  <div className="posts flex items-center justify-between gap-1 flex-wrap	">
-                    {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData} />)}
-                  </div>
+                  {isPosts ?
+
+                    posts.length !== 0 ? <div className="posts flex items-center justify-between gap-1 flex-wrap	" >
+                      {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData} />)}
+                    </div> :
+                      <div className="posts flex items-center justify-between gap-1 flex-wrap	">
+                        <h1 className='xl:text-3xl md:text-xl text-sm  font-semibold'>No Posts</h1>
+                      </div>
+                    :
+
+                    products.length !== 0 ?
+                      <div className="posts flex items-center justify-between gap-1 flex-wrap	">
+                        {products.map((post) => <ProfileProduct key={post._id} post={post} tokenUserData={tokenUserData} />)}
+                      </div> : 
+                      <div className="posts flex items-center justify-between gap-1 flex-wrap	">
+                        <h1 className='xl:text-3xl md:text-xl text-sm  font-semibold'>No Products</h1>
+                      </div>}
                 </div>
               </div>
 
@@ -387,8 +433,8 @@ const UserProfile = ({ tokenUserData }) => {
                   <div className="flex flex-col w-full gap-4 min-h-[30vh] ">
                     <div className='flex w-full justify-between '>
 
-                      <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2 ' ><MdGridOn />  Posts</button>
-                      <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2' >Products</button>
+                      <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2 ' onClick={switchView} ><MdGridOn />  Posts</button>
+                      <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2' onClick={switchView}>Products</button>
                     </div>
                     <div className="posts flex items-center justify-between gap-1 flex-wrap	">
                       {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData} />)}
@@ -409,7 +455,7 @@ const UserProfile = ({ tokenUserData }) => {
 
 
 
-      </div>
+      </div >
     </>
   );
 };

@@ -60,6 +60,10 @@ const UserSchema = new Schema({
         type: Number,
         default: 0
     },
+    products: {
+        type: Number,
+        default: 0
+    },
     followers: {
         type: [String], // Array of usernames
         default: []

@@ -67,6 +67,13 @@ const Navbar = ({ user, tokenUserData,logout }) => {
 
   }, [router.pathname])
 
+  useEffect(() => {
+    
+  
+   setDropdown(false)
+  }, [router])
+  
+
 
 
 
@@ -128,7 +135,7 @@ const Navbar = ({ user, tokenUserData,logout }) => {
         <Link href={'/'} className={`hover:text-3xl duration-300 ${page === 'home' ? 'text-3xl border-b-2 border-[#9B03F8]  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center `} title='Home'><AiFillHome /></Link>
         <Link href={'/feed'} className={`hover:text-3xl duration-300 ${page === 'feed' ? 'text-3xl border-b-2 text-[#9B03F8] border-[#9B03F8] ' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Feed'><BsFilePostFill />
         </Link>
-        <Link href={'/products'} className={`hover:text-3xl duration-300 ${page === 'products' ? 'text-3xl border-b-2 text-[#9B03F8] border-[#9B03F8] ' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Shop'><FaBagShopping />
+        <Link href={'/shop'} className={`hover:text-3xl duration-300 ${page === 'products' ? 'text-3xl border-b-2 text-[#9B03F8] border-[#9B03F8] ' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Shop'><FaBagShopping />
         </Link>
         <Link href={'/#about'} className={`hover:text-3xl duration-300 bg_border1 ${page === 'about' ? 'text-3xl  border-b-2  text-[#9B03F8] border-[#9B03F8] ' : ''}   md:px-10 px-4  h-full flex items-center  `} title='About'><FaReadme />
         </Link>
