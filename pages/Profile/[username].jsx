@@ -11,6 +11,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import { FaPlus } from "react-icons/fa";
 import 'react-toastify/dist/ReactToastify.css';
 import Link from 'next/link';
+import A2 from "@/anime9.json"
+import Lottie from "lottie-react";
 import Profilepic from '@components/Profilepic';
 import Coverpic from '@components/Coverpic';
 import ProfilePost from '@components/ProfilePost';
@@ -48,11 +50,12 @@ const UserProfile = ({ tokenUserData }) => {
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-      router.push('/login')
+      console.log("wapis jarha hu")
+      router.push('/')
     }
 
 
-  }, [])
+  }, [username])
 
   useEffect(() => {
     setProfilePopup(false);
@@ -107,9 +110,12 @@ const UserProfile = ({ tokenUserData }) => {
     };
 
     if (username) {
+      setFollowersPopup(false);
+      setFollowingPopup(false);
       fetchUserData();
       fetchPosts();
       fetchProducts();
+
     }
   }, [username]);
 
@@ -180,12 +186,12 @@ const UserProfile = ({ tokenUserData }) => {
   const toggleIsPosts = () => {
 
     isPosts ? setIsPosts(true) : setIsPosts(true); setIsProducts(false);
-    
+
   }
   const toggleIsProducts = () => {
 
     isProducts ? setIsProducts(true) : setIsPosts(false); setIsProducts(true);
-    
+
   }
 
 
@@ -210,13 +216,11 @@ const UserProfile = ({ tokenUserData }) => {
       <div className='lg:px-[8vw]  relative pt-[8vh]  flex  items-center justify-center text-white   flex-col gap-0 min-h-[100vh] font-noto '>
         {
           loading ? (
-            <div>
-              Loading...
-            </div>
+            <Lottie animationData={A2} loop={true} className='w-[15vw]' />
 
           ) : (
 
-            (tokenUserData.username === username) ? (<div className="flex flex-col my-10 gap-1 items-center glassmorphism w-full shadow-lg shadow-black ">
+            (tokenUserData?.username === username) ? (<div className="flex flex-col my-10 gap-1 items-center glassmorphism w-full shadow-lg shadow-black ">
 
               {
                 profilePopup && <div className='fixed z-30 top-36 justify-center items-center top-  w-full shadow-black shadow-2xl '>
@@ -316,28 +320,28 @@ const UserProfile = ({ tokenUserData }) => {
 
                 </div>
 
-                <div className="flex flex-col gap-4  min-h-[30vh] ">
+                <div className="flex flex-col    min-h-[30vh] ">
                   <div className='flex w-full justify-between '>
 
-                    <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2 ' onClick={toggleIsPosts} ><MdGridOn />  Posts</button>
-                    <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2' onClick={toggleIsProducts} ><FaBagShopping />Products</button>
+                    <button className={`nav-btn   text-white px-5 py-2 rounded-t-lg  flex  justify-center items-center max-md:text-sm w-1/2  ${isPosts ? 'bg-black/70' : 'bg-white/30'}`} onClick={toggleIsPosts} ><MdGridOn />  Posts</button>
+                    <button className={`nav-btn   text-white px-5 py-2 rounded-t-lg  flex  justify-center items-center max-md:text-sm w-1/2  ${isProducts ? 'bg-black/70' : 'bg-white/30'}`} onClick={toggleIsProducts} ><FaBagShopping />Products</button>
                   </div>
                   {isPosts ?
 
-                    posts.length !== 0 ? <div className="posts flex items-center justify-between gap-1 flex-wrap	" >
-                      {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData} />)}
+                    posts.length !== 0 ? <div className="posts py-5 bg-black/70 flex items-center justify-between gap-1 flex-wrap	" >
+                      {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData}  />)}
                     </div> :
-                      <div className="posts flex items-center justify-between gap-1 flex-wrap	">
-                        <h1 className='xl:text-3xl md:text-xl text-sm  font-semibold'>No Posts</h1>
+                      <div className="posts flex items-center h-full  bg-black/70 justify-center min-h-[30vh] gap-1 flex-wrap	">
+                        <h1 className='text-lg  font-semibold'>No Posts</h1>
                       </div>
                     :
 
                     products.length !== 0 ?
-                      <div className="posts flex items-center justify-between gap-1 flex-wrap	">
+                      <div className="posts flex items-center py-5 bg-black/70 justify-between gap-1 flex-wrap	">
                         {products.map((post) => <ProfileProduct key={post._id} post={post} tokenUserData={tokenUserData} />)}
-                      </div> : 
-                      <div className="posts flex items-center justify-between gap-1 flex-wrap	">
-                        <h1 className='xl:text-3xl md:text-xl text-sm  font-semibold'>No Products</h1>
+                      </div> :
+                      <div className="posts flex items-center h-full  bg-black/70 justify-center min-h-[30vh] gap-1 flex-wrap	">
+                        <h1 className='text-lg  font-semibold'>No Products</h1>
                       </div>}
                 </div>
               </div>
@@ -365,24 +369,24 @@ const UserProfile = ({ tokenUserData }) => {
 
                 </div>
 
-                <div className='flex flex-col gap-4 md:w-[62vw] w-full'>
-                  <div className="photo flex max-md:flex-col items-center justify-center gap-4  z-10 w-full">
-                    <div className=' relative w-1/2 '>
-                      {userData.profilepic ?
+                <div className='flex flex-col gap-4 md:w-[62vw] '>
+                  <div className="photo flex max-md:flex-col items-center justify-center gap-4  z-10 ">
+                  <div className=' relative '>
+                    {userData.profilepic ?
 
-                        <img alt={`${userData?.name}'s Profile pic`} className="rounded-full xl:w-44 xl:h-44 max-md:w-28 max-md:h-28 " src={userData?.profilepic} ></img>
-                        :
+                      <img alt={`${userData?.name}'s Profile pic`} className="rounded-full xl:w-44 xl:h-44 max-md:w-28 max-md:h-28 " src={userData?.profilepic} ></img>
+                      :
 
-                        <MdAccountCircle className='rounded-full w-44 h-44 text-gray-500' />
-                      }
+                      <MdAccountCircle className='rounded-full w-44 h-44 text-gray-500' />
+                    }
+
+                   
+
+                  </div>
 
 
 
-                    </div>
-
-
-
-                    <div className="flex flex-col gap-2 w-full">
+                    <div className="flex flex-col gap-2 ">
 
                       <div className='flex gap-4 items-center  '>
                         <h1 className='xl:text-3xl md:text-xl text-sm  font-semibold'>{userData?.name}</h1>
@@ -430,16 +434,30 @@ const UserProfile = ({ tokenUserData }) => {
 
                   </div>
 
-                  <div className="flex flex-col w-full gap-4 min-h-[30vh] ">
-                    <div className='flex w-full justify-between '>
+                  <div className="flex flex-col    min-h-[30vh] ">
+                  <div className='flex w-full justify-between '>
 
-                      <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2 ' onClick={switchView} ><MdGridOn />  Posts</button>
-                      <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  flex  justify-center items-center max-md:text-sm w-1/2' onClick={switchView}>Products</button>
-                    </div>
-                    <div className="posts flex items-center justify-between gap-1 flex-wrap	">
-                      {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData} />)}
-                    </div>
+                    <button className={`nav-btn   text-white px-5 py-2 rounded-t-lg  flex  justify-center items-center max-md:text-sm w-1/2  ${isPosts ? 'bg-black/70' : 'bg-white/30'}`} onClick={toggleIsPosts} ><MdGridOn />  Posts</button>
+                    <button className={`nav-btn   text-white px-5 py-2 rounded-t-lg  flex  justify-center items-center max-md:text-sm w-1/2  ${isProducts ? 'bg-black/70' : 'bg-white/30'}`} onClick={toggleIsProducts} ><FaBagShopping />Products</button>
                   </div>
+                  {isPosts ?
+
+                    posts.length !== 0 ? <div className="posts py-5 bg-black/70 flex items-center justify-between gap-1 flex-wrap	" >
+                      {posts.map((post) => <ProfilePost key={post._id} post={post} tokenUserData={tokenUserData}  />)}
+                    </div> :
+                      <div className="posts flex items-center h-full  bg-black/70 justify-center min-h-[30vh] gap-1 flex-wrap	">
+                        <h1 className='text-lg  font-semibold'>No Posts</h1>
+                      </div>
+                    :
+
+                    products.length !== 0 ?
+                      <div className="posts flex items-center py-5 bg-black/70 justify-between gap-1 flex-wrap	">
+                        {products.map((post) => <ProfileProduct key={post._id} post={post} tokenUserData={tokenUserData} />)}
+                      </div> :
+                      <div className="posts flex items-center h-full  bg-black/70 justify-center min-h-[30vh] gap-1 flex-wrap	">
+                        <h1 className='text-lg  font-semibold'>No Products</h1>
+                      </div>}
+                </div>
                 </div>
 
               </div>

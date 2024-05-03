@@ -70,7 +70,7 @@ const Feed = ({ tokenUserData }) => {
                                 <MdAccountCircle className='rounded-full w-20 h-20 text-gray-500' />
                             )}
 
-                            <button onClick={toggleCreatePost} className='flex justify-center items-center w-3/2 bg-white/80 rounded-full  px-4 glassmorphism1 text-gray-200 font-light text-md hover:scale-105 duration-200'>
+                            <button onClick={toggleCreatePost} className='flex justify-center items-center w-3/2 max-md:w-[60vw] bg-white/80 rounded-full  px-4 glassmorphism1 text-gray-200 font-light text-md hover:scale-105 duration-200'>
                                 What's in your mind, {tokenUserData.name}
                             </button>
                         </div>

@@ -28,7 +28,7 @@ const Explore = () => {
 
     return (
         <>
-            <div id="explore" className=' w-1/2  flex items-center justify-center gap-0 '>
+            <div id="explore" className=' w-1/2 max-md:w-full  flex items-center justify-center gap-0 '>
                 <div className="w-auto relative flex items-center justify-center">
                     {/* <FaChevronLeft className="absolute h-48 left-[-8vw] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('prev')} />
                     <FaChevronRight className="absolute h-48 right-[-8vw] top-1/2 text-white cursor-pointer transform -translate-y-1/2" onClick={() => changeImage('next')} /> */}
@@ -42,7 +42,7 @@ const Explore = () => {
                                 
                                 src={image}
                                 alt={`background-${index}`}
-                                className={`z-[10]  w-[40vw] h-[50vh] max-xl:w-[75vw]  max-xl:h-[30vh]  max-lg:w-[50vw]  max-lg:h-[20vh] max-md:h-[14vh] rounded-3xl shadow-2xl shadow-black bg-contain ${index === currentImage ? 'visible' : 'hidden'}`}
+                                className={`z-[10]  w-[40vw] h-[50vh] max-xl:w-[75vw]  max-xl:h-[30vh]  max-lg:w-[50vw]  max-lg:h-[20vh] max-md:h-[20vh]  max-md:w-[70vw] rounded-3xl shadow-2xl shadow-black bg-contain ${index === currentImage ? 'visible' : 'hidden'}`}
                             />
                         ))}
 

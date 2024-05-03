@@ -65,7 +65,7 @@ const ProfilePost = ({ post, tokenUserData }) => {
 
 
     return (
-        <div className="feedcontainer   backdrop-blur-md   bg-black/70 h-auto flex flex-col  gap-20  font-noto  hover:scale-105 duration-200">
+        <div className="feedcontainer   backdrop-blur-md   bg-black/70 h-auto flex flex-col  gap-20  font-noto  hover:scale-105 duration-200 ">
            
             
 

@@ -20,7 +20,9 @@ const Post = ({ post, tokenUserData }) => {
     const handleLike = async () => {
         try {
             // Toggle the like state locally
-            setIsLiked(!isLiked);
+
+            if(tokenUserData){
+                setIsLiked(!isLiked);
 
             // Send a request to the API route to toggle the like
             const response = await fetch(`/api/like?postId=${post._id}`, {
@@ -39,6 +41,10 @@ const Post = ({ post, tokenUserData }) => {
                 setIsLiked(!isLiked);
                 console.error('Failed to toggle like:', response.statusText);
             }
+
+
+            }
+            
         } catch (error) {
             // Revert the like state if there's an error
             setIsLiked(!isLiked);

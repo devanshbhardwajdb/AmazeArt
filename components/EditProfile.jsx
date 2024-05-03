@@ -179,7 +179,8 @@ const EditProfile = ({ tokenUserData, togglePopup3 }) => {
 
 
     return (
-        <div className='min-h-[120vh] px-[10vw]  flex justify-center items-center font-noto '>
+        <div className=' md:px-[10vw] px-[4vw]  flex justify-center items-center font-noto '>
+            <div className="fixed inset-0 bg-black z-[-1] opacity-70"></div>
             <Head><title>Edit Profile</title></Head>
             <ToastContainer
                 position="top-right"
@@ -208,15 +209,12 @@ const EditProfile = ({ tokenUserData, togglePopup3 }) => {
                     <form
                         onSubmit={(e) => { handleSubmit(e) }}
                         method='POST'
-                        className="flex relative flex-col  gap-2 items-center    w-full h-auto p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-gray-800 backdrop-blur-md   ">
+                        className="flex relative flex-col  gap-2 items-center  w-full h-auto p-8 rounded-lg  duration-150 transition-all font-noto bg-gray-800 backdrop-blur-md   ">
                         <h3 className="text-white text-2xl font-bold mb-1 text-center">Edit Your Profile <span className='text_main'>{userData.name}</span></h3>
                         <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={togglePopup3} />
 
                         <div className="flex mt-6 gap-8  flex-col w-full ">
-                            <div className='flex gap-8'>
-
-
-
+                            <div className='flex gap-8 max-md:flex-col'>
                                 <div className='text-white w-full'>
                                     <h3>Username</h3>
                                     <input
@@ -249,7 +247,7 @@ const EditProfile = ({ tokenUserData, togglePopup3 }) => {
                                     />
                                 </div>
                             </div>
-                            <div className='flex gap-8'>
+                            <div className='flex gap-8 max-md:flex-col'>
 
                                 <div className='text-white w-full'>
                                     <h3>Phone</h3>
@@ -278,7 +276,7 @@ const EditProfile = ({ tokenUserData, togglePopup3 }) => {
                                 </div>
                             </div>
 
-                            <div className='flex gap-8'>
+                            <div className='flex gap-8 max-md:flex-col'>
 
                                 <div className='text-white w-full'>
                                     <h3>Bio</h3>
@@ -309,7 +307,7 @@ const EditProfile = ({ tokenUserData, togglePopup3 }) => {
                                 </div>
                             </div>
 
-                            <div className='flex gap-8'>
+                            <div className='flex gap-8 max-md:flex-col'>
 
                                 <div className='text-white w-full'>
                                     <h3>Address</h3>

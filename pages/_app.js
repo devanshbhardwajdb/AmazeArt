@@ -51,8 +51,6 @@ export default function App({ Component, pageProps }) {
     setUser({ value: null })
     router.push('/')
     // clearCart();
-    router.reload()
-    
   }
 
   return (

@@ -111,7 +111,8 @@ const Coverpic = ({ tokenUserData, togglePopup2 }) => {
     };
 
     return (
-        <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-gray-900 h-[70vh]     relative '>
+        <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg duration-150 transition-all font-noto bg-gray-900 h-[70vh] relative '>
+            <div className="fixed inset-0 bg-black z-[-1] opacity-70"></div>
             
             <div className='flex justify-between'>
 
@@ -120,7 +121,7 @@ const Coverpic = ({ tokenUserData, togglePopup2 }) => {
             </div>
             <IoMdCloseCircle className='absolute right-5 top-5 text-3xl cursor-pointer hover:scale-125 duration-200 hover:text-[#9B03F8] text-gray-500' onClick={togglePopup2} />
 
-            <form onSubmit={handleSubmit} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 w-1/2' >
+            <form onSubmit={handleSubmit} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 w-1/2 max-lg:w-full' >
                 {/* Style the input field */}
                 <div className='flex items-center justify-center '>
                     <input type="file" accept="image/*" onChange={handleImageChange} className='hidden' id="fileInput" required />
