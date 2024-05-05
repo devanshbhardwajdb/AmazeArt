@@ -36,7 +36,7 @@ const Hero = () => {
                         }`}
                 ></div> */}
 
-                <video src='/space2.mp4' class='fixed z-[-117] opacity-50 top-0 left-0 w-full h-full object-cover ' loop autoPlay muted  ></video>
+                <video src='/space2.mp4' className='fixed z-[-117] opacity-50 top-0 left-0 w-full h-full object-cover ' loop autoPlay muted  ></video>
 
                 {/* <Lottie animationData={A1} loop={true} className='w-[30vw] fixed left-50 -z-10 opacity-50 top-50' /> */}
 
