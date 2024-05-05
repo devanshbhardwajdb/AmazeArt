@@ -220,18 +220,18 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
         <>
             <Head>
-                <title>Amazeart - {post.productTitle}</title>
+                <title>Amazeart - {post?.productTitle}</title>
                 {/* Description */}
-                <meta name="description" content={post.description} />
+                <meta name="description" content={post?.description} />
                 {/* Open Graph metadata for sharing on social media */}
-                <meta property="og:title" content={post.productTitle} />
+                <meta property="og:title" content={post?.productTitle} />
                 <meta property="og:description" content={post.description} />
-                <meta property="og:image" content={post.contentUrl} />
+                <meta property="og:image" content={post?.contentUrl} />
                 {/* Twitter Card metadata */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={post.productTitle} />
+                <meta name="twitter:title" content={post?.productTitle} />
                 <meta name="twitter:description" content={post.description} />
-                <meta name="twitter:image" content={post.contentUrl} />
+                <meta name="twitter:image" content={post?.contentUrl} />
             </Head>
             <ToastContainer
                 position="top-right"

@@ -246,18 +246,18 @@ const PostId = ({ tokenUserData }) => {
 
         <>
            <Head>
-                <title>Amazeart - {post.caption}</title>
+                <title>Amazeart - {post?.caption}</title>
                 {/* Description */}
-                <meta name="description" content={post.username} />
+                <meta name="description" content={post?.username} />
                 {/* Open Graph metadata for sharing on social media */}
-                <meta property="og:title" content={post.username} />
+                <meta property="og:title" content={post?.username} />
                 <meta property="og:description" content={post.caption} />
-                <meta property="og:image" content={post.contentUrl} />
+                <meta property="og:image" content={post?.contentUrl} />
                 {/* Twitter Card metadata */}
                 <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={post.username} />
-                <meta name="twitter:description" content={post.description} />
-                <meta name="twitter:image" content={post.contentUrl} />
+                <meta name="twitter:title" content={post?.username} />
+                <meta name="twitter:description" content={post?.description} />
+                <meta name="twitter:image" content={post?.contentUrl} />
             </Head>
             <ToastContainer
                 position="top-right"

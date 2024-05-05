@@ -197,22 +197,22 @@ const UserProfile = ({ tokenUserData }) => {
 
   return (
     <>
+
       <Head>
-        <Head>
-          <title>Profile - {username}</title>
-          {/* Description */}
-          <meta name="description" content={`${username} on Amazeart`} />
-          {/* Open Graph metadata for sharing on social media */}
-          <meta property="og:title" content={`${username} Profile`} />
-          <meta property="og:description" content={`${username} on Amazeart`} />
-          <meta property="og:image" content={userData.profilepic} />
-          {/* Twitter Card metadata */}
-          <meta name="twitter:card" content="summary_large_image" />
-          <meta name="twitter:title" content={`${username} Profile`} />
-          <meta name="twitter:description" content={`${username} on Amazeart`} />
-          <meta name="twitter:image" content={userData.profilepic} />
-        </Head>
+        <title>Profile - {username}</title>
+        {/* Description */}
+        <meta name="description" content={`${username} on Amazeart`} />
+        {/* Open Graph metadata for sharing on social media */}
+        <meta property="og:title" content={`${username} Profile`} />
+        <meta property="og:description" content={`${username} on Amazeart`} />
+        <meta property="og:image" content={userData?.profilepic} />
+        {/* Twitter Card metadata */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${username} Profile`} />
+        <meta name="twitter:description" content={`${username} on Amazeart`} />
+        <meta name="twitter:image" content={userData?.profilepic} />
       </Head>
+
       <ToastContainer
         position="top-right"
         autoClose={5000}
@@ -262,7 +262,7 @@ const UserProfile = ({ tokenUserData }) => {
               }
               <div className='flex relative  items-center  justify-center object-contain'>
 
-                {userData.coverpic ?
+                {userData?.coverpic ?
                   <img src={userData?.coverpic} alt={`${userData?.name}'s Cover pic`} className='w-[80vw] h-[30vh]   xl:h-[40vh] max-lg:h-[15vh] max-md:h-[15vh] max-md:w-[100vw] object-cover object-center' />
                   :
                   <div className='w-[80vw] xl:h-[30vh] max-lg:h-[15vh] bg-gray-800 flex justify-center items-center'>No Cover Image</div>
@@ -279,7 +279,7 @@ const UserProfile = ({ tokenUserData }) => {
               <div className='flex flex-col gap-4 md:w-[62vw] w-[95vw] bg-red-400 '>
                 <div className="photo flex max-md:flex-col items-center justify-center gap-4  z-10 w-full">
                   <div className=' relative '>
-                    {userData.profilepic ?
+                    {userData?.profilepic ?
 
                       <img alt={`${userData?.name}'s Profile pic`} className="rounded-full xl:w-44 xl:h-44 max-md:w-28 max-md:h-28 " src={userData?.profilepic} ></img>
                       :
