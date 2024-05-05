@@ -36,8 +36,19 @@ const Feed = ({ tokenUserData }) => {
 
     return (
         <>
-            <Head>
+           <Head>
                 <title>Amazeart - Feed</title>
+                {/* Description */}
+                <meta name="description" content="Amazeart posts" />
+                {/* Open Graph metadata for sharing on social media */}
+                <meta property="og:title" content="Amazeart - Feed" />
+                <meta property="og:description" content="Amazeart posts" />
+                <meta property="og:image" content="https://amaze-art.vercel.app/logo.png" />
+                {/* Twitter Card metadata */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Amazeart - Feed" />
+                <meta name="twitter:description" content="Amazeart posts" />
+                <meta name="twitter:image" content="https://amaze-art.vercel.app/logo.png" />
             </Head>
             <ToastContainer
                 position="top-right"
@@ -64,7 +75,7 @@ const Feed = ({ tokenUserData }) => {
                         <div className='w-full flex gap-4 justify-center items-center'>
                             {tokenUserData.profilepic ? (
                                 <Link href={`/Profile/${tokenUserData?.username}`}>
-                                    <img alt={`${tokenUserData?.name}'s Profile pic`} className="rounded-full w-20 h-20" src={tokenUserData?.profilepic} />
+                                    <img alt={`${tokenUserData?.name}'s Profile pic`} className="rounded-full w-14 h-14" src={tokenUserData?.profilepic} />
                                 </Link>
                             ) : (
                                 <MdAccountCircle className='rounded-full w-20 h-20 text-gray-500' />

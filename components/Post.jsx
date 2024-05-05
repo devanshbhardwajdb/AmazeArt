@@ -1,8 +1,17 @@
-import React, { useState ,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { FaHeart, FaRegHeart, FaComment } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaShare, FaFacebook, FaTwitter, FaLinkedin, FaPlus, FaComment, FaWhatsapp } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 import { FaCirclePlay } from "react-icons/fa6";
 import { FaPlay } from "react-icons/fa";
+import {
+    EmailShareButton,
+    FacebookShareButton,
+    LinkedinShareButton,
+    TwitterShareButton,
+    WhatsappShareButton,
+
+} from "react-share";
 
 
 
@@ -11,40 +20,67 @@ const Post = ({ post, tokenUserData }) => {
     const [isLiked, setIsLiked] = useState(post.likes.includes(tokenUserData?.username));
     const [likeCount, setLikeCount] = useState(post.likes.length);
     const [commentCount, setCommentCount] = useState(post.comments.length);
+    const [shareCount, setShareCount] = useState(post.shares);
     const [user, setUser] = useState(null)
+    const [isShareOpen, setIsShareOpen] = useState(false);
     // Check if the contentUrl contains any video extension
     const isVideo = /\.(mp4|webm)/.test(post.contentUrl);
 
 
+    const handleShare = async () => {
+        setIsShareOpen(!isShareOpen);
 
-    const handleLike = async () => {
+    };
+    const handleShareButtonClick = async (socialMedia) => {
         try {
-            // Toggle the like state locally
-
-            if(tokenUserData){
-                setIsLiked(!isLiked);
-
-            // Send a request to the API route to toggle the like
-            const response = await fetch(`/api/like?postId=${post._id}`, {
+            // Send a request to the API route to increment the share count
+            const response = await fetch(`/api/share`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: tokenUserData.username }),
+                body: JSON.stringify({ postId }),
             });
 
             if (response.ok) {
-                // Update the like count in the UI
-                setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+                console.log('Post shared successfully');
+                // Update the share count in the UI
+                setShareCount((prevCount) => prevCount + 1);
             } else {
-                // Revert the like state if the request fails
+                console.error('Failed to share post:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error sharing post:', error);
+        }
+    };
+    const handleLike = async () => {
+        try {
+            // Toggle the like state locally
+
+            if (tokenUserData) {
                 setIsLiked(!isLiked);
-                console.error('Failed to toggle like:', response.statusText);
-            }
+
+                // Send a request to the API route to toggle the like
+                const response = await fetch(`/api/like?postId=${post._id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ username: tokenUserData.username }),
+                });
+
+                if (response.ok) {
+                    // Update the like count in the UI
+                    setLikeCount((prevCount) => (isLiked ? prevCount - 1 : prevCount + 1));
+                } else {
+                    // Revert the like state if the request fails
+                    setIsLiked(!isLiked);
+                    console.error('Failed to toggle like:', response.statusText);
+                }
 
 
             }
-            
+
         } catch (error) {
             // Revert the like state if there's an error
             setIsLiked(!isLiked);
@@ -106,15 +142,29 @@ const Post = ({ post, tokenUserData }) => {
                 </Link>
             )}
 
-            <div className="reactions flex items-center justify-around py-2 border-t border-b border-white/20  text-2xl">
-                <div className={`flex max-md:flex-col items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
+            <div className="reactions flex items-center justify-around   text-2xl">
+                <div className={`flex  items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 ${!isLiked ? 'text-white' : 'text-red-500'}`} onClick={handleLike}>
                     {isLiked ? <FaHeart className='text-md text-red-500' /> : <FaRegHeart className='text-md' />}
                     <h5 className='text-sm'>{likeCount}</h5>
                 </div>
-                <div className='flex gap-1 max-md:flex-col items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 '>
+                <div className='flex gap-1  items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 '>
                     <FaComment className='text-md' />
                     <h5 className='text-sm'>{commentCount}</h5>
                 </div>
+                <div className='flex gap-1 relative  items-center justify-center text-white cursor-pointer hover:scale-110 duration-150  '>
+                    <FaShare onClick={handleShare}  />
+                    <h5 className='text-sm'>{shareCount}</h5>
+                    {isShareOpen && (
+                    <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full right-0 p-2">
+                        <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                        <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                        <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                        <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                    </div>
+                )}
+
+                </div>
+                
             </div>
         </div>
     )

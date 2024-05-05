@@ -19,6 +19,17 @@ const Hero = () => {
         <>
             <Head>
                 <title>Amazeart</title>
+                {/* Description */}
+                <meta name="description" content="A Unified Solution for all Artists!" />
+                {/* Open Graph metadata for sharing on social media */}
+                <meta property="og:title" content="Amazeart" />
+                <meta property="og:description" content="A Unified Solution for all Artists!" />
+                <meta property="og:image" content="https://amaze-art.vercel.app/logo.png" />
+                {/* Twitter Card metadata */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Amazeart" />
+                <meta name="twitter:description" content="A Unified Solution for all Artists!" />
+                <meta name="twitter:image" content="https://amaze-art.vercel.app/logo.png" />
             </Head>
             <motion.div className='  lg:px-[8vw] min-h-[90vh] xl:py-[25vh] py-[10vh]  max-lg:flex-col   flex w-full  items-center justify-center  gap-8'>
                 {/* <div className={`fixed z-[-117] bg7-image w-full h-full top-0 transition-opacity  duration-1000 
@@ -71,7 +82,7 @@ const Hero = () => {
                         className='bg_button1 px-10 mt-5 py-3 font-noto text-lg max-md:text-xs max-md:px-4 max-md:py-2 rounded-full hover:scale-110 duration-300 button1 hover:shadow-md hover:shadow-black hover:duration-200 text-white text-shadow2 '>Explore</motion.button></Link>
 
                 </div>
-                <Explore  />
+                <Explore />
             </motion.div>
         </>
     );

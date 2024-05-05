@@ -245,7 +245,20 @@ const PostId = ({ tokenUserData }) => {
     return (
 
         <>
-            <Head><title>Amazeart - {post.caption}</title></Head>
+           <Head>
+                <title>Amazeart - {post.caption}</title>
+                {/* Description */}
+                <meta name="description" content={post.username} />
+                {/* Open Graph metadata for sharing on social media */}
+                <meta property="og:title" content={post.username} />
+                <meta property="og:description" content={post.caption} />
+                <meta property="og:image" content={post.contentUrl} />
+                {/* Twitter Card metadata */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={post.username} />
+                <meta name="twitter:description" content={post.description} />
+                <meta name="twitter:image" content={post.contentUrl} />
+            </Head>
             <ToastContainer
                 position="top-right"
                 autoClose={1500}
@@ -318,16 +331,17 @@ const PostId = ({ tokenUserData }) => {
                             <div className='flex gap-1  items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 relative '>
                                 <FaShare onClick={handleShare} />
                                 <h5 className='text-sm'>{shareCount}</h5>
+                                {isShareOpen && (
+                                    <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full right-0 p-2">
+                                        <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                                        <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                                        <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                                        <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                                    </div>
+                                )}
 
                             </div>
-                            {isShareOpen && (
-                                <div className="share-options rounded-lg flex fixed bg-black/70 gap-5 bottom-6 right-0 p-4">
-                                    <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                                    <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                                    <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                                    <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
-                                </div>
-                            )}
+
                         </div>
                         <form className="commentbox flex gap-2 items-center font-noto " onSubmit={(e) => { addComment(e) }} method='PUT'>
                             <input

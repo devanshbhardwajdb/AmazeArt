@@ -24,7 +24,7 @@ import {
 
 } from "react-share";
 
-const PostId = ({ tokenUserData }) => {
+const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
     const router = useRouter();
     const postId = router.query.id;
@@ -51,7 +51,7 @@ const PostId = ({ tokenUserData }) => {
     const handleShareButtonClick = async (socialMedia) => {
         try {
             // Send a request to the API route to increment the share count
-            const response = await fetch(`/api/share`, {
+            const response = await fetch(`/api/shareproduct`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -219,7 +219,20 @@ const PostId = ({ tokenUserData }) => {
     return (
 
         <>
-            <Head><title>Amazeart - {post.productTitle}</title></Head>
+            <Head>
+                <title>Amazeart - {post.productTitle}</title>
+                {/* Description */}
+                <meta name="description" content={post.description} />
+                {/* Open Graph metadata for sharing on social media */}
+                <meta property="og:title" content={post.productTitle} />
+                <meta property="og:description" content={post.description} />
+                <meta property="og:image" content={post.contentUrl} />
+                {/* Twitter Card metadata */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content={post.productTitle} />
+                <meta name="twitter:description" content={post.description} />
+                <meta name="twitter:image" content={post.contentUrl} />
+            </Head>
             <ToastContainer
                 position="top-right"
                 autoClose={1500}
@@ -284,15 +297,15 @@ const PostId = ({ tokenUserData }) => {
                                 <div className='flex flex-col gap-2'>
                                     <div className="caption text-white text-shadow text-2xl font-bold"><h4>{post.productTitle}</h4></div>
                                     <div className="caption text-white text-sm"><h4>{post.description}</h4></div>
-                                    <div className="caption text-white text-sm bg-gray-500 w-[28%] p-2 rounded-2xl"><h4>Product Type: {post.productType}</h4></div>
+                                    <div className="caption text-white text-sm rounded-2xl"><h4>Product Type: {post.productType}</h4></div>
 
                                 </div>
 
 
                                 <div className='flex max-md:flex-col-reverse  justify-between items-center max-md:items-start gap-4 w-full'>
                                     <div className='flex gap-2 items-center'>
-                                        <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' >Add to Cart</button>
-                                        <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' >Buy</button>
+                                        <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' onClick={()=>{addToCart(postId,1,post.price,post.productTitle,post.productType,post.contentUrl,username)}} >Add to Cart</button>
+                                        <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' onClick={()=>{buyNow(postId,1,post.price,post.productTitle,post.productType,post.contentUrl,username)}} >Buy</button>
                                         <h5 className='text-sm text-white'>₹{post.price}</h5>
                                     </div>
                                     <div className='flex gap-4 items-center justify-end '>
@@ -305,15 +318,15 @@ const PostId = ({ tokenUserData }) => {
                                             <FaShare onClick={handleShare} />
                                             <h5 className='text-sm'>{shareCount}</h5>
 
-                                        </div>
                                         {isShareOpen && (
-                                            <div className="share-options rounded-lg flex absolute bg-black/70 gap-5 bottom-6 right-0 p-4">
+                                            <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full left-0 p-4">
                                                 <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
                                                 <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
                                                 <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
                                                 <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
                                             </div>
                                         )}
+                                        </div>
 
                                     </div>
 

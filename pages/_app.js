@@ -9,10 +9,12 @@ var jwt = require('jsonwebtoken');
 
 export default function App({ Component, pageProps }) {
 
+  const [cart, setCart] = useState({});
+  const [subTotal, setSubTotal] = useState(0)
   const [progress, setProgress] = useState(0)
   const router = useRouter();
   const [user, setUser] = useState({ value: null });
-  
+
 
 
 
@@ -24,12 +26,22 @@ export default function App({ Component, pageProps }) {
     router.events.on('routeChangeComplete', () => {
       setProgress(100);
     })
+    try {
+      if (localStorage.getItem("cart")) {
+        setCart(JSON.parse(localStorage.getItem("cart")))
+        saveCart(JSON.parse(localStorage.getItem("cart")))
+      }
+    } catch (error) {
+      console.log(error)
+      localStorage.clear();
+    }
     const token = localStorage.getItem('token');
 
     if (token) {
       setUser({ value: token })
     }
-  
+
+
   }, [router.query])
 
   const decoded = jwt.decode(user.value);
@@ -51,6 +63,72 @@ export default function App({ Component, pageProps }) {
     setUser({ value: null })
     router.push('/')
     // clearCart();
+  }
+
+  const saveCart = (myCart) => {
+    localStorage.setItem("cart", JSON.stringify(myCart))
+    let subt = 0;
+    let keys = Object.keys(myCart)
+    for (let i = 0; i < keys.length; i++) {
+      subt += myCart[keys[i]].price * myCart[keys[i]].qty
+
+    }
+    setSubTotal(subt)
+  }
+
+  const addToCart = (itemCode, qty, price, name, type, img,username) => {
+
+    let newCart = cart;
+    if (itemCode in cart) {
+      newCart[itemCode].qty = newCart[itemCode].qty + qty;
+    }
+    else {
+      newCart[itemCode] = { qty: 1, price, name, type, img , username}
+    }
+    // console.log(newCart);
+    setCart(newCart)
+    saveCart(newCart)
+
+  }
+
+  const buyNow = (itemCode, qty, price, name, type, img, username) => {
+
+    saveCart({})
+    let newCart = cart;
+    if (itemCode in cart) {
+      newCart[itemCode].qty = newCart[itemCode].qty + qty;
+    }
+    else {
+      newCart[itemCode] = { qty: 1, price, name, type, img, username }
+    }
+
+    setCart(newCart)
+    saveCart(newCart)
+    router.push(`${process.env.NEXT_PUBLIC_HOST}checkout`)
+    console.log("hi bro e rha hia")
+
+  }
+  const removeFromCart = (itemCode, qty) => {
+    let newCart = cart;
+
+    console.log(newCart[itemCode])
+    if (itemCode in cart) {
+      newCart[itemCode].qty = newCart[itemCode].qty - qty;
+    }
+
+    if (newCart[itemCode]["qty"] <= 0) {
+      delete newCart[itemCode]
+    }
+
+    setCart(newCart)
+    saveCart(newCart)
+
+  }
+
+  const clearCart = () => {
+
+    setCart({})
+    saveCart({})
   }
 
   return (
@@ -76,13 +154,13 @@ export default function App({ Component, pageProps }) {
               src="/logo.png"
               alt="AmazeArt"
               className="w-80 h-80 opacity-100 animate-pulse duration-300 "
-               // Set showImage to false when the image is loaded
+            // Set showImage to false when the image is loaded
             />
           </div>
         ) :
           <>
-            <Navbar tokenUserData={tokenUserData} user={user} logout={logout}/>
-            <Component {...pageProps} tokenUserData={tokenUserData} user={user} />
+            <Navbar tokenUserData={tokenUserData} user={user} logout={logout} cart={cart} setCart={setCart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} setSubTotal={setSubTotal} />
+            <Component {...pageProps} tokenUserData={tokenUserData} user={user} addToCart={addToCart} cart={cart} clearCart={clearCart} subTotal={subTotal} buyNow={buyNow} />
             <div className='bg-black/40'>
 
               <Footer />

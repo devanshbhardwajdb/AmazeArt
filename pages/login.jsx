@@ -129,7 +129,20 @@ const Login = () => {
     }
     return (
         <div className='min-h-[91vh] px-[10vw]  flex  justify-center items-center font-noto  max-md:px-6 max-md:pt-28  '>
-            <Head><title>Login to Amazeart</title></Head>
+            <Head>
+                <title>Login to Amazeart</title>
+                {/* Description */}
+                <meta name="description" content="Login to Amazeart" />
+                {/* Open Graph metadata for sharing on social media */}
+                <meta property="og:title" content="Amazeart" />
+                <meta property="og:description" content="Login to Amazeart" />
+                <meta property="og:image" content="https://amaze-art.vercel.app/logo.png" />
+                {/* Twitter Card metadata */}
+                <meta name="twitter:card" content="summary_large_image" />
+                <meta name="twitter:title" content="Amazeart" />
+                <meta name="twitter:description" content="Login to Amazeart" />
+                <meta name="twitter:image" content="https://amaze-art.vercel.app/logo.png" />
+            </Head>
             <ToastContainer
                 position="top-right"
                 autoClose={5000}

@@ -123,6 +123,16 @@ body::-webkit-scrollbar-thumb {
     background-image: linear-gradient(to bottom, #FF5BB3, #9B03F8);
     border-radius: 500px;
 }
+.sidecart::-webkit-scrollbar {
+    display: block;
+    width: 6px;
+    background: none;
+}
+
+.sidecart::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(to bottom, #FF5BB3, #9B03F8);
+    border-radius: 500px;
+}
 
 /* *::selection {
     background-color: #FF5BB3;
