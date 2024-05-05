@@ -29,6 +29,8 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
   const [dropdown, setDropdown] = useState(false);
   const [dropdown2, setDropdown2] = useState(false);
 
+  console.log(Object.keys(cart).length )
+
 
 
 
@@ -74,10 +76,21 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
 
   useEffect(() => {
 
-
+ 
     setDropdown(false)
     setDropdown2(false)
   }, [router])
+
+  useEffect(() => {
+    setSidebar(false);
+  }, [router.pathname, cart]);
+
+  // Open sidecart when item is added to cart
+  useEffect(() => {
+    if (Object.keys(cart).length > 0) {
+      setSidebar(true);
+    }
+  }, [cart,Object.keys(cart).length]);
 
 
 
@@ -126,6 +139,16 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
       sideCartElement.style.top = `${navbarHeight}px`;
     }
   }, [sidebar]);
+  useEffect(() => {
+    const navbarHeight = document.getElementById('navbar').offsetHeight;
+    const dropdownElement = ref2.current;
+
+
+
+    if (dropdownElement) {
+      dropdownElement.style.top = `${navbarHeight}px`;
+    }
+  }, [dropdown]);
 
 
 
@@ -204,7 +227,7 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
                 {dropdown &&
 
                   <div
-
+                    ref={ref2}
                     className="dropdown bg-black/90 absolute right-0 max-lg:left-0  px-10  pt-6 pb-4 rounded-lg lg:rounded-tr-none gap-5 flex flex-col shadow-lg shadow-black   "
                   >
 

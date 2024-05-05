@@ -140,7 +140,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
             try {
                 const res = await fetch(`/api/getproductbyid?id=${postId}`);
                 const result = await res.json();
-                console.log(result)
+                // console.log(result)
                 setPost(result);
                 // Set loading to false after fetching post
 
@@ -156,7 +156,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
                 // setCommentCount(result.comments.length);
                 // setShareCount(result.shares);
                 setLoading(false);
-                console.log(user)
+                // console.log(user)
 
             } catch (error) {
                 console.error('Error fetching post:', error);
