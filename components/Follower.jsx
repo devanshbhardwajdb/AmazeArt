@@ -13,7 +13,7 @@ const Follower = ({ key, username }) => {
         const fetchUserData = async () => {
             try {
                 // Fetch user data based on the username
-                console.log(username)
+                // console.log(username)
                 const response = await fetch(`/api/user/${username}`);
                 const userData = await response.json();
                 // console.log(userData);

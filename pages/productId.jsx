@@ -87,7 +87,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
             if (response.ok) {
                 const data = await response.json();
-                console.log(data)
+                // console.log(data)
                 // setCommentCount(data.post.comments.length);
                 setPost(data.post)
                 setReviewText('')
@@ -320,10 +320,10 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
                                         {isShareOpen && (
                                             <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full left-0 p-4">
-                                                <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                                                <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                                                <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                                                <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                                                <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                                                <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                                                <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                                                <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
                                             </div>
                                         )}
                                         </div>

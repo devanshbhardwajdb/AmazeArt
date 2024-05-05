@@ -39,7 +39,7 @@ const Complete = ({ tokenUserData }) => {
                         const { user } = response;
                         // Check if address and other required fields are already filled
                         if (user.coverpic) {
-                            console.log("hi bro")
+                            // console.log("hi bro")
                             setUserData1(user);
                             // Redirect to another page if all required fields are filled
                             router.push(`/Profile/${username}`);

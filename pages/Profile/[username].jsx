@@ -32,7 +32,7 @@ const UserProfile = ({ tokenUserData }) => {
   // console.log(router.query)
   const { username } = router.query;
 
-  console.log(username)
+  // console.log(username)
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [profilePopup, setProfilePopup] = useState(false);
@@ -50,7 +50,7 @@ const UserProfile = ({ tokenUserData }) => {
 
   useEffect(() => {
     if (!localStorage.getItem('token')) {
-      console.log("wapis jarha hu")
+      // console.log("wapis jarha hu")
       router.push('/')
     }
 

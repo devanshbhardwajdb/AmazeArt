@@ -26,7 +26,7 @@ const ProfileProduct = ({ post, tokenUserData }) => {
 
             const { user } = userJson
             setUser(user)
-            console.log(user)
+            // console.log(user)
         }
 
         fetchUser();
@@ -43,7 +43,7 @@ const ProfileProduct = ({ post, tokenUserData }) => {
             {/* Conditional rendering for image or video */}
             {isVideo ? (
                 // Render video element if contentUrl is a video
-                <Link href={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`}>
+                <Link href={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`}>
                     <div className='post bg-white/10 relative  object-scale-down flex justify-center '>
                         <FaPlay className='absolute text-5xl text-gray-200 text-shadow top-[30%] ' />
                         <video className='object-cover md:w-[15vw] xl:h-[25vh] max-xl:h-[10vh] max-md:h-[15vh] w-[44vw]  '>
@@ -55,7 +55,7 @@ const ProfileProduct = ({ post, tokenUserData }) => {
                 </Link>
             ) : (
                 // Render image element if contentUrl is not a video
-                <Link href={`${process.env.NEXT_PUBLIC_HOST}productId?id=${post._id}&username=${post.username}`}>
+                <Link href={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`}>
                     <div className="post bg-white/10 flex justify-center w-[44vw] md:w-[15vw] xl:h-[25vh] max-xl:h-[10vh] max-md:h-[15vh] ">
                         <img src={post.contentUrl} alt="Post" className=' object-cover' />
                     </div>

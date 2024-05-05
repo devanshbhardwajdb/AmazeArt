@@ -118,7 +118,7 @@ const Checkout = ({ cart, clearCart, subTotal, user, tokenUserData }) => {
                     order_id: data.order.id,
                     description: data.order.desc,
                     callback_url: `${process.env.NEXT_PUBLIC_HOST}/api/posttransaction`,
-                    image: `${process.env.NEXT_PUBLIC_HOST}/p/logo.png`,
+                    image: `${process.env.NEXT_PUBLIC_HOST}/logo.png`,
 
                     prefill: {
                         name: userData?.name || "AmazeArt",

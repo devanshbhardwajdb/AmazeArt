@@ -97,7 +97,7 @@ const Post = ({ post, tokenUserData }) => {
 
             const { user } = userJson
             setUser(user)
-            console.log(user)
+            // console.log(user)
         }
 
         fetchUser();
@@ -123,7 +123,7 @@ const Post = ({ post, tokenUserData }) => {
             {/* Conditional rendering for image or video */}
             {isVideo ? (
                 // Render video element if contentUrl is a video
-                <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`}>
+                <Link href={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`}>
                     <div className='post bg-white/10 relative  object-scale-down flex justify-center '>
                         <FaPlay className='absolute text-5xl text-gray-200 text-shadow top-[30%] ' />
                         <video className='object-contain '>
@@ -135,7 +135,7 @@ const Post = ({ post, tokenUserData }) => {
                 </Link>
             ) : (
                 // Render image element if contentUrl is not a video
-                <Link href={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`}>
+                <Link href={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`}>
                     <div className="post bg-white/10    flex justify-center ">
                         <img src={post.contentUrl} alt="Post" className=' object-contain' />
                     </div>
@@ -156,10 +156,10 @@ const Post = ({ post, tokenUserData }) => {
                     <h5 className='text-sm'>{shareCount}</h5>
                     {isShareOpen && (
                     <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full right-0 p-2">
-                        <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                        <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                        <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                        <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                        <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                        <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                        <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                        <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
                     </div>
                 )}
 

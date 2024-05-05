@@ -72,7 +72,7 @@ const CreateProduct = ({ tokenUserData, toggleCreateProduct }) => {
                 body: formData,
             });
             const data = await res.json();
-            console.log(data)
+            // console.log(data)
             const { imageUrl, videoUrl } = data;
             const contentUrl = imageUrl || videoUrl;
 

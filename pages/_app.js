@@ -104,14 +104,14 @@ export default function App({ Component, pageProps }) {
 
     setCart(newCart)
     saveCart(newCart)
-    router.push(`${process.env.NEXT_PUBLIC_HOST}checkout`)
-    console.log("hi bro e rha hia")
+    router.push(`${process.env.NEXT_PUBLIC_HOST}/checkout`)
+    // console.log("hi bro e rha hia")
 
   }
   const removeFromCart = (itemCode, qty) => {
     let newCart = cart;
 
-    console.log(newCart[itemCode])
+    // console.log(newCart[itemCode])
     if (itemCode in cart) {
       newCart[itemCode].qty = newCart[itemCode].qty - qty;
     }

@@ -29,7 +29,7 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
   const [dropdown, setDropdown] = useState(false);
   const [dropdown2, setDropdown2] = useState(false);
 
-  console.log(Object.keys(cart).length )
+
 
 
 

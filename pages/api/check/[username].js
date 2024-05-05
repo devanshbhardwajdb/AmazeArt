@@ -6,7 +6,7 @@ const handler = async (req, res) => {
     try {
         if (req.method === 'GET') {
             const { username } = req.query;
-            console.log(username);
+            // console.log(username);
 
             // Find the user asynchronously
             let user = await User.findOne({ username: username });

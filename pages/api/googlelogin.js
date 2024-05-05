@@ -3,7 +3,7 @@ import connectDB from "@middleware/database";
 import jwt from 'jsonwebtoken';
 
 const handler = async (req, res) => {
-    console.log(req.body.uid);
+    // console.log(req.body.uid);
     try {
         if (req.method === 'POST') {
             let user = await GoogleUser.findOne({ uid: req.body.uid });
