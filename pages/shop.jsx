@@ -6,6 +6,7 @@ import CreateProduct from '@components/CreateProduct';
 import { ToastContainer } from 'react-toastify';
 import LoadingContainer from '@components/LoadingContainer';
 import Product from '@components/Product';
+import { MdAccountCircle } from "react-icons/md";
 
 const Feed = ({ tokenUserData }) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -19,7 +20,7 @@ const Feed = ({ tokenUserData }) => {
                 const res = await fetch(`/api/getproducts`);
                 const response = await res.json();
 
-              
+
 
                 setPosts(response);
                 setIsLoading(false); // Set loading to false after fetching posts
@@ -67,7 +68,7 @@ const Feed = ({ tokenUserData }) => {
             <div className='flex items-center font-noto flex-col gap-0 min-h-[100vh] relative'>
                 {createproduct && (
                     <div className='   justify-center items-center  w-full shadow-black shadow-2xl'>
-                        <CreateProduct tokenUserData={tokenUserData}  toggleCreateProduct={toggleCreateProduct} />
+                        <CreateProduct tokenUserData={tokenUserData} toggleCreateProduct={toggleCreateProduct} />
                     </div>
                 )}
 
