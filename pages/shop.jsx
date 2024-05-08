@@ -75,7 +75,7 @@ const Feed = ({ tokenUserData }) => {
                 <div className='feeds justify-between flex xl:flex-wrap max-xl:flex-col gap-10 overflow-y-scroll w-full h-[100vh] pt-[10vh] pb-[30vh] px-[5vw] bg_main2'>
                     {tokenUserData && (
                         <div className='w-full flex gap-4 justify-center items-center'>
-                            {tokenUserData.profilepic ? (
+                            {tokenUserData?.profilepic ? (
                                 <Link href={`/Profile/${tokenUserData?.username}`}>
                                     <img alt={`${tokenUserData?.name}'s Profile pic`} className="rounded-full w-14 h-14" src={tokenUserData?.profilepic} />
                                 </Link>
@@ -84,7 +84,7 @@ const Feed = ({ tokenUserData }) => {
                             )}
 
                             <button onClick={toggleCreateProduct} className='flex justify-center items-center w-3/2 max-md:w-[60vw] bg-white/80 rounded-full  px-4 glassmorphism1 text-gray-200 font-light text-md hover:scale-105 duration-200'>
-                                Upload your talent to earn, {tokenUserData.name}
+                                Upload your talent to earn, {tokenUserData?.name}
                             </button>
                         </div>
                     )}

@@ -111,7 +111,7 @@ const PostId = ({ tokenUserData }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ postId, username: tokenUserData.username, commentText, profilepic: tokenUserData.profilepic }),
+                body: JSON.stringify({ postId, username: tokenUserData?.username, commentText, profilepic: tokenUserData?.profilepic }),
             });
 
             if (response.ok) {
@@ -179,7 +179,7 @@ const PostId = ({ tokenUserData }) => {
                 const { user } = userJson
                 setUser(user)
                 setIsLiked(result.likes.includes(tokenUserData?.username));
-                setIsFollowing(user.followers.includes(tokenUserData.username));
+                setIsFollowing(user.followers.includes(tokenUserData?.username));
                 setLikeCount(result.likes.length);
                 setCommentCount(result.comments.length);
                 setShareCount(result.shares);
@@ -203,7 +203,7 @@ const PostId = ({ tokenUserData }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData?.username })
             });
 
             const data = await response.json();
@@ -226,7 +226,7 @@ const PostId = ({ tokenUserData }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData?.username })
             });
 
             const data = await response.json();

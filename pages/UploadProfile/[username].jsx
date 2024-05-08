@@ -164,7 +164,7 @@ const Complete = ({ tokenUserData }) => {
             />
 
             <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-white/5 backdrop-blur-md   glassmorphism '>
-                <h3 className="text-white lg:text-2xl max-lg:text-xl font-bold mb-1 text-center">Upload your Profile Picture <span className='text_main'>{tokenUserData.name}</span></h3>
+                <h3 className="text-white lg:text-2xl max-lg:text-xl font-bold mb-1 text-center">Upload your Profile Picture <span className='text_main'>{tokenUserData?.name}</span></h3>
                 <form onSubmit={handleSubmit} className='bg-black/80 p-10 rounded-lg flex flex-col gap-4 lg:w-1/2' >
                     {/* Style the input field */}
                     <div className='flex items-center justify-center  '>

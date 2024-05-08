@@ -31,7 +31,7 @@ const Product = ({ post, tokenUserData }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ username: tokenUserData.username }),
+                body: JSON.stringify({ username: tokenUserData?.username }),
             });
 
             if (response.ok) {

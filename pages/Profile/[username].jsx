@@ -145,7 +145,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+          body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData?.username })
         });
 
         const data = await response.json();
@@ -168,7 +168,7 @@
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+          body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData?.username })
         });
 
         const data = await response.json();

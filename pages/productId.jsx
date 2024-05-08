@@ -84,7 +84,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ postId, username: tokenUserData.username, reviewText, profilepic: tokenUserData.profilepic }),
+                body: JSON.stringify({ postId, username: tokenUserData?.username, reviewText, profilepic: tokenUserData?.profilepic }),
             });
 
             if (response.ok) {
@@ -177,7 +177,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData?.username })
             });
 
             const data = await response.json();
@@ -200,7 +200,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData.username })
+                body: JSON.stringify({ beingFollowedUsername: username, followerUsername: tokenUserData?.username })
             });
 
             const data = await response.json();
@@ -311,7 +311,7 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
 
                                 <div className='flex max-md:flex-col-reverse  justify-between items-center max-md:items-start gap-4 w-full'>
-                                   {!(post.username===tokenUserData.username) && <div className='flex gap-2 items-center'>
+                                   {!(post?.username===tokenUserData?.username) && <div className='flex gap-2 items-center'>
                                         <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' onClick={()=>{addToCart(postId,1,post.price,post.productTitle,post.productType,post.contentUrl,username)}} >Add to Cart</button>
                                         <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' onClick={()=>{buyNow(postId,1,post.price,post.productTitle,post.productType,post.contentUrl,username)}} >Buy</button>
                                         <h5 className='text-sm text-white'>₹{post.price}</h5>

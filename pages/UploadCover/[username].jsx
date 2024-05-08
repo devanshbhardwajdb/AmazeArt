@@ -163,7 +163,7 @@ const Complete = ({ tokenUserData }) => {
             />
 
             <div className='flex flex-col text-white justify-center   gap-10 items-center    w-full  p-8 rounded-lg shadow-lg shadow-gray-900 duration-150 transition-all font-noto bg-white/5 backdrop-blur-md   glassmorphism '>
-                <h3 className="text-white lg:text-2xl max-lg:text-xl font-bold mb-1 text-center">Upload your Cover Picture <span className='text_main'>{tokenUserData.name}</span></h3>
+                <h3 className="text-white lg:text-2xl max-lg:text-xl font-bold mb-1 text-center">Upload your Cover Picture <span className='text_main'>{tokenUserData?.name}</span></h3>
                 <form onSubmit={handleSubmit} className='bg-black/40 p-10 rounded-lg'>
                     {/* Style the input field */}
 

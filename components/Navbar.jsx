@@ -384,9 +384,18 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
 
 
               {!user.value ?
-                <div className='rounded-full w-10 h-10  flex items-center justify-center '><Link href={'/login'}><MdAccountCircle className='text-3xl ' /></Link></div>
-                :
-                <img alt={`${tokenUserData?.username}'s profilepic`} className="rounded-full w-10 h-10" src={tokenUserData?.profilepic} onClick={() => { setDropdown(prevState => !prevState); }} ></img>}
+                <div className='rounded-full w-10 h-10  flex items-center justify-center '><Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150   hover:shadow-lg  w-full flex scale-75 justify-center items-center text-shadow2' >
+
+                  Login
+                </button></Link></div>
+                : <>
+                  {tokenUserData?.profilepic ?
+
+                    <img alt={`${tokenUserData?.username}'s profilepic`} className="rounded-full w-10 h-10" src={tokenUserData?.profilepic} onClick={() => { setDropdown(prevState => !prevState); }} ></img>
+                    :
+
+                    <MdAccountCircle className='rounded-full w-10 h-10 text-gray-200' onClick={() => { setDropdown(prevState => !prevState); }} />
+                  }</>}
             </div>
 
             {dropdown &&
