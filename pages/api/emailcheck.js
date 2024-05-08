@@ -5,23 +5,22 @@ import CryptoJS from 'crypto-js';
 const handler = async (req, res) => {
     try {
         if (req.method === 'POST') {
-            const { username, name, email, phone } = req.body;
+            const { username, email, phone } = req.body;
 
             let user = await User.findOne({ phone: phone });
             let user2 = await User.findOne({ email: email });
 
             if (!user && !user2) {
-                let u = new User({
-                    username,
-                    name,
-                    email,
-                    phone,
-                    
-                });
-                await u.save();
+                
                 res.status(200).json({ success: true, message: 'User was added successfully' });
-            } else {
-                res.status(200).json({ success: false, error: 'User with same Email or Phone already exists' });
+            } else if(user){
+                res.status(200).json({ success: false, error: 'User with same Phone already exists' });
+            }
+            else if(user2){
+                res.status(200).json({ success: false, error: 'User with same Email already exists' });
+            }
+            else{
+                res.status(200).json({ success: false, error: 'User with same Email and Phone already exists' });
             }
         } else {
             res.status(400).json({ error: 'This method is not defined' });

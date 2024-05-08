@@ -31,6 +31,7 @@ const Complete = ({ tokenUserData }) => {
 
 
 
+
     useEffect(() => {
         const fetchUserData = async () => {
             try {
@@ -42,13 +43,17 @@ const Complete = ({ tokenUserData }) => {
                     if (response.success) {
                         const { user } = response;
                         // Check if address and other required fields are already filled
-                        if (user.address && user.city && user.state && user.pincode) {
+                        if (user.address && user.city && user.state && user.pincode && !router.query.edit) {
                             // Redirect to another page if all required fields are filled
                             router.push(`/UploadProfile/${username}`);
                             setUserData(user);
                         } else {
                             // Set user data if some fields are missing
                             setUserData(user);
+                            setAddress(user.address)
+                            setCity(user.city)
+                            setPincode(user.pincode)
+                            setState(user.state)
                             // setLoading(false);
                         }
                     }
@@ -64,7 +69,7 @@ const Complete = ({ tokenUserData }) => {
         };
 
         fetchUserData();
-    }, [username, router]);
+    }, [username, router, tokenUserData]);
 
 
     const handleSubmit = async (e) => {
@@ -101,7 +106,14 @@ const Complete = ({ tokenUserData }) => {
                     draggable: true,
                     progress: undefined,
                 });
-                router.push(`/UploadProfile/${username}`);
+
+                if (router.query.edit) {
+                    router.push(`/checkout`);
+
+                } else {
+
+                    router.push(`/UploadProfile/${username}`);
+                }
             } else {
                 toast.error(data.error, {
                     position: 'top-center',
@@ -243,10 +255,11 @@ const Complete = ({ tokenUserData }) => {
 
                                         }}
                                         type="text"
-                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full'
+                                        className='bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5]  text-white placeholder-gray-200 w-full resize-none'
                                         placeholder='Enter your address'
                                         name='address'
                                         required
+
                                     />
                                 </div>
                                 <div className='text-white w-full'>

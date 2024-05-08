@@ -76,7 +76,7 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
 
   useEffect(() => {
 
- 
+
     setDropdown(false)
     setDropdown2(false)
   }, [router])
@@ -90,11 +90,7 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
     if (Object.keys(cart).length > 0) {
       setSidebar(true);
     }
-  }, [cart,Object.keys(cart).length]);
-
-
-
-
+  }, [cart, Object.keys(cart).length]);
 
 
 
@@ -184,10 +180,12 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
         <div className='flex  items-center justify-between  gap-0 max-lg:hidden max-md:flex h-full w-3/4 cursor-pointer  '>
 
           <img src="/logo.png" alt="logo" height={40} width={40} />
-          <div className='flex items-center gap-2 cursor-pointer active-while:text-[#9B03F8] md:hidden' onClick={toggleCart}>
+
+
+          {tokenUserData && <div className='flex items-center gap-2 cursor-pointer active-while:text-[#9B03F8] md:hidden' onClick={toggleCart}>
             <IoMdCart className='w-[30px] h-[30px] ' />
 
-          </div>
+          </div>}
 
 
         </div>
@@ -198,7 +196,7 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
           <Link href={'/'} className={`hover:text-3xl duration-300 ${page === 'home' ? 'text-3xl border-b-2 border-[#9B03F8]  text-[#9B03F8]' : ''}   md:px-10 px-4  h-full flex items-center `} title='Home'><AiFillHome /></Link>
           <Link href={'/feed'} className={`hover:text-3xl duration-300 ${page === 'feed' ? 'text-3xl border-b-2 text-[#9B03F8] border-[#9B03F8] ' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Feed'><BsFilePostFill />
           </Link>
-          <Link href={'/shop'} className={`hover:text-3xl duration-300 ${page === 'products' ? 'text-3xl border-b-2 text-[#9B03F8] border-[#9B03F8] ' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Shop'><FaBagShopping />
+          <Link href={'/shop'} className={`hover:text-3xl duration-300 ${page === 'shop' ? 'text-3xl border-b-2 text-[#9B03F8] border-[#9B03F8] ' : ''}    md:px-10 px-4  h-full flex items-center  `} title='Shop'><FaBagShopping />
           </Link>
           <Link href={'/about'} className={`hover:text-3xl duration-300 bg_border1 ${page === 'about' ? 'text-3xl  border-b-2  text-[#9B03F8] border-[#9B03F8] ' : ''}   md:px-10 px-4  h-full flex items-center  `} title='About'><FaReadme />
           </Link>
@@ -207,22 +205,37 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
 
         <div className=' flex items-center h-full justify-end gap-12 w-3/4 max-md:hidden   '>
           {!user.value ?
+            <div className='flex gap-3'>
 
-            <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center text-shadow2' >
+              <Link href={'/login'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center text-shadow2' >
 
-              Login
-            </button></Link>
+                Login
+              </button></Link>
+
+              <Link href={'/signup'}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg  w-full flex  justify-center items-center text-shadow2' >
+
+                Signup
+              </button></Link></div>
             : (
 
               <div className='lg:relative  flex gap-2'>
-                <div className='flex items-center gap-2 cursor-pointer active-while:text-[#9B03F8]' onClick={toggleCart}>
+
+
+                {tokenUserData && <><div className='flex items-center gap-2 cursor-pointer active-while:text-[#9B03F8]' onClick={toggleCart}>
                   <IoMdCart className='w-[30px] h-[30px] ' />
 
                 </div>
 
-                <div onClick={() => { setDropdown(prevState => !prevState); }} className=' cursor-pointer   p-3 flex items-center justify-center'>
-                  <img alt={`${tokenUserData?.username}'s profilepic`} className="rounded-full w-10 h-10" src={tokenUserData?.profilepic} ></img>
-                </div>
+                  <div onClick={() => { setDropdown(prevState => !prevState); }} className=' cursor-pointer   p-3 flex items-center justify-center'>
+
+                    {tokenUserData?.profilepic ?
+
+                      <img alt={`${tokenUserData?.username}'s profilepic`} className="rounded-full w-10 h-10" src={tokenUserData?.profilepic} ></img>
+                      :
+
+                      <MdAccountCircle className='rounded-full w-10 h-10 text-gray-200' />
+                    }
+                  </div></>}
 
                 {dropdown &&
 
@@ -310,9 +323,7 @@ const Navbar = ({ tokenUserData, user, cart, setCart, addToCart, removeFromCart,
         className={`flex   h-[8vh]  gap-2  w-full fixed justify-center max-xl:gap-12  bg-black  md:px-[10vw] px-[2vw] items-center  bottom-0 md:hidden  z-50 duration-700 backdrop-blur-md text-white`}
       >
 
-        {/* THIS IS THE LOGO */}
 
-        {/* THIS IS THE PC LINKS */}
 
         <div className='flex items-center justify-between text-xl  font-normal font-noto  h-full  w-full'>
 

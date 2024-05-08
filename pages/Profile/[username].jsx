@@ -32,6 +32,8 @@
     // console.log(router.query)
     const { username } = router.query;
 
+
+
     // console.log(username)
     const [userData, setUserData] = useState(null);
     const [loading, setLoading] = useState(true);

@@ -9,20 +9,23 @@ import Lottie from "lottie-react";
 import A1 from "@/anime3.json"
 import Head from 'next/head';
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
 import { auth } from '@firebase.config';
 
 const Signup = () => {
 
-    const [username, setUsername] = useState("")
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [phone, setPhone] = useState("")
-    const [password, setPassword] = useState("")
-    const [isHidden, setIsHidden] = useState(true);
+    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isUsernameValid, setIsUsernameValid] = useState(true);
-    const [userExists, setUserExists] = useState(false);
     const router = useRouter();
+    const [isHidden, setIsHidden] = useState(true);
+    const [isUsernameValid, setIsUsernameValid] = useState(true);
+    const [isPassValid, setIsPassValid] = useState(true);
+    const [userExists, setUserExists] = useState(false);
+
 
     useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -32,94 +35,6 @@ const Signup = () => {
 
     }, [])
 
-    // const handleGoogle = async () => {
-    //     try {
-    //         setLoading(true);
-    //         const provider = new GoogleAuthProvider();
-    //         const result = await signInWithPopup(auth, provider);
-    //         const user = result.user;
-
-    //         // After successful sign-in, you can generate JWT token and store user data as needed
-
-    //         let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/googlesignup`, {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify(user)
-    //         })
-    //         let response = await res.json();
-
-    //         if (response.success) {
-    //             console.log("HIIII")
-    //             let res2 = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/googlelogin`, {
-    //                 method: 'POST',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                 },
-    //                 body: JSON.stringify(user)
-    //             })
-    //             let response2 = await res2.json();
-    //             console.log(response2)
-    //             if (response2.success) {
-
-    //                 localStorage.setItem('token', response2.token)
-    //                 toast.success('You are Signed in Succesfully', {
-    //                   position: "top-center",
-    //                   autoClose: 1900,
-    //                   hideProgressBar: false,
-    //                   closeOnClick: true,
-    //                   pauseOnHover: true,
-    //                   draggable: true,
-    //                   progress: undefined,
-    //                   theme: "dark",
-    //                 });
-    //                 setLoading(false);
-          
-    //                 setTimeout(() => {
-    //                   router.push(`${process.env.NEXT_PUBLIC_HOST}`)
-          
-    //                 }, 2000);
-    //               }
-    //               else {
-    //                 toast.error(response.error, {
-    //                   position: "top-center",
-    //                   autoClose: 2000,
-    //                   hideProgressBar: false,
-    //                   closeOnClick: true,
-    //                   pauseOnHover: true,
-    //                   draggable: true,
-    //                   progress: undefined,
-    //                   theme: "dark",
-    //                 });
-    //                 setLoading(false);
-    //               }
-
-
-               
-    //         }
-
-    //         else {
-    //             toast.error(response.error, {
-    //                 position: "top-center",
-    //                 autoClose: 1900,
-    //                 hideProgressBar: false,
-    //                 closeOnClick: true,
-    //                 pauseOnHover: true,
-    //                 draggable: true,
-    //                 progress: undefined,
-    //                 theme: "dark",
-    //             });
-
-    //             setLoading(false);
-    //         }
-
-            
-    //     } catch (error) {
-    //         console.error('Google sign-in error:', error);
-    //         setLoading(false);
-    //     }
-    // };
 
     useEffect(() => {
         if (username.trim() !== '') { // Check if username is not empty
@@ -127,7 +42,7 @@ const Signup = () => {
                 try {
                     const res = await fetch(`/api/check/${username}`);
                     const data = await res.json();
-    
+
                     if (data.success) {
                         setUserExists(true);
                     } else {
@@ -137,57 +52,135 @@ const Signup = () => {
                     console.error('Error checking username:', error);
                 }
             };
-    
+
             fetchUsername();
         }
     }, [username]); // Run this effect whenever username changes
-    
-    
 
 
 
     const handleSubmit = async (e) => {
-
-        setLoading(true);
         e.preventDefault();
+        setLoading(true);
 
-        const formBody = { username, name, email, phone, password };
+        // Password validation regex
+        const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@_])[A-Za-z\d@_]{6,}$/;
+
+        // Check if password meets the criteria
+        if (!passwordRegex.test(password)) {
+            setIsPassValid(false)
+            toast.error('Password must contain at least one capital letter, no spaces, only "@" and "_" allowed, and at least one number, with a minimum length of 6 characters.', {
+                position: 'top-center',
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark',
+            });
+            setLoading(false);
+            return;
+        }
 
 
-        let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
+        const userData = { username, email, phone };
+        const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/emailcheck`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(formBody)
-        })
-        let response = await res.json();
+            body: JSON.stringify(userData),
+        });
 
-        setEmail("")
-        setUsername("")
-        setPhone("")
-        setPassword("")
-        if (response.success) {
-            toast.success('You are signed up Succesfully', {
-                position: "top-center",
-                autoClose: 1900,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-            });
-            setLoading(false);
+        const data = await res.json();
 
-            setTimeout(() => {
-                router.push(`${process.env.NEXT_PUBLIC_HOST}/login`)
+        if (data.success) {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
 
-            }, 2000);
+                // // Send email verification
+                // await sendEmailVerification(user);
+
+                // toast.success('Verification email sent. Please verify your email before registering.', {
+                //     position: 'top-center',
+                //     autoClose: 5000,
+                //     hideProgressBar: false,
+                //     closeOnClick: true,
+                //     pauseOnHover: true,
+                //     draggable: true,
+                //     progress: undefined,
+                //     theme: 'dark',
+                // });
+
+                // Wait for the user to verify their email
+
+                if (user) {
+                    const userData = { username, name, email, phone };
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(userData),
+                    });
+
+                    const data = await res.json();
+                    if (data.success) {
+                        // Redirect user or show success message
+                        toast.success('You are Signed up Successfully', {
+                            position: "top-center",
+                            autoClose: 1900,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                        });
+
+                        setTimeout(() => {
+                            
+                            router.push('/login');
+                        }, 2000);
+                    } else {
+                        // Handle error from MongoDB API
+                        console.error('Error saving user data:', data.error);
+                        toast.error(data.error, {
+                            position: "top-center",
+                            autoClose: 1900,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                        });
+                    }
+                }
+
+            } catch (error) {
+                console.error('Error signing up:', error);
+                toast.error(`${error.message}`, {
+                    position: "top-center",
+                    autoClose: 1900,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                });
+            } finally {
+                setLoading(false);
+            }
+
+
         }
-
         else {
-            toast.error(response.error, {
+            console.error(data.error);
+            toast.error(data.error, {
                 position: "top-center",
                 autoClose: 1900,
                 hideProgressBar: false,
@@ -197,11 +190,12 @@ const Signup = () => {
                 progress: undefined,
                 theme: "dark",
             });
-
-            setLoading(false);
+            setLoading(false)
         }
 
-    }
+
+    };
+
     return (
         <div className='min-h-[120vh] px-[10vw]  flex  justify-center items-center font-noto  max-md:px-6 max-md:pt-28 '>
             <Head>
@@ -230,8 +224,7 @@ const Signup = () => {
                 pauseOnHover
                 theme="dark"
             />
-            {/* Same as */}
-            <ToastContainer />
+
             <div className='flex flex-col max-lg:hidden items-center justify-center w-1/2  border-r mr-20 h-[50vh]'>
                 <div className="flex ">
                     <h1 className='font-metal text-[14vh] max-xl:text-[18vh] max-lg:text-[10vh] max-md:text-[10vh] text_main pl-5 backdrop' >Amaze</h1>
@@ -250,10 +243,9 @@ const Signup = () => {
                     <div className='flex flex-col w-full'>
                         <input
                             value={username}
-                            onChange={ (e) => {
-                                 setUsername(e.target.value);
+                            onChange={(e) => {
+                                setUsername(e.target.value.toLowerCase()); // Convert input to lowercase
                                 setIsUsernameValid(e.target.validity.valid); // Check if the input matches the pattern
-                                 
                             }}
                             type="text"
                             className={`bg-white/15 rounded-lg p-2 focus:outline-none focus:shadow-md focus:border ${isUsernameValid ? 'border-[#9F07F5]' : 'border-red-500'
@@ -302,34 +294,39 @@ const Signup = () => {
                         name='phone'
                         required
                     />
-
-                    <div className=' relative  rounded-lg   flex w-full  items-center justify-between '>
-
-
-                        <input
-                            value={password}
-                            onChange={(e) => { setPassword(e.target.value) }}
-                            type={`${isHidden ? "password" : "visible"}`}
-                            className='bg-white/15 text-white  rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] placeholder-gray-200'
-
-                            placeholder='Password'
-                            name='password'
-                            required
-                        />
-                        {isHidden ?
-
-                            (<AiFillEyeInvisible
-                                onClick={() => { setIsHidden(false) }}
-                                className='cursor-pointer w-7 h-7 text-white absolute right-3  '
-                            />)
-                            :
-                            (<AiFillEye
-                                onClick={() => { setIsHidden(true) }}
-                                className='cursor-pointer w-7 h-7 text-[#9F07F5] absolute right-3  '
-                            />)
+                    <div className='flex flex-col '>
+                        <div className=' relative  rounded-lg   flex w-full  items-center justify-between '>
 
 
-                        }
+                            <input
+                                value={password}
+                                onChange={(e) => { setPassword(e.target.value) }}
+                                type={`${isHidden ? "password" : "visible"}`}
+                                className='bg-white/15 text-white  rounded-lg  p-2 w-full focus:outline-none focus:shadow-md focus:border focus:border-[#9F07F5] focus:shadow-[#9F07F5] placeholder-gray-200'
+
+                                placeholder='Password'
+                                name='password'
+                                required
+                            />
+                            {isHidden ?
+
+                                (<AiFillEyeInvisible
+                                    onClick={() => { setIsHidden(false) }}
+                                    className='cursor-pointer w-7 h-7 text-white absolute right-3  '
+                                />)
+                                :
+                                (<AiFillEye
+                                    onClick={() => { setIsHidden(true) }}
+                                    className='cursor-pointer w-7 h-7 text-[#9F07F5] absolute right-3  '
+                                />)
+
+
+                            }
+
+                        </div>
+                        {!isPassValid && (
+                            <p className="text-red-500 text-sm ">Password must contain at least one capital letter, no spaces, only "@" and "_" allowed, and at least one number, with a minimum length of 6 characters.</p>
+                        )}
                     </div>
 
 

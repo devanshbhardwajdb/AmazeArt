@@ -13,6 +13,8 @@ import A1 from "@/anime3.json"
 import LoadingContainer2 from '@components/LoadingContainer2';
 import { TiTick } from "react-icons/ti";
 import { FaStar } from "react-icons/fa";
+import {MdAccountCircle} from "react-icons/md"
+
 
 
 import {
@@ -257,7 +259,13 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
                         <div className='flex justify-between items-center w-full h-full '>
                             <div className='flex  items-center gap-2 '>
-                                <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={user.profilepic} ></img>
+                            {user?.profilepic ?
+
+<img alt={`${post?.username}'s profilepic`} className="rounded-full w-10 h-10" src={user?.profilepic} ></img>
+:
+
+<MdAccountCircle className='rounded-full w-10 h-10 text-gray-200' />
+}
                                 <div className=''>
                                     <h4 className='text-white font-medium text-sm flex max-md:flex-col items-center gap-1'>{post.name}<span className="text-gray-300 text-xs "><span className='max-md:hidden'>•</span>  Posted {formatTimeAgo(post.createdAt)}</span></h4>
                                     <h5 className='text-gray-300 text-sm max-md:hidden'>@{post.username}</h5>
@@ -303,11 +311,11 @@ const PostId = ({ tokenUserData, addToCart, buyNow }) => {
 
 
                                 <div className='flex max-md:flex-col-reverse  justify-between items-center max-md:items-start gap-4 w-full'>
-                                    <div className='flex gap-2 items-center'>
+                                   {!(post.username===tokenUserData.username) && <div className='flex gap-2 items-center'>
                                         <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' onClick={()=>{addToCart(postId,1,post.price,post.productTitle,post.productType,post.contentUrl,username)}} >Add to Cart</button>
                                         <button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' onClick={()=>{buyNow(postId,1,post.price,post.productTitle,post.productType,post.contentUrl,username)}} >Buy</button>
                                         <h5 className='text-sm text-white'>₹{post.price}</h5>
-                                    </div>
+                                    </div>}
                                     <div className='flex gap-4 items-center justify-end '>
                                         <div className={`flex  items-center justify-center gap-1 cursor-pointer hover:scale-110 duration-150 `} >
                                             <FaStar className='text-2xl text-yellow-500' />

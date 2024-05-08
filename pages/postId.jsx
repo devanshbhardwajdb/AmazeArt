@@ -12,6 +12,8 @@ import Lottie from "lottie-react";
 import A1 from "@/anime3.json"
 import LoadingContainer2 from '@components/LoadingContainer2';
 import { TiTick } from "react-icons/ti";
+import {MdAccountCircle} from "react-icons/md"
+
 
 import {
     EmailShareButton,
@@ -245,7 +247,7 @@ const PostId = ({ tokenUserData }) => {
     return (
 
         <>
-           <Head>
+            <Head>
                 <title>Amazeart - {post?.caption}</title>
                 {/* Description */}
                 <meta name="description" content={post?.username} />
@@ -288,7 +290,13 @@ const PostId = ({ tokenUserData }) => {
 
                         <div className='flex justify-between items-center w-full '>
                             <div className='flex  items-center gap-2 '>
-                                <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={user.profilepic} ></img>
+                                {user?.profilepic ?
+
+                                    <img alt={`${post?.username}'s profilepic`} className="rounded-full w-10 h-10" src={user?.profilepic} ></img>
+                                    :
+
+                                    <MdAccountCircle className='rounded-full w-10 h-10 text-gray-200' />
+                                }
                                 <div className=''>
                                     <h4 className='text-white font-medium text-sm flex max-md:flex-col items-center gap-1'>{post.name}<span className="text-gray-300 text-xs "><span className='max-md:hidden'>•</span>  Posted {formatTimeAgo(post.createdAt)}</span></h4>
                                     <h5 className='text-gray-300 text-sm max-md:hidden'>@{post.username}</h5>

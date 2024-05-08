@@ -4,6 +4,7 @@ import { FaHeart, FaRegHeart, FaShare, FaFacebook, FaTwitter, FaLinkedin, FaPlus
 import { FaXTwitter } from "react-icons/fa6";
 import { FaCirclePlay } from "react-icons/fa6";
 import { FaPlay } from "react-icons/fa";
+import {MdAccountCircle} from "react-icons/md"
 import {
     EmailShareButton,
     FacebookShareButton,
@@ -111,7 +112,15 @@ const Post = ({ post, tokenUserData }) => {
             <div className='flex justify-between items-center w-full'>
                 <div className='flex items-center gap-2 '>
                     <Link href={`/Profile/${post?.username}`} className='hover:text-[#9B03F8] hover:underline-offset-4  hover:underline transition-all duration-300 hover:scale-95'>
-                        <img alt={`${post.username}'s profilepic`} className="rounded-full w-10 h-10" src={user?.profilepic} ></img></Link>
+                        {user?.profilepic ?
+
+                            <img alt={`${post?.username}'s profilepic`} className="rounded-full w-10 h-10" src={user?.profilepic} ></img>
+                            :
+
+                            <MdAccountCircle className='rounded-full w-10 h-10 text-gray-200' />
+                        }
+
+                    </Link>
                     <div className=''>
                         <h4 className='text-white font-medium text-sm'>{post.name}</h4>
                         <h5 className='text-gray-300 text-sm '>@{post.username}</h5>
@@ -152,19 +161,19 @@ const Post = ({ post, tokenUserData }) => {
                     <h5 className='text-sm'>{commentCount}</h5>
                 </div>
                 <div className='flex gap-1 relative  items-center justify-center text-white cursor-pointer hover:scale-110 duration-150  '>
-                    <FaShare onClick={handleShare}  />
+                    <FaShare onClick={handleShare} />
                     <h5 className='text-sm'>{shareCount}</h5>
                     {isShareOpen && (
-                    <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full right-0 p-2">
-                        <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
-                        <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
-                        <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
-                        <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
-                    </div>
-                )}
+                        <div className="share-options rounded-lg flex absolute bg-black/90 gap-5 top-full right-0 p-2">
+                            <WhatsappShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('whatsapp')}><FaWhatsapp className='text-green-500 ' /></WhatsappShareButton>
+                            <FacebookShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('facebook')}><FaFacebook className='text-blue-500 ' /></FacebookShareButton>
+                            <TwitterShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('twitter')}><FaXTwitter className='text-gray-200 ' /> </TwitterShareButton>
+                            <LinkedinShareButton url={`${process.env.NEXT_PUBLIC_HOST}/postId?id=${post._id}&username=${post.username}`} onClick={() => handleShareButtonClick('linkedin')}><FaLinkedin className='text-blue-700 ' /></LinkedinShareButton>
+                        </div>
+                    )}
 
                 </div>
-                
+
             </div>
         </div>
     )

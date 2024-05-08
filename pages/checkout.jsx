@@ -204,7 +204,7 @@ const Checkout = ({ cart, clearCart, subTotal, user, tokenUserData }) => {
                                 <h3 className=' text-sm'>{userData.address}</h3>
                                 <h3 className=' text-sm'>{userData.city}, {userData.state}, <span className='font-semibold'>{userData.pincode}</span></h3>
                             </div>
-                            <Link href={`/UpdateAddress/${userData.username}`}>
+                            <Link href={`/UpdateAddress/${userData.username}?edit=true`}>
                                 <button
                                     className='  nav-btn  bg_button1 text-white px-4 py-2 rounded-lg  transition-all duration-150  hover:scale-95   md:w-1/4 ' >Edit
                                 </button>

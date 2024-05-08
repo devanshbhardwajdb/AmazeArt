@@ -80,7 +80,7 @@ const Feed = ({ tokenUserData }) => {
                                     <img alt={`${tokenUserData?.name}'s Profile pic`} className="rounded-full w-14 h-14" src={tokenUserData?.profilepic} />
                                 </Link>
                             ) : (
-                                <MdAccountCircle className='rounded-full w-20 h-20 text-gray-500' />
+                                <MdAccountCircle className='rounded-full w-20 h-20 text-gray-400' />
                             )}
 
                             <button onClick={toggleCreateProduct} className='flex justify-center items-center w-3/2 max-md:w-[60vw] bg-white/80 rounded-full  px-4 glassmorphism1 text-gray-200 font-light text-md hover:scale-105 duration-200'>
