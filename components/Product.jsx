@@ -125,7 +125,7 @@ const Product = ({ post, tokenUserData }) => {
                     <h5 className='text-sm text-white'>₹{post.price}</h5>
                 </div>
 
-                {!(post.username === tokenUserData.username) && <Link href={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' >Buy</button></Link>}
+                {!(post?.username === tokenUserData?.username) && <Link href={`${process.env.NEXT_PUBLIC_HOST}/productId?id=${post._id}&username=${post.username}`}><button className='nav-btn  bg_button1 text-white px-5 py-2 rounded-lg  transition-all duration-150  hover:scale-95  hover:shadow-lg hover:shadow-black/70 text-sm ' >Buy</button></Link>}
                 {/* <div className='flex gap-1 max-md:flex-col items-center justify-center text-white cursor-pointer hover:scale-110 duration-150 '>
                     <FaComment className='text-md' />
                     <h5 className='text-sm'>{commentCount}</h5>

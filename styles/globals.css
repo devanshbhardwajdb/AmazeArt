@@ -95,7 +95,7 @@ html {
 body::-webkit-scrollbar {
     display: block;
     width: 6px;
-    background: #000;
+    background: #fff;
 }
 
 
